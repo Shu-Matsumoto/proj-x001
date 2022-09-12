@@ -17,10 +17,6 @@ interface UserProfileProps {
    */
   profileImageUrl: string
   /**
-   * ユーザーが所有する商品数
-   */
-  numberOfProducts: number
-  /**
    * ユーザーの説明
    */
   description?: string

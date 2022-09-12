@@ -7,6 +7,7 @@ import {
 import ShapeImage from 'components/atoms/ShapeImage'
 import Spinner from 'components/atoms/Spinner'
 import Text from 'components/atoms/Text'
+import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import { useAuthContext } from 'contexts/AuthContext'
 
@@ -45,14 +46,49 @@ const Header = () => {
 
   return (
     <HeaderRoot>
-      <Flex paddingLeft={3} paddingRight={3} justifyContent="space-between">
+      <Flex
+        paddingLeft={3}
+        paddingRight={3}
+        justifyContent="space-between">
+        <Box paddingLeft={1}>
+          <AppLogo />
+        </Box>
         <Nav as="nav" height="56px" alignItems="center">
           <NavLink>
-            <Link href="/" passHref>
-              <Anchor as="a">
-                <AppLogo />
-              </Anchor>
-            </Link>
+            <Box display={{ base: 'none', md: 'block' }}>
+              <Link href="/top" passHref>
+                <Anchor as="a">
+                  <Text variant='large'>トップ</Text>
+                </Anchor>
+              </Link>
+            </Box>
+          </NavLink>
+          <NavLink>
+            <Box display={{ base: 'none', md: 'block' }}>
+              <Link href="/attendance/me" passHref>
+                <Anchor as="a">
+                  <Text variant='large'>受講一覧</Text>
+                </Anchor>
+              </Link>
+            </Box>
+          </NavLink>
+          <NavLink>
+            <Box display={{ base: 'none', md: 'block' }}>
+              <Link href="/lecture/me" passHref>
+                <Anchor as="a">
+                  <Text variant='large'>講義一覧</Text>
+                </Anchor>
+              </Link>
+            </Box>
+          </NavLink>
+          <NavLink>
+            <Box display={{ base: 'none', md: 'block' }}>
+              <Link href="/inquiry" passHref>
+                <Anchor as="a">
+                  <Text variant='large'>お問い合わせ</Text>
+                </Anchor>
+              </Link>
+            </Box>
           </NavLink>
         </Nav>
         <Nav as="nav" height="56px" alignItems="center">
@@ -89,7 +125,7 @@ const Header = () => {
             })()}
           </NavLink>
         </Nav>
-      </Flex>
+        </Flex>
     </HeaderRoot>
   )
 }
