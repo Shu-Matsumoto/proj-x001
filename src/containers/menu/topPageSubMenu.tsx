@@ -1,5 +1,5 @@
 import React from 'react'
-import { LinkInformationSet } from '../../types'
+import { LinkInformationSet } from '../../types/userTypes'
 import SubMenu from 'components/templates/Layout/subMenu';
 
 const TopPageSubMenu = () => {

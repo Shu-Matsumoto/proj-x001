@@ -18,7 +18,7 @@ const SubMenu = ({
 				width="300px"
 				backgroundColor="#BFBFBF"
 				flexDirection="column"
-				justifyContent="center"
+				justifyContent="flex-start"
 				alignItems="center"
 			>
 				<Fragment>

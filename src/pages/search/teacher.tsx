@@ -1,16 +1,16 @@
 /**
- * トップページ
+ * 講師検索ページ
  */
 import type { NextPage } from 'next'
 import Layout from 'components/templates/Layout'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
-import TopPageSubMenu from 'containers/menu/topPageSubMenu'
+import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
 
 const TopPage: NextPage = () => {  
   return (
     <Layout>
-      <MainPartLayout subMenu={<TopPageSubMenu/>}>
-        トップページです。
+      <MainPartLayout subMenu={<AttendancePageSubMenu/>}>
+        講師検索ページです。
       </MainPartLayout>
     </Layout>
   )

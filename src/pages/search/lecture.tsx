@@ -1,6 +1,3 @@
-/**
- * 受講一覧ページ
- */
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,7 +12,11 @@ import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
 import LectureCardListContainer from 'containers/LectureCardListContainer'
 
-const AttendanceManagementPage: NextPage = () => {
+/**
+ * 講義検索ページ
+ * @returns 
+ */
+const LectureSearchPage: NextPage = () => {
   const router = useRouter();
 	
 	const handleChange = (selected: string[]) => {
@@ -45,8 +46,8 @@ const AttendanceManagementPage: NextPage = () => {
                 </Link>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <Link href="/attendance/me">
-                  <a>受講一覧</a>
+                <Link href="/search">
+                  <a>講義検索</a>
                 </Link>
               </BreadcrumbItem>
             </Breadcrumb>
@@ -56,11 +57,12 @@ const AttendanceManagementPage: NextPage = () => {
               <Box as="aside" minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
                 {/* 講義検索のフィルタ */}
                 <FilterGroup
-                  title="絞り込み込条件"
+                  title="検索条件"
                   items={[
-                    { label: '申請中', name: 'waiting' },
-                    { label: '受講中', name: 'onGoing' },
-                    { label: '受講済', name: 'done' },
+                    { label: 'HTML', name: 'html' },
+                    { label: 'CSS', name: 'css' },
+                    { label: 'JavaScript', name: 'javascript' },
+                    { label: 'PHP', name: 'php' },
                   ]}
                   // value={conditions}
                   onChange={handleChange}
@@ -73,7 +75,7 @@ const AttendanceManagementPage: NextPage = () => {
                   fontWeight="bold"
                   variant="mediumLarge"
                 >
-                  受講一覧
+                  講義一覧
                 </Text>
                 {/*
                   講義カードリストコンテナ
@@ -89,4 +91,4 @@ const AttendanceManagementPage: NextPage = () => {
   )
 }
 
-export default AttendanceManagementPage
+export default LectureSearchPage
