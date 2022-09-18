@@ -11,9 +11,10 @@ export const Login = () => {
   const authUser = {
     id: 1,
     username: 'dummy',
+    password: 'password',
     displayName: 'Taketo Yoshida',
     email: 'test@example.com',
-    profileImageUrl: '/images/sample/1.jpg',
+    profileImageUrl: '',
     description: '',
   }
 

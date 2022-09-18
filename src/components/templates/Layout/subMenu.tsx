@@ -14,25 +14,26 @@ const SubMenu = ({
 }: SubMenuProps) => {
   return (
 		<>
-			<Flex
-				width="300px"
-				backgroundColor="#BFBFBF"
-				flexDirection="column"
-				justifyContent="flex-start"
-				alignItems="center"
-			>
-				<Fragment>
-					{menuLinkList.map((item) => (
-						<Box paddingTop={1} paddingBottom={1}>
-							<Link href={`${item.pageLink}`} passHref>
-								<Text variant="extraLarge" margin={0} padding={0}>
-									{`${item.dispaleyName}`}
-								</Text>
-							</Link>
-						</Box>
-					))}
-				</Fragment>
-			</Flex>
+			<Box width="100%">
+				<Flex
+					backgroundColor="#BFBFBF"
+					flexDirection="column"
+					justifyContent="center"
+					alignItems="center"
+				>
+					<Fragment>
+						{menuLinkList.map((item) => (
+							<Box paddingTop={1} paddingBottom={1}>
+								<Link href={`${item.pageLink}`} passHref>
+									<Text variant="extraLarge" margin={0} padding={0}>
+										{`${item.dispaleyName}`}
+									</Text>
+								</Link>
+							</Box>
+						))}
+					</Fragment>
+				</Flex>
+			</Box>	
     </>
   )
 }

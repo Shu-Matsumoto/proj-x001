@@ -6,8 +6,6 @@ const TopPageSubMenu = () => {
 
 	const menuList: LinkInformationSet[] = [
     { dispaleyName: "お知らせ", pageLink: "/top" },
-    { dispaleyName: "menu2", pageLink: "/top" },
-    { dispaleyName: "menu3", pageLink: "/top" },
   ];
 
   return (

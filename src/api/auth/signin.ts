@@ -1,7 +1,5 @@
 // typesは後ほど定義
-import { ApiContext, User } from 'types'
-// 先ほど定義したsrc/utils/index.tsから読み込み
-import { fetcher } from 'utils'
+import { ApiContext, User } from '../../types/userTypes'
 
 export type SigninParams = {
   /**
@@ -30,6 +28,7 @@ const signin = async (
     const user: User = {
       id: 1,
       username: "taketo",
+      password: "password",
       displayName: "Taketo Yoshida",
       email: "taketo@example.com",
       profileImageUrl: "/users/1.png",

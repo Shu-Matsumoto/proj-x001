@@ -16,10 +16,16 @@ const MainPartLayout = ({
 }: MainPartLayoutProps) => {
   return (
 		<>
-			<Flex>
-				<Flex>{subMenu}</Flex>
-				<Flex>{children}</Flex>
-			</Flex>
+			<Box width="100%">
+				<Flex>
+					<Box width='20%' >
+						{ subMenu }
+					</Box>
+					<Box width='80%'>
+						{children}
+					</Box>
+				</Flex>	
+			</Box>
     </>
   )
 }

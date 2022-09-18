@@ -1,5 +1,4 @@
-import type { ApiContext } from 'types'
-import { fetcher } from 'utils'
+import type { ApiContext } from '../../types/userTypes'
 
 /**
  * 認証API（サインアウト）
