@@ -67,7 +67,7 @@ const Header = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/attendance/me" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>受講一覧</Text>
+                  <Text variant='large'>受講</Text>
                 </Anchor>
               </Link>
             </Box>
@@ -76,7 +76,7 @@ const Header = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/lecture/me" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>講義一覧</Text>
+                  <Text variant='large'>講義</Text>
                 </Anchor>
               </Link>
             </Box>

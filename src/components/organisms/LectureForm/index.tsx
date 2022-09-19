@@ -6,8 +6,9 @@ import Button from 'components/atoms/Button'
 import Input from 'components/atoms/Input'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
-import * as UserTypes from '../../../types/userTypes'
 import Flex from "components/layout/Flex";
+import * as UserTypes from '../../../types/userTypes'
+import * as Utils from '../../../utils'
 
 export type LecturePostFormData = {
   lecture: UserTypes.Lecture
@@ -52,17 +53,19 @@ export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
         dev_env: "必要な開発環境のサンプルです。",
       }],
       teachers: [{
+        user_id: 1,
         type: UserTypes.StudentPosition.Leader,
         pay_amount: 19000,
       }],
       schedules: [{
-        start_time: new Date(2022, 10 - 1, 4, 23, 0, 0),
-        end_time: new Date(2022, 10 - 1, 4, 23, 59, 0),
+        start_time: Utils.ToDatetimeString(new Date(2022, 10 - 1, 4, 23, 0, 0)),
+        end_time: Utils.ToDatetimeString(new Date(2022, 10 - 1, 4, 23, 59, 0)),
         url: "https://us02web.zoom.us/j/86346237299?pwd=UnBYMW8rZUZvU1VoSThzVW9UcnNZdz09",
         meeting_id: "863 4623 7299",
         passcord: "171910"
       }],
       materials: [{
+        user_id: 1,
         title: "教材サンプル1",
         explanation: "これは教材の説明サンプルです。",
         path: "https://drive.google.com/file/d/1_iZM0kjrw_fwrzQE/view?usp=sharing"

@@ -219,10 +219,10 @@ export type LectureSchedule = {
   id: number;
   // 講義ID
   lecture_id: number;
-  // 開始時刻
-  start_time: Date;
-  // 終了時刻
-  end_time: Date;
+  // 開始時刻 (format:yyyy-mm-dd HH:MM:SS)
+  start_time: string;
+  // 終了時刻 (format:yyyy-mm-dd HH:MM:SS)
+  end_time: string;
   // MTG URL
   url: string;
   // ミーティングID

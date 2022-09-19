@@ -33,7 +33,9 @@ export const ApiRequestFetcher = async (
   type: ApiRequestType,
   params: any,
 ): Promise<any> => {
-  let init: RequestInit = {
+  let init: RequestInit;
+  if (params != null) {
+    init = {
       method: convertApiRequestTypeToString(type),
       headers: {
         Origin: '*',
@@ -43,6 +45,17 @@ export const ApiRequestFetcher = async (
       },
       body: JSON.stringify(params),
     }
+  } else {
+    init = {
+      method: convertApiRequestTypeToString(type),
+      headers: {
+        Origin: '*',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        credentials: 'include',
+      }
+    }
+  }
   const res = await fetch(resource, init)
   const jsonData = await res.json();
 
@@ -59,4 +72,17 @@ export const ApiRequestFetcher = async (
       data: jsonData.data
     };
   }
+}
+
+/**
+ * 日時データの文字列化(2022-09-19 12:34:56)
+ */
+export function ToDatetimeString(datetime: Date): string {
+  const year = datetime.getFullYear();
+  const month = ("0" + (datetime.getMonth() + 1)).slice(-2);
+  const day = ("0" + datetime.getDate()).slice(-2);
+  const hour = ("0" + datetime.getHours()).slice(-2);
+  const minutes = ("0" + datetime.getMinutes()).slice(-2);
+  const seconds = ("0" + datetime.getSeconds()).slice(-2);
+  return year + "-" + month + "-" + day + " "+ hour + ":" + minutes + ":" + seconds;
 }

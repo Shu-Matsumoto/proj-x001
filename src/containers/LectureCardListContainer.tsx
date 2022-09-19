@@ -3,19 +3,20 @@ import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import LectureCard from 'components/organisms/LectureCard'
 import LectureCardList from 'components/organisms/LectureCardList'
-import searchLectures from 'services/attendance/search-lectures'
-import type { ApiContext } from 'types'
+import type { Lecture } from '../types/userTypes'
 
-const context: ApiContext = {
-  apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
+interface LectureCardListProps {
+	isLoading: boolean
+  lectures: Lecture[]
 }
 
 /**
  * 講義カードリストコンテナ
  */
-const LectureCardListContainer = () => {
-  const { lectures, isLoading } = searchLectures(context);
-
+const LectureCardListContainer = ({
+	isLoading,
+  lectures,
+}: LectureCardListProps) => {
   return (
     <LectureCardList>
       {/* ロード中はレクトローダーを表示 */}
@@ -30,19 +31,19 @@ const LectureCardListContainer = () => {
             </Box>
           </Box>
         ))}
-      {!isLoading &&
+      {!isLoading && lectures != null && lectures.length != 0 &&
         lectures.map((p) => (
-          <Box key={p.Id}>
-            <Link href={`/lectures/${p.Id}`} passHref>
+          <Box key={p.id}>
+            <Link href={`/lecture/${p.id}`} passHref>
               <a>
                 {/* 講義カード */}
                 <LectureCard
                   variant="detail"
-                  title={p.Title}
-                  teacherName={p.TeacherName}
-                  capacity={p.Capacity}
-                  numberOfStudents={p.NumberOfStudents}
-                  teacherProfileImageUrl={p.TeacherProfileImageURL}
+                  title={p.title}
+                  teacherName="まつもと"
+                  capacity={4}
+                  numberOfStudents={4}
+                  teacherProfileImageUrl="/lectures/github.png"
                 />
               </a>
             </Link>

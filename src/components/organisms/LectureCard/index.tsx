@@ -62,8 +62,9 @@ const LectureCard = ({
 
   return (
     <>
-      <LectureCardImageContainer>
-        <ScaleImage
+      <LectureCardContainer>
+        <LectureCardImageContainer>
+          <ScaleImage
             src={teacherProfileImageUrl}
             width={imgSize ?? 240}
             height={imgSize ?? 240}
@@ -71,8 +72,7 @@ const LectureCard = ({
             containerHeight={size}
             objectFit="cover"
           />
-      </LectureCardImageContainer>
-      <LectureCardContainer>
+        </LectureCardImageContainer> 
         {variant !== 'small' && (
           <LectureCardInfo>
             <Box>
@@ -103,7 +103,7 @@ const LectureCard = ({
               >
                 講師：{teacherName}
               </Text>
-              <Text
+              {/* <Text
                 as="span"
                 fontWeight="bold"
                 display="inline-block"
@@ -128,7 +128,7 @@ const LectureCard = ({
                 padding={{ base: 1, md: 2 }}
               >
                 参加者：{numberOfStudents}名
-              </Text>
+              </Text> */}
             </Box>
           </LectureCardInfo>
         )}
@@ -140,12 +140,12 @@ const LectureCard = ({
             <Text as="span" variant="medium">
               講師：{teacherName}
             </Text>
-            <Text as="span" variant="medium">
+            {/* <Text as="span" variant="medium">
               定員：{capacity}名
             </Text>
             <Text as="span" variant="medium">
               参加者：{numberOfStudents}名
-            </Text>
+            </Text> */}
           </Box>
         )}
       </LectureCardContainer>

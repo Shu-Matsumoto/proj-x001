@@ -79,7 +79,9 @@ const AttendanceManagementPage: NextPage = () => {
                   講義カードリストコンテナ
                   検索クエリから講義カードリストを表示
                 */}
-                <LectureCardListContainer/>
+                <LectureCardListContainer
+                
+                />
               </Box>
             </Flex>
           </Flex>

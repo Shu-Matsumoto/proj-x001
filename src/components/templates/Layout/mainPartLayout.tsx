@@ -1,17 +1,19 @@
 import Link from 'next/link'
-import React, { Fragment } from 'react'
+import React from 'react'
 import Flex from 'components/layout/Flex'
 import Box from 'components/layout/Box'
-import { LinkInformationSet } from '../../../types/userTypes'
-import Text from 'components/atoms/Text'
+import Breadcrumb from 'components/molecules/Breadcrumb'
+import BreadcrumbItem from 'components/atoms/BreadcrumbItem'
 
 interface MainPartLayoutProps {
 	subMenu: React.ReactNode,
+	breadcrumbList: { link: string, title: string} [],
 	children: React.ReactNode,
 }
 
 const MainPartLayout = ({
 	subMenu,
+	breadcrumbList,
 	children
 }: MainPartLayoutProps) => {
   return (
@@ -22,7 +24,26 @@ const MainPartLayout = ({
 						{ subMenu }
 					</Box>
 					<Box width='80%'>
-						{children}
+						<Flex
+							flexDirection={"column"}
+						>
+							<Box margin={1}>
+								<Flex>
+									<Breadcrumb>
+										{(breadcrumbList != null) &&
+											breadcrumbList.map((item) => (
+												<BreadcrumbItem>
+													<Link href={item.link}>
+														<a>{item.title}</a>
+													</Link>
+												</BreadcrumbItem>
+											))
+										}
+									</Breadcrumb>
+								</Flex>
+							</Box>
+							{children}
+						</Flex>
 					</Box>
 				</Flex>	
 			</Box>
