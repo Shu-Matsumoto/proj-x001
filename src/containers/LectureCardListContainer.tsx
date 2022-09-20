@@ -8,6 +8,7 @@ import type { Lecture } from '../types/userTypes'
 interface LectureCardListProps {
 	isLoading: boolean
   lectures: Lecture[]
+  view_mode_mine: boolean
 }
 
 /**
@@ -16,6 +17,7 @@ interface LectureCardListProps {
 const LectureCardListContainer = ({
 	isLoading,
   lectures,
+  view_mode_mine,
 }: LectureCardListProps) => {
   return (
     <LectureCardList>
@@ -34,11 +36,11 @@ const LectureCardListContainer = ({
       {!isLoading && lectures != null && lectures.length != 0 &&
         lectures.map((p) => (
           <Box key={p.id}>
-            <Link href={`/lecture/${p.id}`} passHref>
+            <Link href={`/lecture/${p.id}?view_mode_mine=${view_mode_mine}`} passHref>
               <a>
                 {/* 講義カード */}
                 <LectureCard
-                  variant="detail"
+                  variant="listing"
                   title={p.title}
                   teacherName="まつもと"
                   capacity={4}

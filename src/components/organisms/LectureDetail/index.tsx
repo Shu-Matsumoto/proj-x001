@@ -6,11 +6,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from 'components/layout/Box'
 import Flex from "components/layout/Flex";
+import Button from 'components/atoms/Button'
 import { ApiContext, AppErrorCode, LectureWithOptionData } from 'types/userTypes'
 import { GetLectureWithOptionData } from '../../../api/lectures'
 
 interface LectureDetailProps {
 	lecture_id: number
+	view_mode_mine: boolean
 }
 
 // 情報表示用タグ
@@ -58,6 +60,7 @@ export const LectureDetail = (props: LectureDetailProps) => {
 	// #region Fields
 	const [lecture, setLecture] = useState(new LectureWithOptionData());
 	// #endregion Fields
+	
 	// #region Functions
 	// 初期化処理
   useEffect(() => {
@@ -125,18 +128,30 @@ export const LectureDetail = (props: LectureDetailProps) => {
 								}
 							</FormControl>
 							<FormControl variant="standard" margin={"normal"}>
-								<InputLabel shrink htmlFor="bootstrap-input">
+								<Box margin={1}>
+									<InputLabel shrink htmlFor="bootstrap-input">
 										募集生徒
-								</InputLabel>
+									</InputLabel>
+								</Box>
 								{
 									lecture.students.map((student) => {
 										return (
-											<>
-												<BootstrapInput
-													id="bootstrap-input"
-													value={student.user_id}
-												/>
-											</>
+											<Box margin={1}>
+												<Flex>
+													<BootstrapInput
+														id="bootstrap-input"
+														value={student.user_id}
+													/>
+													{!props.view_mode_mine &&
+														<Button
+															width={{ base: '100px', md: '100px' }}
+															onClick={() => { let i = 1; /* todo:受講申請ページへ飛ばす */ }}
+														>
+															受講申請
+														</Button>
+													}
+												</Flex>
+											</Box>	
 										)
 									})
 								}
@@ -160,6 +175,18 @@ export const LectureDetail = (props: LectureDetailProps) => {
 													id="bootstrap-input"
 													value={schedule.end_time}
 												/>
+												{props.view_mode_mine &&
+													<Button
+														variant={'secondary'}
+														width={{ base: '100px', md: '100px' }}
+														onClick={() => {
+															/* 新規タブを開きZOOMリンクへアクセス */
+															window.open('https://us05web.zoom.us/j/4344904366?pwd=R2ltOVJOYldMREJXbndzcnZLa0xzZz09', '_blank');
+														}}
+													>
+														講義参加
+													</Button>
+												}
 											</Flex>
 										)
 									})

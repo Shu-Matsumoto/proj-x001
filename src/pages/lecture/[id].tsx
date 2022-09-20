@@ -18,6 +18,17 @@ const IndexLecturePage: NextPage = () => {
   const router = useRouter();
   // 講義ID
   const lecture_id = Number(router.query.id);
+
+  // 表示モード
+  const view_mode_mine: boolean = (() => {
+    if (Array.isArray(router.query.view_mode_mine)) {
+      return false;
+    } else if (router.query.view_mode_mine) {
+      return router.query.view_mode_mine === 'true' ? true : false; 
+    } else {
+      return false
+    }
+  })()
   // #endregion Fields
 
   // #region Function
@@ -28,8 +39,8 @@ const IndexLecturePage: NextPage = () => {
   const breadcrumbList: { link: string, title: string }[] = new Array();
   breadcrumbList[0] = { link: "/top", title: "トップ" };
   breadcrumbList[1] = { link: "/attendance/me", title: "受講一覧" };
-  breadcrumbList[2] = { link: "/search", title: "講義検索" };
-  breadcrumbList[3] = { link: `/lecture/${lecture_id}`, title: "講義詳細" };
+  breadcrumbList[2] = { link: "/search/lecture", title: "講義検索" };
+  breadcrumbList[3] = { link: `/lecture/${lecture_id}?view_mode_mine=${view_mode_mine}`, title: "講義詳細" };
   return (
     <Layout>
       <MainPartLayout
@@ -49,7 +60,10 @@ const IndexLecturePage: NextPage = () => {
                 alignItems={"center"}
               >
                 { /*講義詳細表示*/}
-                <LectureDetail lecture_id={lecture_id}/>
+                <LectureDetail
+                  lecture_id={lecture_id}
+                  view_mode_mine={view_mode_mine}
+                />
               </Flex>
             </Box>
           </Flex>

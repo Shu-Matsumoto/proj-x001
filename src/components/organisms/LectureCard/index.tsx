@@ -52,7 +52,7 @@ const LectureCard = ({
   const { size, imgSize } = (() => {
     switch (variant) {
       case 'detail':
-        return { size: { base: '240px', md: '360px' }, imgSize: 360 }
+        return { size: { base: '320px', md: '540px' }, imgSize: 540 }
       case 'listing':
         return { size: { base: '160px', md: '240px' }, imgSize: 240 }
       default:

@@ -1,3 +1,6 @@
+/**
+ * 受講一覧ページ
+ */
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
@@ -10,22 +13,18 @@ import Text from 'components/atoms/Text'
 import FilterGroup from 'components/molecules/FilterGroup'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
 import LectureCardListContainer from 'containers/LectureCardListContainer'
-import { ApiContext, AppErrorCode, Lecture} from 'types/userTypes'
-import { SearchLectures } from '../../api/lectures/'
+import { ApiContext, AppErrorCode, Lecture } from 'types/userTypes'
+import { SearchLectures } from '../../api/lectures'
 
 // 検索条件
-type Condition = 'html' | 'css' | 'javascript' | 'php';
-  
-/**
- * 講義検索ページ
- * @returns 
- */
-const LectureSearchPage: NextPage = () => {
+type Condition = 'ongoing' | 'done';
 
+const AttendanceManagementPage: NextPage = () => {
   // #region Fields
   const apiContext: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
   }
+
   // 検索結果
   const [lectures, setLectures] = useState<Lecture[]>(new Array());
   // 検索結果ロード中
@@ -88,13 +87,12 @@ const LectureSearchPage: NextPage = () => {
 			})
   }, [])
   // #endregion Functions
-
+  
   // #region View
   // ページリンクリスト
   const breadcrumbList: { link: string, title: string }[] = new Array();
   breadcrumbList[0] = { link: "/top", title: "トップ" };
   breadcrumbList[1] = { link: "/attendance/me", title: "受講一覧" };
-  breadcrumbList[2] = { link: "/search/lecture", title: "講義検索" };
   return (
     <Layout>
       <MainPartLayout
@@ -105,7 +103,7 @@ const LectureSearchPage: NextPage = () => {
           <Flex
             flexDirection={"column"}
           >
-            講義検索ページです。
+            受講講義一覧ページです。
             <Separator />
             <Box width="100%" padding={2}>
               <Flex
@@ -118,12 +116,10 @@ const LectureSearchPage: NextPage = () => {
                     {/* 講義検索のフィルタ */}
                     <Box minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
                       <FilterGroup
-                      title="検索条件"
+                      title="絞込条件"
                       items={[
-                        { label: 'HTML', name: 'html' },
-                        { label: 'CSS', name: 'css' },
-                        { label: 'JavaScript', name: 'javascript' },
-                        { label: 'PHP', name: 'php' },
+                        { label: '受講中', name: 'ongoing' },
+                        { label: '受講済', name: 'done' },
                       ]}
                       value={searchConditions}
                       onChange={handleSearchConditionChange}
@@ -134,7 +130,7 @@ const LectureSearchPage: NextPage = () => {
                 {/*検索結果*/}
                 <Box>
                   <Flex flexDirection={"column"}>
-                    <Text variant="mediumLarge">検索結果</Text>
+                    <Text variant="mediumLarge">一覧</Text>
                     {/*
                       講義カードリストコンテナ
                       検索クエリから講義カードリストを表示
@@ -142,7 +138,7 @@ const LectureSearchPage: NextPage = () => {
                     <LectureCardListContainer
                       isLoading={isLoading}
                       lectures={lectures}
-                      view_mode_mine={false}
+                      view_mode_mine={true}
                     />
                   </Flex>
                 </Box>
@@ -156,4 +152,4 @@ const LectureSearchPage: NextPage = () => {
   // #endregion View
 }
 
-export default LectureSearchPage
+export default AttendanceManagementPage

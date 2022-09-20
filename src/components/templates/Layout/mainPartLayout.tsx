@@ -20,10 +20,10 @@ const MainPartLayout = ({
 		<>
 			<Box width="100%">
 				<Flex>
-					<Box width='20%' >
+					<Box width='13%' >
 						{ subMenu }
 					</Box>
-					<Box width='80%'>
+					<Box width='87%'>
 						<Flex
 							flexDirection={"column"}
 						>
