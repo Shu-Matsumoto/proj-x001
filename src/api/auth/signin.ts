@@ -1,5 +1,8 @@
 // typesは後ほど定義
-import { ApiContext, User } from '../../types/userTypes'
+import * as UserTypes from '../../types/userTypes'
+import { ErrorCodeTranslator } from '../errorCodeTranslator';
+import { ApiRequestFetcher, ChangeToInvalidApiAuth, ApiRequestType } from 'utils'
+
 
 export type SigninParams = {
   /**
@@ -15,38 +18,62 @@ export type SigninParams = {
 }
 
 /**
- * 認証API（サインイン）
- * @param context APIコンテキスト
- * @param params パラメータ
- * @returns ログインユーザー
+ * 外部API認証結果
  */
-const signin = async (
-  context: ApiContext,
-  params: SigninParams,
-): Promise<User> => {
-  return new Promise((resolve) => {
-    const user: User = {
-      id: 1,
-      username: "taketo",
-      password: "password",
-      displayName: "Taketo Yoshida",
-      email: "taketo@example.com",
-      profileImageUrl: "/users/1.png",
-      description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-    };
-    resolve(user);
-  });
-  // return await fetcher(
-  //   `${context.apiRootUrl.replace(/\/$/g, '')}/auth/signin`,
-  //   {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(params),
-  //   },
-  // )
+type AuthResult = {
+  token_type: string
+  expires_in: string
+  access_token: string
+  refresh_token: string
 }
 
-export default signin
+// /**
+//  * 認証API（サインイン）
+//  * @param context APIコンテキスト
+//  * @param params パラメータ
+//  * @returns ログインユーザー
+//  */
+// export const signin = async (
+//   context: UserTypes.ApiContext,
+//   params: SigninParams,
+// ): Promise<UserTypes.User> => {
+
+//   let address = context.apiRootUrl.replace('api', '');
+//   address = `${address.replace(/\/$/g, '')}/oauth/token`;
+//   // }
+//   const postObject = {
+//     grant_type: "client_credentials",
+//     client_id: process.env.NEXT_PUBLIC_API_CLIENT_USER_ID,
+//     client_secret: process.env.NEXT_PUBLIC_API_CLIENT_SECRET,
+//     username: params.username,
+//     password: params.password,
+//     scope: "*"
+//   }
+//   console.log(address);
+//   console.log(postObject);
+
+//   try {
+//     const apiResult: { data: any} =
+//       await ApiRequestFetcher(address, ApiRequestType.POST, postObject, true);
+//     console.log(apiResult);
+//   } catch (e) {
+//     console.log(e);
+//     ChangeToInvalidApiAuth();
+//     return false;
+//   }
+//   return true;
+// }
+
+export const signin = async (
+  context: UserTypes.ApiContext,
+  params: SigninParams,
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.User } > => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/signin`;
+  const apiResult: { code: number, message: string, data: UserTypes.User } =
+    await ApiRequestFetcher(address, ApiRequestType.POST, params);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}

@@ -1,70 +1,104 @@
-import React, { useContext } from 'react'
-import useSWR from 'swr'
-import signin from 'api/auth/signin'
-import signout from 'api/auth/signout'
-import type { ApiContext, User } from '../../types/userTypes'
+import React, { useContext, useState, useEffect } from 'react'
+import { AuthUser, GetDefaultAuthUser } from '../../types/userTypes'
 
+// 認証情報データ型
 type AuthContextType = {
-  authUser?: User
-  isLoading: boolean
-  signin: (username: string, password: string) => Promise<void>
-  signout: () => Promise<void>
-  mutate: (
-    data?: User | Promise<User>,
-    shouldRevalidate?: boolean,
-  ) => Promise<User | undefined>
+	// ログイン状態
+	isloggdIn: boolean
+	// ログインユーザー
+	authUser: AuthUser
+	// ログインユーザーセット関数
+	setAuthUser: React.Dispatch<React.SetStateAction<AuthUser>>
 }
 
-type AuthContextProviderProps = {
-  context: ApiContext
-  authUser?: User
-}
-
+// 認証情報コンテクスト
 const AuthContext = React.createContext<AuthContextType>({
-  authUser: undefined,
-  isLoading: false,
-  signin: async () => Promise.resolve(),
-  signout: async () => Promise.resolve(),
-  mutate: async () => Promise.resolve(undefined),
+	isloggdIn: false,
+  authUser: GetDefaultAuthUser(),
+  setAuthUser: () => { }
 })
 
+// 認証情報コンテクストのI/F
 export const useAuthContext = (): AuthContextType =>
   useContext<AuthContextType>(AuthContext)
+
+// ローカルストレージ上のキー名
+const LocalStarageKeyName: string = "formartion-app-auth-info";
+
+/**
+ * 認証情報をローカルストレージから取得
+ * @returns
+ */
+function getAuthInfoToLocalStorage(): AuthUser {
+	// localStorageから指定キーのオブジェクト取得
+	const defaultAuthInfo = localStorage.getItem(LocalStarageKeyName);
+	if (defaultAuthInfo) {
+		return JSON.parse(defaultAuthInfo) as AuthUser;
+	} else {
+		// Localstrageに存在しない場合は未認証ユーザーをリターン
+		let unAuthUser = GetDefaultAuthUser();
+		unAuthUser.id = -1;
+		return unAuthUser;
+	}
+}
+/**
+ * 認証情報をローカルストレージに追加
+ * @param authInfo
+ */
+function setAuthInfoToLocalStorage(authInfo: AuthUser): void {
+	const authInfoStringfy = JSON.stringify(authInfo);
+	localStorage.setItem(LocalStarageKeyName, authInfoStringfy);
+}
+
+/**
+ * 認証情報をローカルストレージから削除
+ */
+function clearAuthInfoInLocalStorage(): void {
+	localStorage.removeItem(LocalStarageKeyName);
+}
+
+interface AuthContextProviderProps {
+  children?: React.ReactNode
+}
 
 /**
  * 認証コンテキストプロバイダー
  * @param params パラメータ
  */
 export const AuthContextProvider = ({
-  context,
-  authUser,
   children,
-}: React.PropsWithChildren<AuthContextProviderProps>) => {
-  const { data, error, mutate } = useSWR<User>(
-    `${context.apiRootUrl.replace(/\/$/g, '')}/users/me`,
-  )
-  const isLoading = !data && !error
+}: AuthContextProviderProps) => {
 
-  // サインイン
-  const signinInternal = async (username: string, password: string) => {
-    await signin(context, { username, password })
-    await mutate()
-  }
+	// #region Fields
+	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<AuthUser>(GetDefaultAuthUser());
+	// #endregion Fields
 
-  // サインアウト
-  const signoutInternal = async () => {
-    await signout(context)
-    await mutate()
-  }
+	// 初回のみの実行
+	useEffect(() => {
+		setUserInfo(getAuthInfoToLocalStorage());
+	}, []);
+
+	// #region Functions
+	useEffect(() => {
+    // userInfoに正しく値がセットされているかどうかをチェック
+    if (userInfo.id > 0) {
+      setAuthInfoToLocalStorage(userInfo);
+      setLoggedIn(true);
+		} else {
+			// これは実施しない。ブラウザをリロードしてしまうとこの分岐にはいってキー削除されてしまうため。
+			//clearAuthInfoInLocalStorage();
+      setLoggedIn(false);
+    }
+  }, [userInfo]);
+	// #endregion Functions
 
   return (
     <AuthContext.Provider
       value={{
-        authUser: data ?? authUser,
-        isLoading,
-        signin: signinInternal,
-        signout: signoutInternal,
-        mutate,
+        isloggdIn: loggedIn,
+				authUser: userInfo,
+        setAuthUser: setUserInfo
       }}
     >
       {children}

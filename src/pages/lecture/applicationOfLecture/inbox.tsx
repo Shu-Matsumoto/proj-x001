@@ -1,5 +1,5 @@
 /**
- * 受講一覧ページ
+ * 受講申込一覧ページ
  */
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -11,27 +11,51 @@ import Separator from 'components/atoms/Separator'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import Text from 'components/atoms/Text'
 import FilterGroup from 'components/molecules/FilterGroup'
-import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
-import LectureCardListContainer from 'containers/LectureCardListContainer'
-import { ApiContext, AppErrorCode, Lecture } from 'types/userTypes'
-import { SearchLectures } from '../../api/lectures'
+import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
+import ApplicationOfLectureCardListContainer from 'containers/ApplicationOfLectureCardListContainer'
+import {
+  ApiContext,
+  AppErrorCode,
+  ApplicationOfLectureWithOptionData,
+  ApplicationStatusString,
+  ConvertToNumberApplicationStatus,
+} from 'types/userTypes'
+import { GetMyApplyBoxList } from '../../../api/applicationOfLecture'
+import { useAuthContext } from 'contexts/AuthContext'
 
-// 検索条件
-type Condition = 'ongoing' | 'done';
+// 絞り込み条件
+type Condition = ApplicationStatusString.Waiting
+  | ApplicationStatusString.Accept
+  | ApplicationStatusString.Reject;
 
-const AttendanceManagementPage: NextPage = () => {
+/**
+ * 受講申請の受信ボックス
+ */
+const ApplicationOfLectureInboxPage: NextPage = () => {  
+
   // #region Fields
   const apiContext: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
   }
-
+  // 認証済ユーザー
+  const { authUser } = useAuthContext();
   // 絞込結果
-  const [lectures, setLectures] = useState<Lecture[]>(new Array());
+  const [applicationOfLectures, setApplicationOfLectures] = useState<ApplicationOfLectureWithOptionData[]>(new Array());
   // 絞込結果ロード中
   const [isLoading, setIsLoading] = useState(false);
   // ページルート
   const router = useRouter();	
   // #endregion Fields
+
+  // APIへ送信するデータへ変換
+  const covertToApiPostData = (conditions: string[]) => {
+    let array = conditions.map((item) => {
+      return (
+        { status: ConvertToNumberApplicationStatus(item)}
+      )
+    });
+    return { data: array };
+  }
 
   // #region Functions
   // 絞込条件をクエリから取得(条件選択コンポーネントにセットするために必要)
@@ -60,12 +84,12 @@ const AttendanceManagementPage: NextPage = () => {
     console.log(selected);
     // 検索
     setIsLoading(true);
-    SearchLectures(apiContext, selected)
+    GetMyApplyBoxList(apiContext, authUser.id, covertToApiPostData(selected))
 			.then(apiResult => {
         //console.log(apiResult);
         if (apiResult.result.Code == AppErrorCode.Success) {
-          setLectures(apiResult.data);
-          console.log(lectures);
+          setApplicationOfLectures(apiResult.data);
+          console.log(applicationOfLectures);
         }
         setIsLoading(false);
 			})
@@ -73,53 +97,54 @@ const AttendanceManagementPage: NextPage = () => {
 
   // 初期化処理
   useEffect(() => {
-    // 講義一覧取得
+    // 受講申請一覧取得
     setIsLoading(true);
     let selected: string[] = new Array();
-    SearchLectures(apiContext, selected)
+    GetMyApplyBoxList(apiContext, authUser.id, covertToApiPostData(selected))
 			.then(apiResult => {
         //console.log(apiResult);
         if (apiResult.result.Code == AppErrorCode.Success) {
-          setLectures(apiResult.data);
-          console.log(lectures);
+          setApplicationOfLectures(apiResult.data);
+          console.log(applicationOfLectures);
         }
         setIsLoading(false);
 			})
   }, [])
   // #endregion Functions
-  
+
   // #region View
   // ページリンクリスト
   const breadcrumbList: { link: string, title: string }[] = new Array();
   breadcrumbList[0] = { link: "/top", title: "トップ" };
-  breadcrumbList[1] = { link: "/attendance/me", title: "受講一覧" };
+  breadcrumbList[1] = { link: "lecture/applicationOfLecture/inbox", title: "受講申請一覧" };
   return (
     <Layout>
       <MainPartLayout
-        subMenu={<AttendancePageSubMenu />}
+        subMenu={<LecturePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
         <Box>
           <Flex
             flexDirection={"column"}
           >
-            受講講義一覧ページです。
+            受講申請一覧ページです。
             <Separator />
             <Box width="100%" padding={2}>
               <Flex
                 justifyContent={"flex-start"}
                 flexDirection={"row"}
               >
-                {/*検索条件*/}
+                {/*絞込条件*/}
                 <Box>
                   <Flex>
-                    {/* 講義検索のフィルタ */}
+                    {/* 絞込検索のフィルタ */}
                     <Box minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
                       <FilterGroup
                       title="絞込条件"
                       items={[
-                        { label: '受講中', name: 'ongoing' },
-                        { label: '受講済', name: 'done' },
+                        { label: '申請中', name: ApplicationStatusString.Waiting },
+                        { label: '処理済(許可)', name: ApplicationStatusString.Accept },
+                        { label: '処理済(否認)', name: ApplicationStatusString.Reject },
                       ]}
                       value={searchConditions}
                       onChange={handleSearchConditionChange}
@@ -127,17 +152,17 @@ const AttendanceManagementPage: NextPage = () => {
                     </Box>
                   </Flex>
                 </Box>
-                {/*検索結果*/}
+                {/*絞込結果*/}
                 <Box>
                   <Flex flexDirection={"column"}>
                     <Text variant="mediumLarge">一覧</Text>
                     {/*
-                      講義カードリストコンテナ
-                      検索クエリから講義カードリストを表示
+                      受講申請リストコンテナ
+                      絞込クエリから受講申請リストを表示
                     */}
-                    <LectureCardListContainer
+                    <ApplicationOfLectureCardListContainer
                       isLoading={isLoading}
-                      lectures={lectures}
+                      applicationOfLectures={applicationOfLectures}
                       view_mode_mine={true}
                     />
                   </Flex>
@@ -152,4 +177,4 @@ const AttendanceManagementPage: NextPage = () => {
   // #endregion View
 }
 
-export default AttendanceManagementPage
+export default ApplicationOfLectureInboxPage

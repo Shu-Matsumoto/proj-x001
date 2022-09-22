@@ -30,6 +30,22 @@ export const AddStudent = async (
     data: apiResult.data,
   };
 }
+
+// 生徒取得(1件)
+export const GetStudent = async (
+  context: UserTypes.ApiContext,
+  student_id: number,
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.Student } > => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/students/${student_id}`;
+  const apiResult: { code: number, message: string, data: UserTypes.Student } =
+    await ApiRequestFetcher(address, ApiRequestType.GET, null);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}
+
 // 生徒新規追加(複数件バッチ)
 export const AddStudents = async (
   context: UserTypes.ApiContext,

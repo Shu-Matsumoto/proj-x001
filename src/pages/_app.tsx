@@ -3,6 +3,9 @@ import Head from 'next/head'
 import * as React from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { theme } from 'themes'
+import { AuthContextProvider } from 'contexts/AuthContext'
+import GlobalSpinnerContextProvider from 'contexts/GlobalSpinnerContext'
+import type { ApiContext } from '../types/userTypes'
 
 // グローバルのスタイル
 const GlobalStyle = createGlobalStyle`
@@ -31,6 +34,11 @@ ol, ul {
 }
 `
 
+// APIベースURL
+const apiContext: ApiContext = {
+  apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+}
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
@@ -46,7 +54,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+          <GlobalSpinnerContextProvider>
+            <AuthContextProvider>
+              <Component {...pageProps} />
+            </AuthContextProvider>
+          </GlobalSpinnerContextProvider>
       </ThemeProvider>
     </>
   )

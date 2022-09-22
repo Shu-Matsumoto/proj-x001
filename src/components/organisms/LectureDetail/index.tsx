@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from "react";
 import  { useState, useEffect } from "react"
 import { alpha, styled } from '@mui/material/styles';
@@ -68,7 +69,7 @@ export const LectureDetail = (props: LectureDetailProps) => {
     const apiContext: ApiContext = {
       apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
 		}
-		GetLectureWithOptionData(apiContext, 50)
+		GetLectureWithOptionData(apiContext, props.lecture_id)
 			.then(apiResult => {
 				//console.log(apiResult);
 				if (apiResult.result.Code == AppErrorCode.Success) {
@@ -143,12 +144,21 @@ export const LectureDetail = (props: LectureDetailProps) => {
 														value={student.user_id}
 													/>
 													{!props.view_mode_mine &&
-														<Button
-															width={{ base: '100px', md: '100px' }}
-															onClick={() => { let i = 1; /* todo:受講申請ページへ飛ばす */ }}
-														>
-															受講申請
-														</Button>
+														<Link href={
+															{
+																pathname: `/lecture/applicationOfLecture/${student.user_id}`,
+																query: {
+																	lecture_id: student.lecture_id,
+																	student_id: student.id
+																}
+															}
+														} passHref>
+															<Button
+																width={{ base: '100px', md: '100px' }}
+															>
+																受講申請
+															</Button>
+														</Link>
 													}
 												</Flex>
 											</Box>	

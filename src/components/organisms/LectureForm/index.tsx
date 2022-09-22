@@ -27,7 +27,7 @@ interface LecturePostFormProps {
 }
 
 /**
- * サインインフォーム
+ * 講義新規投稿フォーム
  */
 export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
   // React Hook Formの使用

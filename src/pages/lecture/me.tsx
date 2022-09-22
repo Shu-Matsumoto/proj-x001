@@ -12,11 +12,13 @@ import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
 import {LecturePostForm, LecturePostFormData} from 'components/organisms/LectureForm'
 import { ApiContext, AppResult, AppErrorCode } from 'types/userTypes'
 import { GetLectures, AddLectureWithOptionData } from '../../api/lectures/'
+import { useAuthContext } from 'contexts/AuthContext'
 
 const MyLecturePage: NextPage = () => {
-
   // #region Fields
-  const [myLectures, setMyLectures] = useState(1);
+  // 認証済ユーザー
+  const { authUser } = useAuthContext();
+  const [myLectures, setMyLectures] = useState(authUser.id);
   // #endregion Fields
 
   // #region Function
@@ -26,7 +28,7 @@ const MyLecturePage: NextPage = () => {
     const apiContext: ApiContext = {
       apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
     }
-    GetLectures(apiContext, 2)
+    GetLectures(apiContext, authUser.id)
 			.then(result => {
 				console.log(result);
 			})

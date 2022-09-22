@@ -6,7 +6,7 @@ const LecturePageSubMenu = () => {
 
   const menuList: LinkInformationSet[] = [
     { dispaleyName: "講義一覧", pageLink: "/lecture/me" },
-    { dispaleyName: "受講申請一覧", pageLink: "/lecture/receivedRequest" },
+    { dispaleyName: "受講申請一覧", pageLink: "/lecture/applicationOfLecture/inbox" },
   ];
 
   return (
