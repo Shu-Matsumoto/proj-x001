@@ -571,6 +571,54 @@ export function GetObj_ApplicationOfLectureWithOptionData() {
   }
   return obj;
 }
+
+// ユーザー通知
+export enum UserNoticeType {
+  // 不定
+  Unknown = 0,
+  // 通知
+  Notice = 1,
+  // お知らせ
+  News = 2,
+}
+
+// 既読ステータス
+export enum AlreadyReadStatus {
+  // 不定
+  Unknown = 0,
+  // 既読
+  True = 1,
+  // 未読
+  False = 2,
+}
+
+// ユーザー通知
+export type UserNotice = {
+  // ID
+  id: number;
+  // ユーザーID
+  user_id: number;
+  // 通知タイプ
+  type: UserNoticeType;
+  // 既読
+  already_read: AlreadyReadStatus;
+  // タイトル
+  title: string;
+  // サブタイトル
+  sub_title: string;
+}
+// UserNotice型初期化オブジェクト
+export function GetObj_UserNotice() {
+  let obj: UserNotice = {
+    id: 0,
+    user_id: 0,
+    type: UserNoticeType.Unknown,
+    already_read: AlreadyReadStatus.Unknown,
+    title: "",
+    sub_title: "",
+  }
+  return obj;
+}
 // #endregion App types
 
 // #region API

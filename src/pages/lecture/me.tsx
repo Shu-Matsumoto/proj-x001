@@ -28,7 +28,7 @@ const MyLecturePage: NextPage = () => {
     const apiContext: ApiContext = {
       apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
     }
-    GetLectures(apiContext, authUser.id)
+    GetLectures(apiContext, authUser.id, ["all"])
 			.then(result => {
 				console.log(result);
 			})

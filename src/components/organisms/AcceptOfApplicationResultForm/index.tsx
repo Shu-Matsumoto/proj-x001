@@ -13,7 +13,7 @@ import * as UserTypes from '../../../types/userTypes'
 // 本フォームの出力データ型
 export type AcceptOfApplicationResultPostFormData = {
   // 受講申請内容
-  applicationOfLecture: UserTypes.ApplicationOfLectureWithOptionData;
+  applicationOfLecture: UserTypes.ApplicationOfLecture;
 }
 
 interface AcceptOfApplicationResultPostFormProps {
@@ -74,6 +74,12 @@ export const AcceptOfApplicationResultPostForm = (props: AcceptOfApplicationResu
     handleSubmit,
 		formState: { errors },
   } = useForm<AcceptOfApplicationResultPostFormData>({
+    defaultValues: {
+      applicationOfLecture: {
+        status: 1,
+        fb_comment: ""
+      },
+    },
     mode: "onBlur"
   });
 
@@ -141,9 +147,14 @@ export const AcceptOfApplicationResultPostForm = (props: AcceptOfApplicationResu
               { /*フィードバックコメント*/}
               <Text>フィードバックコメント</Text>
               <textarea
-                {...register("applicationOfLecture.fb_comment", {})}
+                {...register("applicationOfLecture.fb_comment", { required: true })}
                 rows={7}
               />
+              {errors.applicationOfLecture?.fb_comment && (
+                <Text color="danger" variant="small" paddingLeft={1}>
+                  コメントを入力してください。
+                </Text>
+              )}
               {/* 承認結果選択ボタン */}
               <Box margin={2}>
                 <Flex flexDirection={"column"}>
@@ -167,6 +178,11 @@ export const AcceptOfApplicationResultPostForm = (props: AcceptOfApplicationResu
                   </select>
                 </Flex>
               </Box>
+              {errors.applicationOfLecture?.status && (
+                <Text color="danger" variant="small" paddingLeft={1}>
+                  申請に対する処置を入力してください。
+                </Text>
+              )}
               {/* 承認結果送信ボタン */}
               <Box margin={2}>
                 <Flex justifyContent={"center"}>

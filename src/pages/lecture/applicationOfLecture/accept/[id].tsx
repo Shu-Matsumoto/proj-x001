@@ -7,14 +7,21 @@ import Flex from 'components/layout/Flex'
 import Separator from 'components/atoms/Separator'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
-import { AcceptOfApplicationResultPostForm, AcceptOfApplicationResultPostFormData } from 'components/organisms/AcceptOfApplicationResultForm'
+import {
+  AcceptOfApplicationResultPostForm,
+  AcceptOfApplicationResultPostFormData
+} from 'components/organisms/AcceptOfApplicationResultForm'
 import {
   ApiContext,
   AppErrorCode,
   ApplicationOfLectureWithOptionData,
   GetObj_ApplicationOfLectureWithOptionData
 } from 'types/userTypes'
-import { GetApplicationOfLecture } from '../../../../api/applicationOfLecture'
+import { UpdateStudent } from '../../../../api/lectures'
+import {
+  GetApplicationOfLecture,
+  UpdateApplicationOfLecture
+} from '../../../../api/applicationOfLecture'
 
 /**
  * 受講申請承認ページ
@@ -54,9 +61,22 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
       apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
     }
     // 受講申請処理結果送信
-    AddApplicationOfLecture(apiContext, formInputData.applicationOfLecture)
+    UpdateApplicationOfLecture(apiContext, formInputData.applicationOfLecture)
 			.then(apiResult => {
-				console.log(apiResult);
+        console.log(apiResult);
+        if (apiResult.result.Code == AppErrorCode.Success) {
+          // 申請処理が成功した場合に対象生徒情報のIDに申請者IDをセットする。
+          let updateStudent = applicationOfLecture.student;
+          updateStudent.user_id = applicationOfLecture.user_id;
+          UpdateStudent(apiContext, updateStudent)
+            .then(apiResult2 => {
+              if (apiResult2.result.Code == AppErrorCode.Success) {
+                setTimeout(() => {
+                  router.push("/lecture/applicationOfLecture/inbox");
+                }, 1000);
+              }
+          })
+        }
 			})
   }
   // #endregion Function

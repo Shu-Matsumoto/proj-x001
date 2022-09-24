@@ -46,6 +46,21 @@ export const GetStudent = async (
   };
 }
 
+// 生徒更新(1件)
+export const UpdateStudent = async (
+  context: UserTypes.ApiContext,
+  postData: UserTypes.Student,
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.Student } > => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/students/${postData.id}`;
+  const apiResult: { code: number, message: string, data: UserTypes.Student } =
+    await ApiRequestFetcher(address, ApiRequestType.PUT, postData);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}
+
 // 生徒新規追加(複数件バッチ)
 export const AddStudents = async (
   context: UserTypes.ApiContext,

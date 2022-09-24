@@ -17,7 +17,7 @@ export const AddApplicationOfLecture = async (
   };
 }
 
-// 受講申請一覧取得
+// 受講申請一覧取得(申請IDを指定して取得)
 export const GetApplicationOfLecture = async (
   context: UserTypes.ApiContext,
   application_of_lecture_id: number,
@@ -25,6 +25,21 @@ export const GetApplicationOfLecture = async (
   const address = `${context.apiRootUrl.replace(/\/$/g, '')}/application_of_lectures/${application_of_lecture_id}`;
   const apiResult: { code: number, message: string, data: UserTypes.ApplicationOfLectureWithOptionData } =
     await ApiRequestFetcher(address, ApiRequestType.GET, null);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}
+
+// 受講申請更新(申請IDを指定して更新)
+export const UpdateApplicationOfLecture = async (
+  context: UserTypes.ApiContext,
+  postData: UserTypes.ApplicationOfLecture,
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.ApplicationOfLecture } > => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/application_of_lectures/${postData.id}`;
+  const apiResult: { code: number, message: string, data: UserTypes.ApplicationOfLecture } =
+    await ApiRequestFetcher(address, ApiRequestType.PUT, postData);  
   console.log(apiResult);
   return {
     result: ErrorCodeTranslator.ToAppResult(apiResult.code),
