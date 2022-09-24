@@ -4,6 +4,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import { useAuthContext } from '../../contexts/AuthContext'
 import Layout from 'components/templates/Layout'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
@@ -13,8 +14,8 @@ import Text from 'components/atoms/Text'
 import FilterGroup from 'components/molecules/FilterGroup'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
 import LectureCardListContainer from 'containers/LectureCardListContainer'
-import { ApiContext, AppErrorCode, Lecture } from 'types/userTypes'
-import { SearchLectures } from '../../api/lectures'
+import { ApiContext, AppErrorCode, LectureWithUser } from 'types/userTypes'
+import { GetMyStudies } from '../../api/lectures'
 
 // 検索条件
 type Condition = 'ongoing' | 'done';
@@ -24,13 +25,14 @@ const AttendanceManagementPage: NextPage = () => {
   const apiContext: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
   }
-
-  // 絞込結果
-  const [lectures, setLectures] = useState<Lecture[]>(new Array());
-  // 絞込結果ロード中
-  const [isLoading, setIsLoading] = useState(false);
   // ページルート
   const router = useRouter();	
+  // 認証済ユーザー
+  const { authUser } = useAuthContext();
+  // 絞込結果
+  const [lectures, setLectures] = useState<LectureWithUser[]>(new Array());
+  // 絞込結果ロード中
+  const [isLoading, setIsLoading] = useState(false);
   // #endregion Fields
 
   // #region Functions
@@ -60,7 +62,7 @@ const AttendanceManagementPage: NextPage = () => {
     console.log(selected);
     // 検索
     setIsLoading(true);
-    SearchLectures(apiContext, selected)
+    GetMyStudies(apiContext, authUser.id, selected)
 			.then(apiResult => {
         //console.log(apiResult);
         if (apiResult.result.Code == AppErrorCode.Success) {
@@ -76,7 +78,7 @@ const AttendanceManagementPage: NextPage = () => {
     // 講義一覧取得
     setIsLoading(true);
     let selected: string[] = new Array();
-    SearchLectures(apiContext, selected)
+    GetMyStudies(apiContext, authUser.id, selected)
 			.then(apiResult => {
         //console.log(apiResult);
         if (apiResult.result.Code == AppErrorCode.Success) {

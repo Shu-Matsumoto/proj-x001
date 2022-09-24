@@ -9,8 +9,6 @@ import Flex from 'components/layout/Flex'
 import Separator from 'components/atoms/Separator'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
-import { ApiContext, AppErrorCode, LectureWithOptionData } from 'types/userTypes'
-import { GetLectureWithOptionData } from '../../api/lectures/'
 import { LectureDetail } from 'components/organisms/LectureDetail'
 
 const IndexLecturePage: NextPage = () => {
@@ -18,7 +16,6 @@ const IndexLecturePage: NextPage = () => {
   const router = useRouter();
   // 講義ID
   const lecture_id = Number(router.query.id);
-
   // 表示モード
   const view_mode_mine: boolean = (() => {
     if (Array.isArray(router.query.view_mode_mine)) {

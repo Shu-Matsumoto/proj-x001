@@ -18,6 +18,21 @@ export const AddApplicationOfLecture = async (
 }
 
 // 受講申請一覧取得
+export const GetApplicationOfLecture = async (
+  context: UserTypes.ApiContext,
+  application_of_lecture_id: number,
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.ApplicationOfLectureWithOptionData } > => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/application_of_lectures/${application_of_lecture_id}`;
+  const apiResult: { code: number, message: string, data: UserTypes.ApplicationOfLectureWithOptionData } =
+    await ApiRequestFetcher(address, ApiRequestType.GET, null);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}
+
+// 受講申請一覧取得
 export const GetMyApplicationOfLectures = async (
   context: UserTypes.ApiContext,
   user_id: number,

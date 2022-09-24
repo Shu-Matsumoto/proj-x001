@@ -238,10 +238,28 @@ export const GetLectureWithOptionData = async (
 export const GetLectures = async (
   context: UserTypes.ApiContext,
   user_id: number,
-): Promise<{ result: UserTypes.AppResult, data: UserTypes.Lecture[] } > => {
+  conditions: string[],
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.LectureWithUser[] } > => {
   
 	const address = `${context.apiRootUrl.replace(/\/$/g, '')}/${user_id}/lectures`;
-  const apiResult: { code: number, message: string, data: UserTypes.Lecture[] } =
+  const apiResult: { code: number, message: string, data: UserTypes.LectureWithUser[] } =
+    await ApiRequestFetcher(address, ApiRequestType.GET, null);  
+  console.log(apiResult);
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  };
+}
+
+// 受講講義一覧取得
+export const GetMyStudies = async (
+  context: UserTypes.ApiContext,
+  user_id: number,
+  conditions: string[],
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.LectureWithUser[] } > => {
+  
+	const address = `${context.apiRootUrl.replace(/\/$/g, '')}/${user_id}/studies`;
+  const apiResult: { code: number, message: string, data: UserTypes.LectureWithUser[] } =
     await ApiRequestFetcher(address, ApiRequestType.GET, null);  
   console.log(apiResult);
   return {
@@ -254,10 +272,9 @@ export const GetLectures = async (
 export const SearchLectures = async (
   context: UserTypes.ApiContext,
   conditions: string[],
-): Promise<{ result: UserTypes.AppResult, data: UserTypes.Lecture[] } > => {
-  const user_id = 1;
-	const address = `${context.apiRootUrl.replace(/\/$/g, '')}/${user_id}/lectures`;
-  const apiResult: { code: number, message: string, data: UserTypes.Lecture[] } =
+): Promise<{ result: UserTypes.AppResult, data: UserTypes.LectureWithUser[] } > => {
+	const address = `${context.apiRootUrl.replace(/\/$/g, '')}/lectures`;
+  const apiResult: { code: number, message: string, data: UserTypes.LectureWithUser[] } =
     await ApiRequestFetcher(address, ApiRequestType.GET, null);  
   console.log(apiResult);
   return {

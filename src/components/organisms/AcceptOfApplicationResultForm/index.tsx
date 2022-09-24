@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { alpha, styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import Box from 'components/layout/Box'
 import Flex from "components/layout/Flex";
 import InputBase from '@mui/material/InputBase';
@@ -10,22 +11,18 @@ import Button from 'components/atoms/Button'
 import * as UserTypes from '../../../types/userTypes'
 
 // 本フォームの出力データ型
-export type ApplicationOfLecturePostFormData = {
+export type AcceptOfApplicationResultPostFormData = {
   // 受講申請内容
-  applicationOfLecture: UserTypes.ApplicationOfLecture;
+  applicationOfLecture: UserTypes.ApplicationOfLectureWithOptionData;
 }
 
-interface ApplicationOfLecturePostFormProps {
-  // 申請するユーザー情報
-  user: UserTypes.AuthUser
+interface AcceptOfApplicationResultPostFormProps {
   // 講義情報
-  lecture: UserTypes.LectureWithOptionData
-  // 生徒情報
-  student: UserTypes.Student
+  applicationOfLecture: UserTypes.ApplicationOfLectureWithOptionData
   /**
    * 投稿ボタンを押した時のイベントハンドラ
    */
-  onPost?: (formData: ApplicationOfLecturePostFormData) => void
+  onPost?: (formData: AcceptOfApplicationResultPostFormData) => void
 }
 
 // 情報表示用タグ
@@ -69,24 +66,37 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 /**
  * 受講申請フォーム
  */
-export const ApplicationOfLecturePostForm = (props: ApplicationOfLecturePostFormProps) => {
+export const AcceptOfApplicationResultPostForm = (props: AcceptOfApplicationResultPostFormProps) => {
   // React Hook Formの使用
 	const {
     register,
     control,
     handleSubmit,
 		formState: { errors },
-  } = useForm<ApplicationOfLecturePostFormData>({
+  } = useForm<AcceptOfApplicationResultPostFormData>({
     mode: "onBlur"
   });
 
+  // // トグルボタンの状態保持
+  // const [alignment, setAlignment] = useState(Number(UserTypes.ApplicationStatus.Waiting));
+
+  // // トグルボタンクリックイベントハンドラ
+  // const handleChange = (
+  //   event: React.MouseEvent<HTMLElement>,
+  //   newAlignment: number,
+  // ) => {
+  //   setAlignment(newAlignment);
+  // };
+
 	// Form submit時イベントハンドラ
-  const onSubmit = (formData: ApplicationOfLecturePostFormData) => {
-    console.log(formData);
-    formData.applicationOfLecture.user_id = props.user.id;
-    formData.applicationOfLecture.student_id = props.student.id;
-    formData.applicationOfLecture.status = UserTypes.ApplicationStatus.Waiting;
-    console.log(props.user.id);
+  const onSubmit = (formData: AcceptOfApplicationResultPostFormData) => {
+    const acceptResult = formData.applicationOfLecture.status;
+    const feedbackComment = formData.applicationOfLecture.fb_comment;
+    //console.log(formData);
+    formData.applicationOfLecture = props.applicationOfLecture;
+    formData.applicationOfLecture.status = acceptResult;
+    formData.applicationOfLecture.fb_comment = feedbackComment;
+    //console.log(formData);
     props.onPost && props.onPost(formData);
   }
 
@@ -100,20 +110,68 @@ export const ApplicationOfLecturePostForm = (props: ApplicationOfLecturePostForm
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box marginBottom={1}>
 						<Flex
-							justifyContent={"flex-start"}
 							flexDirection={"column"}
             >
+              { /*受講希望者*/}
+              <FormControl variant="standard" margin={"normal"}>
+                <Text variant="medium">受講希望者</Text>
+                <Box margin={2}>
+                  <Flex
+                    flexDirection={"row"}
+                  >
+                    <BootstrapInput
+                      id="bootstrap-input" 
+                      value={props.applicationOfLecture.user.user_name}
+                    />
+                    <Button
+                      variant="primary"
+                      type="button"
+                    >
+                      プロフィール
+                    </Button>
+                  </Flex>
+                </Box>
+              </FormControl>
               { /*受講動機*/}
               <Text>受講動機</Text>
               <textarea
-                {...register("applicationOfLecture.motivation", {})}
+                value={props.applicationOfLecture.motivation}
                 rows={7}
               />
-              {/* 申請ボタン */}
+              { /*フィードバックコメント*/}
+              <Text>フィードバックコメント</Text>
+              <textarea
+                {...register("applicationOfLecture.fb_comment", {})}
+                rows={7}
+              />
+              {/* 承認結果選択ボタン */}
+              <Box margin={2}>
+                <Flex flexDirection={"column"}>
+                  <Text>受講申請 承認</Text>
+                  {/* <ToggleButtonGroup
+                    {...register("applicationOfLecture.status", {})}
+                    color="primary"
+                    value={alignment}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="Platform"
+                  >
+                    <ToggleButton value={Number(UserTypes.ApplicationStatus.Accept)}>承認</ToggleButton>
+                    <ToggleButton value={Number(UserTypes.ApplicationStatus.Reject)}>却下</ToggleButton>
+                    <ToggleButton value={Number(UserTypes.ApplicationStatus.Waiting)}>保留</ToggleButton>
+                  </ToggleButtonGroup> */}
+                  <select {...register("applicationOfLecture.status", { required: true })}>
+                    <option value={Number(UserTypes.ApplicationStatus.Waiting)}>保留</option>
+                    <option value={Number(UserTypes.ApplicationStatus.Accept)}>承認</option>
+                    <option value={Number(UserTypes.ApplicationStatus.Reject)}>却下</option>
+                  </select>
+                </Flex>
+              </Box>
+              {/* 承認結果送信ボタン */}
               <Box margin={2}>
                 <Flex justifyContent={"center"}>
                   <Button type="submit">
-                    申請
+                    送信
                   </Button>
                 </Flex>
               </Box>
@@ -132,49 +190,49 @@ export const ApplicationOfLecturePostForm = (props: ApplicationOfLecturePostForm
               <Text variant="medium">講義タイトル</Text>
               <BootstrapInput
                 id="bootstrap-input" 
-                value={props.lecture.lecture.title}
+                value={props.applicationOfLecture.lecture.title}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>講義説明</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={props.lecture.lecture.explanation}
+                value={props.applicationOfLecture.lecture.explanation}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>参加担当</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={UserTypes.ConvertToStringStudentPosition(props.student.position)}
+                value={UserTypes.ConvertToStringStudentPosition(props.applicationOfLecture.student.position)}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>支払い金額[￥]</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={props.student.pay_amount}
+                value={props.applicationOfLecture.student.pay_amount}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>目標到達レベル</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={props.student.goal}
+                value={props.applicationOfLecture.student.goal}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>参加必要条件</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={props.student.requirement}
+                value={props.applicationOfLecture.student.requirement}
               />
             </FormControl>
             <FormControl variant="standard" margin={"normal"}>
               <Text>必要開発環境</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={props.student.dev_env}
+                value={props.applicationOfLecture.student.dev_env}
               />
             </FormControl>
           </Flex>

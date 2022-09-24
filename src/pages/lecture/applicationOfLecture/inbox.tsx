@@ -116,7 +116,7 @@ const ApplicationOfLectureInboxPage: NextPage = () => {
   // ページリンクリスト
   const breadcrumbList: { link: string, title: string }[] = new Array();
   breadcrumbList[0] = { link: "/top", title: "トップ" };
-  breadcrumbList[1] = { link: "lecture/applicationOfLecture/inbox", title: "受講申請一覧" };
+  breadcrumbList[1] = { link: "/lecture/applicationOfLecture/inbox", title: "受講申請一覧" };
   return (
     <Layout>
       <MainPartLayout

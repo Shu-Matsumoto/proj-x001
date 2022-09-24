@@ -8,10 +8,6 @@ interface LectureCardProps {
   title: string
   // 講師名
   teacherName: string
-  // 定員(募集人数)
-  capacity: number
-  // 参加者数
-  numberOfStudents: number
   // 講師プロフィール画像URL
   teacherProfileImageUrl: string
   /**
@@ -44,8 +40,6 @@ const LectureCardInfo = styled.div`
 const LectureCard = ({
   title,
   teacherName,
-  capacity,
-  numberOfStudents,
   teacherProfileImageUrl,
   variant = 'listing',
 }: LectureCardProps) => {
@@ -103,32 +97,6 @@ const LectureCard = ({
               >
                 講師：{teacherName}
               </Text>
-              {/* <Text
-                as="span"
-                fontWeight="bold"
-                display="inline-block"
-                backgroundColor="white"
-                fontSize={{ base: 'extraSmall', md: 'medium' }}
-                lineHeight={{ base: '8px', md: '12px' }}
-                letterSpacing={{ base: 2, md: 4 }}
-                margin={0}
-                padding={{ base: 1, md: 2 }}
-              >
-                定員：{capacity}名
-              </Text>
-              <Text
-                as="span"
-                fontWeight="bold"
-                display="inline-block"
-                backgroundColor="white"
-                fontSize={{ base: 'extraSmall', md: 'medium' }}
-                lineHeight={{ base: '8px', md: '12px' }}
-                letterSpacing={{ base: 2, md: 4 }}
-                margin={0}
-                padding={{ base: 1, md: 2 }}
-              >
-                参加者：{numberOfStudents}名
-              </Text> */}
             </Box>
           </LectureCardInfo>
         )}
@@ -140,12 +108,6 @@ const LectureCard = ({
             <Text as="span" variant="medium">
               講師：{teacherName}
             </Text>
-            {/* <Text as="span" variant="medium">
-              定員：{capacity}名
-            </Text>
-            <Text as="span" variant="medium">
-              参加者：{numberOfStudents}名
-            </Text> */}
           </Box>
         )}
       </LectureCardContainer>

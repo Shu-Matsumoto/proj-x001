@@ -8,7 +8,12 @@ import FormControl from '@mui/material/FormControl';
 import Box from 'components/layout/Box'
 import Flex from "components/layout/Flex";
 import Button from 'components/atoms/Button'
-import { ApiContext, AppErrorCode, LectureWithOptionData } from 'types/userTypes'
+import {
+	ApiContext,
+	AppErrorCode,
+	LectureWithOptionData,
+	ConvertToStringStudentPosition
+} from 'types/userTypes'
 import { GetLectureWithOptionData } from '../../../api/lectures'
 
 interface LectureDetailProps {
@@ -112,18 +117,28 @@ export const LectureDetail = (props: LectureDetailProps) => {
 								/>
 							</FormControl>
 							<FormControl variant="standard" margin={"normal"}>
-								<InputLabel shrink htmlFor="bootstrap-input">
-									講師名
-								</InputLabel>
+								<Box margin={1}>
+									<InputLabel shrink htmlFor="bootstrap-input">
+										講師
+									</InputLabel>
+								</Box>
 								{
 									lecture.teachers.map((teacher) => {
 										return (
-											<>
-												<BootstrapInput
-													id="bootstrap-input"
-													value={teacher.user_id}
-												/>
-											</>
+											<Box margin={1}>
+												<Flex
+													flexDirection={"row"}
+												>
+													<BootstrapInput
+														id="bootstrap-input"
+														value={teacher.user.user_name}
+													/>
+													<BootstrapInput
+														id="bootstrap-input"
+														value={ConvertToStringStudentPosition(teacher.teacher.type)}
+													/>
+												</Flex>
+											</Box>	
 										)
 									})
 								}
@@ -141,15 +156,15 @@ export const LectureDetail = (props: LectureDetailProps) => {
 												<Flex>
 													<BootstrapInput
 														id="bootstrap-input"
-														value={student.user_id}
+														value={ConvertToStringStudentPosition(student.student.position)}
 													/>
 													{!props.view_mode_mine &&
 														<Link href={
 															{
-																pathname: `/lecture/applicationOfLecture/${student.user_id}`,
+																pathname: `/lecture/applicationOfLecture/post/${student.student.user_id}`,
 																query: {
-																	lecture_id: student.lecture_id,
-																	student_id: student.id
+																	lecture_id: student.student.lecture_id,
+																	student_id: student.student.id
 																}
 															}
 														} passHref>
@@ -167,9 +182,11 @@ export const LectureDetail = (props: LectureDetailProps) => {
 								}
 							</FormControl>
 							<FormControl variant="standard" margin={"normal"}>
-								<InputLabel shrink htmlFor="bootstrap-input">
-									スケジュール
-								</InputLabel>
+								<Box margin={1}>
+									<InputLabel shrink htmlFor="bootstrap-input">
+										スケジュール
+									</InputLabel>
+								</Box>
 								{
 									lecture.schedules.map((schedule) => {
 										return (

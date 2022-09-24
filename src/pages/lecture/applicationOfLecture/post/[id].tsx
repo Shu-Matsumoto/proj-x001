@@ -1,6 +1,3 @@
-/**
- * 講義一覧ページ
- */
 import type { NextPage } from 'next'
 import  { useRouter } from "next/router"
 import  { useState, useEffect } from "react"
@@ -12,7 +9,7 @@ import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
 import { ApplicationOfLecturePostForm, ApplicationOfLecturePostFormData } from 'components/organisms/ApplicationOfLectureForm'
 import { ApiContext, AppErrorCode, LectureWithOptionData, Student, GetObj_Student} from 'types/userTypes'
-import { AddApplicationOfLecture } from '../../../api/applicationOfLecture'
+import { AddApplicationOfLecture } from '../../../../api/applicationOfLecture'
 import { GetStudent, GetLectureWithOptionData } from 'api/lectures'
 import { useAuthContext } from 'contexts/AuthContext'
 

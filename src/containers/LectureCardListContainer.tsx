@@ -3,11 +3,11 @@ import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import LectureCard from 'components/organisms/LectureCard'
 import LectureCardList from 'components/organisms/LectureCardList'
-import type { Lecture } from '../types/userTypes'
+import type { LectureWithUser } from '../types/userTypes'
 
 interface LectureCardListProps {
 	isLoading: boolean
-  lectures: Lecture[]
+  lectures: LectureWithUser[]
   view_mode_mine: boolean
 }
 
@@ -35,16 +35,14 @@ const LectureCardListContainer = ({
         ))}
       {!isLoading && lectures != null && lectures.length != 0 &&
         lectures.map((p) => (
-          <Box key={p.id}>
-            <Link href={`/lecture/${p.id}?view_mode_mine=${view_mode_mine}`} passHref>
+          <Box key={p.lecture.id}>
+            <Link href={`/lecture/${p.lecture.id}?view_mode_mine=${view_mode_mine}`} passHref>
               <a>
                 {/* 講義カード */}
                 <LectureCard
                   variant="listing"
-                  title={p.title}
-                  teacherName="まつもと"
-                  capacity={4}
-                  numberOfStudents={4}
+                  title={p.lecture.title}
+                  teacherName={ p.user.user_name }
                   teacherProfileImageUrl="/lectures/github.png"
                 />
               </a>

@@ -216,6 +216,12 @@ export function GetObj_Lecture() {
   }
   return obj;
 }
+// Lecture型とUser型のセット
+export type LectureWithUser = {
+  lecture: Lecture
+  user:User
+}
+
 // 生徒役割
 export enum StudentPosition {
   Unknown = 0,
@@ -223,6 +229,46 @@ export enum StudentPosition {
   Frontend = 2,
   Backend = 3,
   Design = 4,
+}
+/**
+ * 申請ステータス(文字列)
+ */
+export enum StudentPositionString{
+  Unknown = "Unknown",
+  Leader = "リーダー",
+  Frontend = "フロントエンドエンジニア",
+  Backend = "バックサイドエンジニア",
+  Design = "デザインエンジニア",
+}
+// 文字列の数値化
+export function ConvertToNumberStudentPosition(status: string) {
+  // TODO：if使わずにスマートに書き換えたい
+  if (status == StudentPositionString.Leader) {
+    return StudentPosition.Leader;
+  } else if (status == StudentPositionString.Frontend) {
+    return StudentPosition.Frontend;
+  } else if (status == StudentPositionString.Backend) {
+    return StudentPosition.Backend;
+  } else if (status == StudentPositionString.Design) {
+    return StudentPosition.Design;
+  } else {
+    return StudentPosition.Unknown;
+  }
+}
+// 数値の文字列化
+export function ConvertToStringStudentPosition(status: number) {
+  // TODO：if使わずにスマートに書き換えたい
+  if (status == StudentPosition.Leader) {
+    return StudentPositionString.Leader;
+  } else if (status == StudentPosition.Frontend) {
+    return StudentPositionString.Frontend;
+  } else if (status == StudentPosition.Backend) {
+    return StudentPositionString.Backend;
+  } else if (status == StudentPosition.Design) {
+    return StudentPositionString.Design;
+  } else {
+    return StudentPositionString.Unknown;
+  }
 }
 
 // 受講ステータス
@@ -270,6 +316,11 @@ export function GetObj_Student() {
   }
   return obj;
 }
+// Student型とUser型のセット
+export type StudentWithUser = {
+  student: Student
+  user:User
+}
 
 // 講師
 export type Teacher = {
@@ -294,6 +345,11 @@ export function GetObj_Teacher() {
     pay_amount: 0,
   }
   return obj;
+}
+// Teacher型とUser型のセット
+export type TeacherWithUser = {
+  teacher: Teacher
+  user:User
 }
 // 講義日程
 export type LectureSchedule = {
@@ -416,6 +472,8 @@ export type ApplicationOfLecture = {
   status: ApplicationStatus;
   // 受講動機
   motivation: string;
+  // フィードバックコメント
+  fb_comment: string;
 }
 // ApplicationOfLecture型初期化オブジェクト
 export function GetObj_ApplicationOfLecture() {
@@ -425,6 +483,7 @@ export function GetObj_ApplicationOfLecture() {
     student_id: 0,
     status: ApplicationStatus.Waiting,
     motivation: "",
+    fb_comment: "",
   }
   return obj;
 }
@@ -456,8 +515,8 @@ export class LectureWithOptionData {
 
   // 講義
   public lecture: Lecture;
-  public students: Student[];
-  public teachers: Teacher[];
+  public students: StudentWithUser[];
+  public teachers: TeacherWithUser[];
   public schedules: LectureSchedule[];
   public materials: TeachingMaterial[];
 
@@ -487,12 +546,30 @@ export type ApplicationOfLectureWithOptionData = {
   status: ApplicationStatus;
   // 受講動機
   motivation: string;
+  // フィードバックコメント
+  fb_comment: string;
   // ユーザー情報
   user: User;
   // 生徒情報
   student: Student;
   // 講義情報
   lecture: Lecture;
+}
+
+// ApplicationOfLectureWithOptionData型初期化オブジェクト
+export function GetObj_ApplicationOfLectureWithOptionData() {
+  let obj: ApplicationOfLectureWithOptionData = {
+    id: 0,
+    user_id: 0,
+    student_id: 0,
+    status: ApplicationStatus.Unknown,
+    motivation: "",
+    fb_comment: "",
+    user: GetObj_User(),
+    student: GetObj_Student(),
+    lecture: GetObj_Lecture()
+  }
+  return obj;
 }
 // #endregion App types
 

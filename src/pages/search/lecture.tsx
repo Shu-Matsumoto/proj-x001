@@ -10,7 +10,7 @@ import Text from 'components/atoms/Text'
 import FilterGroup from 'components/molecules/FilterGroup'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
 import LectureCardListContainer from 'containers/LectureCardListContainer'
-import { ApiContext, AppErrorCode, Lecture} from 'types/userTypes'
+import { ApiContext, AppErrorCode, LectureWithUser} from 'types/userTypes'
 import { SearchLectures } from '../../api/lectures/'
 
 // 検索条件
@@ -26,12 +26,12 @@ const LectureSearchPage: NextPage = () => {
   const apiContext: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
   }
-  // 検索結果
-  const [lectures, setLectures] = useState<Lecture[]>(new Array());
-  // 検索結果ロード中
-  const [isLoading, setIsLoading] = useState(false);
   // ページルート
   const router = useRouter();	
+  // 検索結果
+  const [lectures, setLectures] = useState<LectureWithUser[]>(new Array());
+  // 検索結果ロード中
+  const [isLoading, setIsLoading] = useState(false);
   // #endregion Fields
 
   // #region Functions

@@ -36,7 +36,8 @@ const ApplicationOfLectureCardListContainer = ({
       {!isLoading && applicationOfLectures != null && applicationOfLectures.length != 0 &&
         applicationOfLectures.map((p) => (
           <Box key={p.id}>
-            <Link href={`/lecture/${p.id}?view_mode_mine=${view_mode_mine}`} passHref>
+            {/* リンク先ページには受講申請のIDを渡す */}
+            <Link href={`/lecture/applicationOfLecture/accept/${p.id}`} passHref>
               <a>
                 {/* 受講申請カード */}
                 <ApplicationOfLectureCard

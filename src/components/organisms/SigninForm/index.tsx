@@ -40,7 +40,7 @@ const SigninForm = ({ onSignin }: SigninFormProps) => {
           {...register('username', { required: true })}
           name="username"
           type="text"
-          placeholder="e-mail"
+          placeholder="ユーザーID"
           hasError={!!errors.username}
         />
         {errors.username && (
