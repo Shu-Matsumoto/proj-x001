@@ -44,7 +44,7 @@ const ApplicationOfLecturePage: NextPage = () => {
   useEffect(() => {
     // 講義情報取得
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
 
     // 生徒情報取得
@@ -75,7 +75,7 @@ const ApplicationOfLecturePage: NextPage = () => {
   ) => {
     console.log(formInputData)
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
 
     // fb_commentに値を入力しないとはじかれるので無意味文字列を代入しておく

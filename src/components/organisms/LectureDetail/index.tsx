@@ -72,7 +72,7 @@ export const LectureDetail = (props: LectureDetailProps) => {
   useEffect(() => {
     // 講義一覧取得
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
     GetLectureWithOptionData(apiContext, props.lecture_id).then((apiResult) => {
       //console.log(apiResult);

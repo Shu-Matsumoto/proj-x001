@@ -23,7 +23,7 @@ type Condition = 'ongoing' | 'done'
 const AttendanceManagementPage: NextPage = () => {
   // #region Fields
   const apiContext: ApiContext = {
-    apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+    apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
   }
   // ページルート
   const router = useRouter()

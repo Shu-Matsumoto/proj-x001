@@ -27,7 +27,7 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
       }
 
       const apiContext: ApiContext = {
-        apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+        apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
       }
       await signin(apiContext, targetUser).then((apiResult) => {
         if (apiResult.result.Code == AppErrorCode.Success) {

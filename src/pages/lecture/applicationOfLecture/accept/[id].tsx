@@ -42,7 +42,7 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
   useEffect(() => {
     // 受講申請情報取得
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
 
     // 受講申請情報取得
@@ -63,7 +63,7 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
   ) => {
     console.log(formInputData)
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
+      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
     // 受講申請処理結果送信
     UpdateApplicationOfLecture(
