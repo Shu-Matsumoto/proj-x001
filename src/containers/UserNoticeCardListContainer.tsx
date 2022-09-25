@@ -1,53 +1,44 @@
-import Link from 'next/link'
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
+import { styled } from '@mui/material/styles'
+import * as React from 'react'
 import type { UserNotice } from '../types/userTypes'
-import RectLoader from 'components/atoms/RectLoader'
-import Box from 'components/layout/Box'
 import UserNoticeCard from 'components/organisms/UserNoticeCard'
-import UserNoticeCardList from 'components/organisms/UserNoticeCardList'
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}))
 
 interface UserNoticeCardListProps {
   isLoading: boolean
   userNotices: UserNotice[]
 }
 
-/**
- * ユーザー通知カードリストコンテナ
- */
-const UserNoticeCardListContainer = ({
+export default function BasicStack({
   isLoading,
   userNotices,
-}: UserNoticeCardListProps) => {
+}: UserNoticeCardListProps) {
   return (
-    <UserNoticeCardList>
-      {/* ロード中はレクトローダーを表示 */}
-      {isLoading &&
-        Array.from(Array(16), (_, k) => (
-          <Box key={k}>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <RectLoader width={480} height={480} />
-            </Box>
-            <Box display={{ base: 'block', md: 'none' }}>
-              <RectLoader width={320} height={320} />
-            </Box>
-          </Box>
-        ))}
-      {!isLoading &&
-        userNotices != null &&
-        userNotices.length != 0 &&
-        userNotices.map((p) => (
-          <Box key={p.id}>
-            {/* ユーザー通知カード */}
-            <UserNoticeCard
-              variant="listing"
-              type={p.type}
-              alreadyRead={p.already_read}
-              title={p.title}
-              subTitle={p.sub_title}
-            />
-          </Box>
-        ))}
-    </UserNoticeCardList>
+    <Box sx={{ width: '100%' }}>
+      <Stack spacing={2}>
+        {userNotices != null &&
+          userNotices.map((notice, index) => (
+            <Item key={index}>
+              {/* ユーザー通知カード */}
+              <UserNoticeCard
+                type={notice.type}
+                alreadyRead={notice.already_read}
+                title={notice.title}
+                subTitle={notice.sub_title}
+              />
+            </Item>
+          ))}
+      </Stack>
+    </Box>
   )
 }
-
-export default UserNoticeCardListContainer

@@ -4,6 +4,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Separator from 'components/atoms/Separator'
+import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import { LectureDetail } from 'components/organisms/LectureDetail'
@@ -47,11 +48,19 @@ const IndexLecturePage: NextPage = () => {
         subMenu={<AttendancePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            講義詳細ページです。
-            <Separator />
-            <Box width="100%">
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              講義詳細
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex
                 justifyContent={'center'}
                 flexDirection={'column'}

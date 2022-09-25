@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { AddApplicationOfLecture } from '../../../../api/applicationOfLecture'
 import { GetStudent, GetLectureWithOptionData } from 'api/lectures'
 import Separator from 'components/atoms/Separator'
+import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import {
@@ -76,6 +77,10 @@ const ApplicationOfLecturePage: NextPage = () => {
     const apiContext: ApiContext = {
       apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
     }
+
+    // fb_commentに値を入力しないとはじかれるので無意味文字列を代入しておく
+    formInputData.applicationOfLecture.fb_comment = 'nothing'
+
     // 受講申請送信
     AddApplicationOfLecture(
       apiContext,
@@ -101,11 +106,19 @@ const ApplicationOfLecturePage: NextPage = () => {
         subMenu={<LecturePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            受講申請ページです。
-            <Separator />
-            <Box width="100%">
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              受講申請
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex
                 justifyContent={'center'}
                 flexDirection={'column'}

@@ -95,17 +95,28 @@ const TopPage: NextPage = () => {
         subMenu={<TopPageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            トップページです。
-            <Separator />
-            <Box width="100%" padding={2}>
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              お知らせ一覧
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex justifyContent={'flex-start'} flexDirection={'row'}>
-                {/*検索条件*/}
                 <Box>
                   <Flex>
-                    {/* 講義検索のフィルタ */}
-                    <Box minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
+                    <Box
+                      as="aside"
+                      minWidth="200px"
+                      marginBottom={{ base: 2, md: 0 }}
+                    >
+                      {/*絞込条件*/}
                       <FilterGroup
                         title="絞込条件"
                         items={[
@@ -120,17 +131,14 @@ const TopPage: NextPage = () => {
                 </Box>
                 {/*絞込結果*/}
                 <Box>
-                  <Flex flexDirection={'column'}>
-                    <Text variant="mediumLarge">一覧</Text>
-                    {/*
-                      ユーザー通知カードリストコンテナ
-                      絞込クエリからユーザー通知カードリストを表示
-                    */}
-                    <UserNoticeCardListContainer
-                      isLoading={isLoading}
-                      userNotices={userNotices}
-                    />
-                  </Flex>
+                  {/*
+                  ユーザー通知カードリストコンテナ
+                  絞込クエリからユーザー通知カードリストを表示
+                */}
+                  <UserNoticeCardListContainer
+                    isLoading={isLoading}
+                    userNotices={userNotices}
+                  />
                 </Box>
               </Flex>
             </Box>

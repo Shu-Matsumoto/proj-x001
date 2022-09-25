@@ -1,7 +1,7 @@
-import styled from 'styled-components'
 import Button from 'components/atoms/Button'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
+import Flex from 'components/layout/Flex'
 
 interface UserNoticeCardProps {
   // 通知タイプ
@@ -12,24 +12,7 @@ interface UserNoticeCardProps {
   title: string
   // サブタイトル
   subTitle: string
-  /**
-   * バリアント（表示スタイル）
-   */
-  variant?: 'listing' | 'small' | 'detail'
 }
-
-// UserNoticeカードのコンテナ
-const UserNoticeCardContainer = styled.div`
-  position: relative;
-`
-
-// ユーザー通知カードの情報
-const UserNoticeCardInfo = styled.div`
-  position: absolute;
-  z-index: 100;
-  top: 0px;
-  left: 0px;
-`
 
 /**
  * ユーザー通知カード
@@ -39,68 +22,53 @@ const UserNoticeCard = ({
   alreadyRead,
   title,
   subTitle,
-  variant = 'listing',
 }: UserNoticeCardProps) => {
-  const { size } = (() => {
-    switch (variant) {
-      case 'detail':
-        return { size: { base: '320px', md: '540px' } }
-      case 'listing':
-        return { size: { base: '160px', md: '240px' } }
-      default:
-        return { size: { base: '160px' } }
-    }
-  })()
-
   return (
     <>
-      <UserNoticeCardContainer>
-        {variant !== 'small' && (
-          <UserNoticeCardInfo>
+      <Flex justifyContent={'space-between'}>
+        <Box width="90%">
+          <Flex flexDirection={'column'} alignItems={'flex-start'}>
+            {/* タイトル */}
             <Box>
               <Text
-                as="h2"
-                fontSize={{ base: 'small', md: 'mediumLarge' }}
+                as="span"
+                fontSize={{ base: 'mediumLarge', md: 'large' }}
                 letterSpacing={{ base: 2, md: 3 }}
-                lineHeight={{ base: '32px', md: '48px' }}
+                lineHeight={{ base: '32px', md: '32px' }}
+                color="blue"
                 backgroundColor="white"
-                margin={0}
-                paddingRight={2}
-                paddingLeft={2}
-                paddingTop={0}
-                paddingBottom={0}
+                margin={2}
               >
                 {title}
               </Text>
+            </Box>
+            {/* サブタイトル */}
+            <Box>
               <Text
                 as="span"
-                fontWeight="bold"
-                display="inline-block"
                 backgroundColor="white"
-                fontSize={{ base: 'extraSmall', md: 'medium' }}
-                lineHeight={{ base: '8px', md: '12px' }}
+                fontSize={{ base: 'medium', md: 'mediumLarge' }}
+                lineHeight={{ base: '16px', md: '24px' }}
                 letterSpacing={{ base: 2, md: 4 }}
-                margin={0}
-                padding={{ base: 1, md: 2 }}
+                margin={2}
               >
                 {subTitle}
               </Text>
-              <Button>既読</Button>
             </Box>
-          </UserNoticeCardInfo>
-        )}
-        {variant === 'small' && (
-          <Box marginTop={1}>
-            <Text as="h2" variant="medium" margin={0} padding={0}>
-              {title}
-            </Text>
-            <Text as="span" variant="medium">
-              {subTitle}
-            </Text>
+          </Flex>
+        </Box>
+        {/* 既読ボタン */}
+        <Box width="10%">
+          <Flex
+            flexDirection={'row'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            alignContent={'center'}
+          >
             <Button>既読</Button>
-          </Box>
-        )}
-      </UserNoticeCardContainer>
+          </Flex>
+        </Box>
+      </Flex>
     </>
   )
 }

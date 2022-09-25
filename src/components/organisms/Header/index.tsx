@@ -44,39 +44,40 @@ const Header = () => {
 
   return (
     <HeaderRoot>
-      <Flex paddingLeft={3} paddingRight={3} justifyContent="space-between">
-        <Box paddingLeft={1}>
-          <AppLogo />
-        </Box>
-        <Nav as="nav" height="56px" alignItems="center">
-          <NavLink>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <Link href="/top" passHref>
-                <Anchor as="a">
-                  <Text variant="large">トップ</Text>
-                </Anchor>
-              </Link>
-            </Box>
-          </NavLink>
-          <NavLink>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <Link href="/attendance/me" passHref>
-                <Anchor as="a">
-                  <Text variant="large">受講</Text>
-                </Anchor>
-              </Link>
-            </Box>
-          </NavLink>
-          <NavLink>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <Link href="/lecture/me" passHref>
-                <Anchor as="a">
-                  <Text variant="large">講義</Text>
-                </Anchor>
-              </Link>
-            </Box>
-          </NavLink>
-          {/* <NavLink>
+      <div>
+        <Flex paddingLeft={3} paddingRight={3} justifyContent="space-between">
+          <Box paddingLeft={1}>
+            <AppLogo />
+          </Box>
+          <Nav as="nav" height="56px" alignItems="center">
+            <NavLink>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Link href="/top" passHref>
+                  <Anchor as="a">
+                    <Text variant="large">トップ</Text>
+                  </Anchor>
+                </Link>
+              </Box>
+            </NavLink>
+            <NavLink>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Link href="/attendance/me" passHref>
+                  <Anchor as="a">
+                    <Text variant="large">受講</Text>
+                  </Anchor>
+                </Link>
+              </Box>
+            </NavLink>
+            <NavLink>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Link href="/lecture/me" passHref>
+                  <Anchor as="a">
+                    <Text variant="large">講義</Text>
+                  </Anchor>
+                </Link>
+              </Box>
+            </NavLink>
+            {/* <NavLink>
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/inquiry" passHref>
                 <Anchor as="a">
@@ -85,42 +86,43 @@ const Header = () => {
               </Link>
             </Box>
           </NavLink> */}
-        </Nav>
-        <Nav as="nav" height="56px" alignItems="center">
-          <NavLink>
-            {(() => {
-              // 認証していたらアイコンを表示
-              if (authUser) {
-                return (
-                  <Link href={`/users/${authUser.id}`} passHref>
-                    <Anchor as="a">
-                      <ShapeImage
-                        shape="circle"
-                        src={'' /*authUser.profileImageUrl*/}
-                        width={24}
-                        height={24}
-                        data-testid="profile-shape-image"
-                      />
-                    </Anchor>
-                  </Link>
-                )
-              } else if (isloggdIn) {
-                // ロード中はスピナーを表示
-                return <Spinner size={20} strokeWidth={2} />
-              } else {
-                // サインインしてない場合はアイコンを表示
-                return (
-                  <Link href="/" passHref>
-                    <Anchor as="a">
-                      <PersonIcon size={24} />
-                    </Anchor>
-                  </Link>
-                )
-              }
-            })()}
-          </NavLink>
-        </Nav>
-      </Flex>
+          </Nav>
+          <Nav as="nav" height="56px" alignItems="center">
+            <NavLink>
+              {(() => {
+                // 認証していたらアイコンを表示
+                if (authUser) {
+                  return (
+                    <Link href={`/users/${authUser.id}`} passHref>
+                      <Anchor as="a">
+                        <ShapeImage
+                          shape="circle"
+                          src={'' /*authUser.profileImageUrl*/}
+                          width={24}
+                          height={24}
+                          data-testid="profile-shape-image"
+                        />
+                      </Anchor>
+                    </Link>
+                  )
+                } else if (isloggdIn) {
+                  // ロード中はスピナーを表示
+                  return <Spinner size={20} strokeWidth={2} />
+                } else {
+                  // サインインしてない場合はアイコンを表示
+                  return (
+                    <Link href="/" passHref>
+                      <Anchor as="a">
+                        <PersonIcon size={24} />
+                      </Anchor>
+                    </Link>
+                  )
+                }
+              })()}
+            </NavLink>
+          </Nav>
+        </Flex>
+      </div>
     </HeaderRoot>
   )
 }

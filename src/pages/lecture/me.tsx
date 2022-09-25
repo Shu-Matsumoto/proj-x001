@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 import { GetLectures, AddLectureWithOptionData } from '../../api/lectures/'
 import Separator from 'components/atoms/Separator'
+import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import {
@@ -65,11 +66,19 @@ const MyLecturePage: NextPage = () => {
         subMenu={<LecturePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            講義一覧ページです。
-            <Separator />
-            <Box width="100%">
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              講義一覧
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex
                 justifyContent={'center'}
                 flexDirection={'column'}

@@ -98,17 +98,29 @@ const LectureSearchPage: NextPage = () => {
         subMenu={<AttendancePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            講義検索ページです。
-            <Separator />
-            <Box width="100%" padding={2}>
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              講義検索
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex justifyContent={'flex-start'} flexDirection={'row'}>
                 {/*検索条件*/}
                 <Box>
                   <Flex>
                     {/* 講義検索のフィルタ */}
-                    <Box minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
+                    <Box
+                      as="aside"
+                      minWidth="200px"
+                      marginBottom={{ base: 2, md: 0 }}
+                    >
                       <FilterGroup
                         title="検索条件"
                         items={[

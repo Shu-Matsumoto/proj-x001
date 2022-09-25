@@ -132,11 +132,19 @@ const ApplicationOfLectureInboxPage: NextPage = () => {
         subMenu={<LecturePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
+        <Separator />
         <Box>
           <Flex flexDirection={'column'}>
-            受講申請一覧ページです。
-            <Separator />
-            <Box width="100%" padding={2}>
+            <Text
+              as="h3"
+              fontWeight="bold"
+              variant="mediumLarge"
+              marginTop={0}
+              paddingLeft={1}
+            >
+              受講申請一覧
+            </Text>
+            <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex justifyContent={'flex-start'} flexDirection={'row'}>
                 {/*絞込条件*/}
                 <Box>
