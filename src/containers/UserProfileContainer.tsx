@@ -2,7 +2,7 @@ import type { ApiContext, User } from '../types/userTypes'
 import UserProfile from 'components/organisms/UserProfile'
 
 const context: ApiContext = {
-  apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || '/api/proxy',
+  apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
 }
 
 interface UserProfileContainerProps {

@@ -1,6 +1,6 @@
 # プロダクトのタイトル:formartion
 
-https://vercel.com/shu-matsumoto/proj-x001/FA67wcJAihpZuLr6jeTudeXYQ2R4
+https://proj-x001.vercel.app/
 
 ## プロダクトの紹介
 
