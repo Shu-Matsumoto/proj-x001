@@ -1,98 +1,18 @@
-## TypeScript‚ÆReact/Next.js‚Å‚Â‚­‚éÀ‘HWebƒAƒvƒŠƒP[ƒVƒ‡ƒ“
+# ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«:formartion
 
-u[TypeScript‚ÆReact/Next.js‚Å‚Â‚­‚éÀ‘HWebƒAƒvƒŠƒP[ƒVƒ‡ƒ“](https://gihyo.jp/book/2022/978-4-297-12916-3)v‚ÌƒTƒ“ƒvƒ‹ƒAƒvƒŠ
+https://vercel.com/shu-matsumoto/proj-x001/FA67wcJAihpZuLr6jeTudeXYQ2R4
 
-![ƒTƒ“ƒvƒ‹ƒAƒvƒŠ](https://user-images.githubusercontent.com/2387508/178550902-a7c1e47b-a322-413c-b9ad-2ffff79e041d.png)
+## ãƒ—ãƒ­ãƒ€ã‚¯ãƒˆã®ç´¹ä»‹
 
-## ‰”Å‚©‚ç‚ÌƒAƒbƒvƒf[ƒg
+- ç®‡æ¡æ›¸ãã«ã™ã‚‹ã¨(Matsumoto)
+- èª­ã¿ã‚„ã™ã„(Matsumoto)
 
-- [ƒrƒ‹ƒh‚ª¸”s‚·‚é–â‘è‚ğC³](https://github.com/gihyo-book/ts-nextbook-app/pull/6)
-- [Storybook‚ªÅV‚ÌNext.js‚Å“®ì‚µ‚È‚¢–â‘è‚ğC³](https://github.com/gihyo-book/ts-nextbook-app/pull/5)
+## å·¥å¤«ã—ãŸç‚¹ï¼Œã“ã ã‚ã£ãŸç‚¹
 
-## ŠÂ‹«
+- ç‰¹ã«è¦‹ã¦ã»ã—ã„ç‚¹ï¼Œ(Matsumoto)
+- ã†ã¾ãã§ããŸã¨æ„Ÿã˜ã¦ã„ã‚‹ç‚¹ãªã©ï¼(Matsumoto)
 
-- Node.js: 16.14.0
-- Next.js: 12.2.3
-- React: 18.2.0
+## è‹¦æˆ¦ã—ãŸç‚¹ï¼Œå…±æœ‰ã—ãŸã„ãƒãƒã‚Šãƒã‚¤ãƒ³ãƒˆãªã©
 
-## ƒCƒ“ƒXƒg[ƒ‹
-
-```bash
-npm install
-```
-
-## ŠÂ‹«•Ï”‚Ìİ’è
-
-.env‚ğŠJ‚­
-
-```
-API_BASE_URL=<ƒoƒbƒNƒGƒ“ƒhAPI‚Ö‚Ìƒx[ƒXURL‚Ìİ’è>
-NEXT_PUBLIC_API_BASE_PATH=/api/proxy
-```
-
-## ŠJ”­ƒT[ƒo[‹N“®
-
-ŠJ”­ƒT[ƒo[‚Ì‹N“®‚µAhttp://localhost:3000/ ‚ÉƒAƒNƒZƒX
-
-```
-npm run dev
-```
-
-## Storybook‹N“®
-
-Storybook‚ğ‹N“®‚µAhttp://localhost:6006/ ‚ÉƒAƒNƒZƒX
-
-```
-npm run storybook
-```
-
-## ƒeƒXƒgÀs
-
-ƒ†ƒjƒbƒgƒeƒXƒgÀs
-
-```
-npm run test
-```
-
-## ƒ\[ƒXƒR[ƒhƒŠƒ“ƒ^[EƒtƒH[ƒ}ƒbƒ^[
-
-ƒ\[ƒXƒR[ƒh‚ğƒŠƒ“ƒ^[‚Åƒ`ƒFƒbƒN
-
-```
-npm run lint
-```
-
-ƒ\[ƒXƒR[ƒh‚ğƒtƒH[ƒ}ƒbƒ^[‚Å®Œ`
-
-```
-npm run format
-```
-
-## ƒfƒBƒŒƒNƒgƒŠ\¬
-
-ŠÈ’P‚ÉƒfƒBƒŒƒNƒgƒŠ\¬‚ğˆÈ‰º‚Éà–¾‚µ‚Ü‚·B
-
-```
-„¥„Ÿ„Ÿ .editorconfig
-„¥„Ÿ„Ÿ .env <-- ŠÂ‹«•Ï”
-„¥„Ÿ„Ÿ .env.production <-- –{”Ô—pŠÂ‹«•Ï”
-„¥„Ÿ„Ÿ .eslintrc.json <-- ESLintİ’èƒtƒ@ƒCƒ‹
-„¥„Ÿ„Ÿ README.md
-„¥„Ÿ„Ÿ jest.config.js <-- Jest‚Ìİ’èƒtƒ@ƒCƒ‹
-„¥„Ÿ„Ÿ jest.setup.js <-- ƒeƒXƒgƒtƒ@ƒCƒ‹‚ªÀs‚³‚ê‚é‘O‚É‘–‚é
-„¥„Ÿ„Ÿ next-env.d.ts
-„¥„Ÿ„Ÿ next.config.js <-- Next.jsİ’èƒtƒ@ƒCƒ‹
-„¥„Ÿ„Ÿ package-lock.json
-„¥„Ÿ„Ÿ package.json
-„¥„Ÿ„Ÿ public
-„¥„Ÿ„Ÿ src
-„ ?? „¥„Ÿ„Ÿ components <-- Presentational Components
-„ ?? „¥„Ÿ„Ÿ containers <-- Container Compoments
-„ ?? „¥„Ÿ„Ÿ contexts <-- React Context
-„ ?? „¥„Ÿ„Ÿ pages <-- Next.js‚Ìƒy[ƒW
-„ ?? „¥„Ÿ„Ÿ services <-- Web API Client
-„ ?? „¥„Ÿ„Ÿ themes <-- styled-components‚Ìƒe[ƒ}
-„ ?? „¥„Ÿ„Ÿ types <-- Œ^’è‹`
-„ ?? „¤„Ÿ„Ÿ utils <-- ”Ä—pŠÖ”
-„¤„Ÿ„Ÿ tsconfig.json
-```
+- ãƒãƒã£ãŸçµŒé¨“ã¯è³‡ç”£ï¼(Matsumoto)
+- ã‚ã¨ã§è‡ªåˆ†ã§è¦‹è¿”ã—ã¦ã‚‚æœ‰ç”¨ï¼(Matsumoto)
