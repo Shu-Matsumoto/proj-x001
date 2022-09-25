@@ -72,7 +72,7 @@ const ApplicationOfLectureCard = ({
             containerHeight={size}
             objectFit="cover"
           />
-        </ApplicationOfLectureCardImageContainer> 
+        </ApplicationOfLectureCardImageContainer>
         {variant !== 'small' && (
           <ApplicationOfLectureCardInfo>
             <Box>

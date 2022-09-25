@@ -22,8 +22,7 @@ const Footer = () => {
           minWidth={{ base: '100%', md: '120px' }}
           paddingRight={{ base: 0, md: 1 }}
         >
-          <nav>
-          </nav>
+          <nav></nav>
         </Box>
       </Flex>
       <Box paddingTop={3} paddingBottom={2}>

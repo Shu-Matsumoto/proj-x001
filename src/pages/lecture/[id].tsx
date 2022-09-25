@@ -3,25 +3,25 @@
  */
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Layout from 'components/templates/Layout'
+import Separator from 'components/atoms/Separator'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
-import Separator from 'components/atoms/Separator'
+import { LectureDetail } from 'components/organisms/LectureDetail'
+import Layout from 'components/templates/Layout'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
-import { LectureDetail } from 'components/organisms/LectureDetail'
 
 const IndexLecturePage: NextPage = () => {
   // #region Fields
-  const router = useRouter();
+  const router = useRouter()
   // 講義ID
-  const lecture_id = Number(router.query.id);
+  const lecture_id = Number(router.query.id)
   // 表示モード
   const view_mode_mine: boolean = (() => {
     if (Array.isArray(router.query.view_mode_mine)) {
-      return false;
+      return false
     } else if (router.query.view_mode_mine) {
-      return router.query.view_mode_mine === 'true' ? true : false; 
+      return router.query.view_mode_mine === 'true' ? true : false
     } else {
       return false
     }
@@ -33,30 +33,31 @@ const IndexLecturePage: NextPage = () => {
 
   // #region View
   // ページリンクリスト
-  const breadcrumbList: { link: string, title: string }[] = new Array();
-  breadcrumbList[0] = { link: "/top", title: "トップ" };
-  breadcrumbList[1] = { link: "/attendance/me", title: "受講一覧" };
-  breadcrumbList[2] = { link: "/search/lecture", title: "講義検索" };
-  breadcrumbList[3] = { link: `/lecture/${lecture_id}?view_mode_mine=${view_mode_mine}`, title: "講義詳細" };
+  const breadcrumbList: { link: string; title: string }[] = []
+  breadcrumbList[0] = { link: '/top', title: 'トップ' }
+  breadcrumbList[1] = { link: '/attendance/me', title: '受講一覧' }
+  breadcrumbList[2] = { link: '/search/lecture', title: '講義検索' }
+  breadcrumbList[3] = {
+    link: `/lecture/${lecture_id}?view_mode_mine=${view_mode_mine}`,
+    title: '講義詳細',
+  }
   return (
     <Layout>
       <MainPartLayout
-        subMenu={<AttendancePageSubMenu/>}
+        subMenu={<AttendancePageSubMenu />}
         breadcrumbList={breadcrumbList}
       >
         <Box>
-          <Flex
-            flexDirection={"column"}
-          >
+          <Flex flexDirection={'column'}>
             講義詳細ページです。
             <Separator />
             <Box width="100%">
               <Flex
-                justifyContent={"center"}
-                flexDirection={"column"}
-                alignItems={"center"}
+                justifyContent={'center'}
+                flexDirection={'column'}
+                alignItems={'center'}
               >
-                { /*講義詳細表示*/}
+                {/*講義詳細表示*/}
                 <LectureDetail
                   lecture_id={lecture_id}
                   view_mode_mine={view_mode_mine}

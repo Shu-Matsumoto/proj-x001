@@ -1,10 +1,10 @@
 import { render, screen, RenderResult } from '@testing-library/react'
 import { ThemeProvider } from 'styled-components'
+import { SexType } from '../../../types/data'
 import Header from '.'
 import { AuthContextProvider } from 'contexts/AuthContext'
 import { theme } from 'themes'
-import type { User} from 'types'
-import { SexType } from '../../../types/data'
+import type { User } from 'types'
 
 // ダミーユーザー
 const authUser: User = {
@@ -25,12 +25,12 @@ describe('Header', () => {
   it('カートに商品が存在する', async () => {
     renderResult = render(
       <ThemeProvider theme={theme}>
-          <AuthContextProvider
-            authUser={authUser}
-            context={{ apiRootUrl: 'https://dummy' }}
-          >
-            <Header />
-          </AuthContextProvider>
+        <AuthContextProvider
+          authUser={authUser}
+          context={{ apiRootUrl: 'https://dummy' }}
+        >
+          <Header />
+        </AuthContextProvider>
       </ThemeProvider>,
     )
 
@@ -43,9 +43,9 @@ describe('Header', () => {
   it('未サインイン', async () => {
     renderResult = render(
       <ThemeProvider theme={theme}>
-          <AuthContextProvider context={{ apiRootUrl: 'https://dummy' }}>
-            <Header />
-          </AuthContextProvider>
+        <AuthContextProvider context={{ apiRootUrl: 'https://dummy' }}>
+          <Header />
+        </AuthContextProvider>
       </ThemeProvider>,
     )
 

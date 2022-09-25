@@ -1,37 +1,36 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import Layout from 'components/templates/Layout'
+import { SearchLectures } from '../../api/lectures/'
+import Separator from 'components/atoms/Separator'
+import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
-import Separator from 'components/atoms/Separator'
-import MainPartLayout from 'components/templates/Layout/mainPartLayout'
-import Text from 'components/atoms/Text'
 import FilterGroup from 'components/molecules/FilterGroup'
-import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
+import Layout from 'components/templates/Layout'
+import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import LectureCardListContainer from 'containers/LectureCardListContainer'
-import { ApiContext, AppErrorCode, LectureWithUser} from 'types/userTypes'
-import { SearchLectures } from '../../api/lectures/'
+import AttendancePageSubMenu from 'containers/menu/attendancePageSubMenu'
+import { ApiContext, AppErrorCode, LectureWithUser } from 'types/userTypes'
 
 // 検索条件
-type Condition = 'html' | 'css' | 'javascript' | 'php';
-  
+type Condition = 'html' | 'css' | 'javascript' | 'php'
+
 /**
  * 講義検索ページ
- * @returns 
+ * @returns
  */
 const LectureSearchPage: NextPage = () => {
-
   // #region Fields
   const apiContext: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || 'http://localhost/api',
   }
   // ページルート
-  const router = useRouter();	
+  const router = useRouter()
   // 検索結果
-  const [lectures, setLectures] = useState<LectureWithUser[]>(new Array());
+  const [lectures, setLectures] = useState<LectureWithUser[]>([])
   // 検索結果ロード中
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   // #endregion Fields
 
   // #region Functions
@@ -48,7 +47,7 @@ const LectureSearchPage: NextPage = () => {
 
   /**
    * 検索条件変更イベントハンドラ
-   * @param selected 
+   * @param selected
    */
   const handleSearchConditionChange = (selected: string[]) => {
     // 条件をクエリへ追加
@@ -58,43 +57,41 @@ const LectureSearchPage: NextPage = () => {
         condition: selected,
       },
     })
-    console.log(selected);
+    console.log(selected)
     // 検索
-    setIsLoading(true);
-    SearchLectures(apiContext, selected)
-			.then(apiResult => {
-        //console.log(apiResult);
-        if (apiResult.result.Code == AppErrorCode.Success) {
-          setLectures(apiResult.data);
-          console.log(lectures);
-        }
-        setIsLoading(false);
-			})
+    setIsLoading(true)
+    SearchLectures(apiContext, selected).then((apiResult) => {
+      //console.log(apiResult);
+      if (apiResult.result.Code == AppErrorCode.Success) {
+        setLectures(apiResult.data)
+        console.log(lectures)
+      }
+      setIsLoading(false)
+    })
   }
 
   // 初期化処理
   useEffect(() => {
     // 講義一覧取得
-    setIsLoading(true);
-    let selected: string[] = new Array();
-    SearchLectures(apiContext, selected)
-			.then(apiResult => {
-        //console.log(apiResult);
-        if (apiResult.result.Code == AppErrorCode.Success) {
-          setLectures(apiResult.data);
-          console.log(lectures);
-        }
-        setIsLoading(false);
-			})
+    setIsLoading(true)
+    const selected: string[] = []
+    SearchLectures(apiContext, selected).then((apiResult) => {
+      //console.log(apiResult);
+      if (apiResult.result.Code == AppErrorCode.Success) {
+        setLectures(apiResult.data)
+        console.log(lectures)
+      }
+      setIsLoading(false)
+    })
   }, [])
   // #endregion Functions
 
   // #region View
   // ページリンクリスト
-  const breadcrumbList: { link: string, title: string }[] = new Array();
-  breadcrumbList[0] = { link: "/top", title: "トップ" };
-  breadcrumbList[1] = { link: "/attendance/me", title: "受講一覧" };
-  breadcrumbList[2] = { link: "/search/lecture", title: "講義検索" };
+  const breadcrumbList: { link: string; title: string }[] = []
+  breadcrumbList[0] = { link: '/top', title: 'トップ' }
+  breadcrumbList[1] = { link: '/attendance/me', title: '受講一覧' }
+  breadcrumbList[2] = { link: '/search/lecture', title: '講義検索' }
   return (
     <Layout>
       <MainPartLayout
@@ -102,38 +99,33 @@ const LectureSearchPage: NextPage = () => {
         breadcrumbList={breadcrumbList}
       >
         <Box>
-          <Flex
-            flexDirection={"column"}
-          >
+          <Flex flexDirection={'column'}>
             講義検索ページです。
             <Separator />
             <Box width="100%" padding={2}>
-              <Flex
-                justifyContent={"flex-start"}
-                flexDirection={"row"}
-              >
+              <Flex justifyContent={'flex-start'} flexDirection={'row'}>
                 {/*検索条件*/}
                 <Box>
                   <Flex>
                     {/* 講義検索のフィルタ */}
                     <Box minWidth="200px" marginBottom={{ base: 2, md: 0 }}>
                       <FilterGroup
-                      title="検索条件"
-                      items={[
-                        { label: 'HTML', name: 'html' },
-                        { label: 'CSS', name: 'css' },
-                        { label: 'JavaScript', name: 'javascript' },
-                        { label: 'PHP', name: 'php' },
-                      ]}
-                      value={searchConditions}
-                      onChange={handleSearchConditionChange}
-                    />
+                        title="検索条件"
+                        items={[
+                          { label: 'HTML', name: 'html' },
+                          { label: 'CSS', name: 'css' },
+                          { label: 'JavaScript', name: 'javascript' },
+                          { label: 'PHP', name: 'php' },
+                        ]}
+                        value={searchConditions}
+                        onChange={handleSearchConditionChange}
+                      />
                     </Box>
                   </Flex>
                 </Box>
                 {/*検索結果*/}
                 <Box>
-                  <Flex flexDirection={"column"}>
+                  <Flex flexDirection={'column'}>
                     <Text variant="mediumLarge">検索結果</Text>
                     {/*
                       講義カードリストコンテナ

@@ -1,12 +1,12 @@
 import Link from 'next/link'
+import type { LectureWithUser } from '../types/userTypes'
 import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import LectureCard from 'components/organisms/LectureCard'
 import LectureCardList from 'components/organisms/LectureCardList'
-import type { LectureWithUser } from '../types/userTypes'
 
 interface LectureCardListProps {
-	isLoading: boolean
+  isLoading: boolean
   lectures: LectureWithUser[]
   view_mode_mine: boolean
 }
@@ -15,7 +15,7 @@ interface LectureCardListProps {
  * 講義カードリストコンテナ
  */
 const LectureCardListContainer = ({
-	isLoading,
+  isLoading,
   lectures,
   view_mode_mine,
 }: LectureCardListProps) => {
@@ -33,16 +33,21 @@ const LectureCardListContainer = ({
             </Box>
           </Box>
         ))}
-      {!isLoading && lectures != null && lectures.length != 0 &&
+      {!isLoading &&
+        lectures != null &&
+        lectures.length != 0 &&
         lectures.map((p) => (
           <Box key={p.lecture.id}>
-            <Link href={`/lecture/${p.lecture.id}?view_mode_mine=${view_mode_mine}`} passHref>
+            <Link
+              href={`/lecture/${p.lecture.id}?view_mode_mine=${view_mode_mine}`}
+              passHref
+            >
               <a>
                 {/* 講義カード */}
                 <LectureCard
                   variant="listing"
                   title={p.lecture.title}
-                  teacherName={ p.user.user_name }
+                  teacherName={p.user.user_name}
                   teacherProfileImageUrl="/lectures/github.png"
                 />
               </a>

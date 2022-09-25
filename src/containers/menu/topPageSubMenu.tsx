@@ -1,16 +1,15 @@
 import React from 'react'
 import { LinkInformationSet } from '../../types/userTypes'
-import SubMenu from 'components/templates/Layout/subMenu';
+import SubMenu from 'components/templates/Layout/subMenu'
 
 const TopPageSubMenu = () => {
-
-	const menuList: LinkInformationSet[] = [
-    { dispaleyName: "お知らせ", pageLink: "/top" },
-  ];
+  const menuList: LinkInformationSet[] = [
+    { dispaleyName: 'お知らせ', pageLink: '/top' },
+  ]
 
   return (
-		<>
-			<SubMenu menuLinkList={menuList} />
+    <>
+      <SubMenu menuLinkList={menuList} />
     </>
   )
 }

@@ -7,9 +7,14 @@ import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import InquiryPageSubMenu from 'containers/menu/inquiryPageSubMenu'
 
 const InquiryPage: NextPage = () => {
+  const breadcrumbList: { link: string; title: string }[] = []
+  breadcrumbList[0] = { link: '/top', title: 'トップ' }
   return (
     <Layout>
-      <MainPartLayout subMenu={<InquiryPageSubMenu/>}>
+      <MainPartLayout
+        subMenu={<InquiryPageSubMenu />}
+        breadcrumbList={breadcrumbList}
+      >
         お問い合わせページです。
       </MainPartLayout>
     </Layout>

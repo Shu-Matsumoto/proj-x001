@@ -1,12 +1,12 @@
 import Link from 'next/link'
+import type { UserNotice } from '../types/userTypes'
 import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import UserNoticeCard from 'components/organisms/UserNoticeCard'
 import UserNoticeCardList from 'components/organisms/UserNoticeCardList'
-import type { UserNotice } from '../types/userTypes'
 
 interface UserNoticeCardListProps {
-	isLoading: boolean
+  isLoading: boolean
   userNotices: UserNotice[]
 }
 
@@ -14,7 +14,7 @@ interface UserNoticeCardListProps {
  * ユーザー通知カードリストコンテナ
  */
 const UserNoticeCardListContainer = ({
-	isLoading,
+  isLoading,
   userNotices,
 }: UserNoticeCardListProps) => {
   return (
@@ -31,17 +31,19 @@ const UserNoticeCardListContainer = ({
             </Box>
           </Box>
         ))}
-      {!isLoading && userNotices != null && userNotices.length != 0 &&
+      {!isLoading &&
+        userNotices != null &&
+        userNotices.length != 0 &&
         userNotices.map((p) => (
           <Box key={p.id}>
             {/* ユーザー通知カード */}
-						<UserNoticeCard
-							variant="listing"
-							type={p.type}
-							alreadyRead={p.already_read}
-							title={p.title}
-							subTitle={ p.sub_title }
-						/>
+            <UserNoticeCard
+              variant="listing"
+              type={p.type}
+              alreadyRead={p.already_read}
+              title={p.title}
+              subTitle={p.sub_title}
+            />
           </Box>
         ))}
     </UserNoticeCardList>

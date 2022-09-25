@@ -1,39 +1,37 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
-import Flex from 'components/layout/Flex'
-import Box from 'components/layout/Box'
 import { LinkInformationSet } from '../../../types/userTypes'
 import Text from 'components/atoms/Text'
+import Box from 'components/layout/Box'
+import Flex from 'components/layout/Flex'
 
 interface SubMenuProps {
-	menuLinkList: LinkInformationSet[],
+  menuLinkList: LinkInformationSet[]
 }
 
-const SubMenu = ({
-	menuLinkList
-}: SubMenuProps) => {
+const SubMenu = ({ menuLinkList }: SubMenuProps) => {
   return (
-		<>
-			<Box width="100%">
-				<Flex
-					backgroundColor="#BFBFBF"
-					flexDirection="column"
-					justifyContent="center"
-					alignItems="center"
-				>
-					<Fragment>
-						{menuLinkList.map((item) => (
-							<Box paddingTop={1} paddingBottom={1}>
-								<Link href={`${item.pageLink}`} passHref>
-									<Text variant="extraLarge" margin={0} padding={0}>
-										{`${item.dispaleyName}`}
-									</Text>
-								</Link>
-							</Box>
-						))}
-					</Fragment>
-				</Flex>
-			</Box>	
+    <>
+      <Box width="100%">
+        <Flex
+          backgroundColor="#BFBFBF"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Fragment>
+            {menuLinkList.map((item, index) => (
+              <Box key={index} paddingTop={1} paddingBottom={1}>
+                <Link key={index} href={`${item.pageLink}`} passHref>
+                  <Text key={index} variant="extraLarge" margin={0} padding={0}>
+                    {`${item.dispaleyName}`}
+                  </Text>
+                </Link>
+              </Box>
+            ))}
+          </Fragment>
+        </Flex>
+      </Box>
     </>
   )
 }

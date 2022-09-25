@@ -60,8 +60,8 @@ const Template: ComponentStory<typeof LectureCard> = (args) => (
 export const Listing = Template.bind({})
 Listing.args = {
   variant: 'listing',
-  title: "開発現場におけるGithub活用方法",
-  teacherName: "鈴木亮平",
+  title: '開発現場におけるGithub活用方法',
+  teacherName: '鈴木亮平',
   teacherProfileImageUrl: '/images/users/1.png',
 }
 
@@ -69,8 +69,8 @@ Listing.args = {
 export const Small = Template.bind({})
 Small.args = {
   variant: 'small',
-  title: "開発現場におけるGithub活用方法",
-  teacherName: "鈴木亮平",
+  title: '開発現場におけるGithub活用方法',
+  teacherName: '鈴木亮平',
   teacherProfileImageUrl: '/images/users/1.png',
 }
 
@@ -78,7 +78,7 @@ Small.args = {
 export const Detail = Template.bind({})
 Detail.args = {
   variant: 'detail',
-  title: "開発現場におけるGithub活用方法",
-  teacherName: "鈴木亮平",
+  title: '開発現場におけるGithub活用方法',
+  teacherName: '鈴木亮平',
   teacherProfileImageUrl: '/images/users/1.png',
 }

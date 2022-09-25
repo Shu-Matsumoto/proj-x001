@@ -1,12 +1,12 @@
 import Link from 'next/link'
+import type { ApplicationOfLectureWithOptionData } from '../types/userTypes'
 import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import ApplicationOfLectureCard from 'components/organisms/ApplicationOfLectureCard'
 import ApplicationOfLectureCardList from 'components/organisms/ApplicationOfLectureCardList'
-import type { ApplicationOfLectureWithOptionData } from '../types/userTypes'
 
 interface ApplicationOfLectureCardListProps {
-	isLoading: boolean
+  isLoading: boolean
   applicationOfLectures: ApplicationOfLectureWithOptionData[]
   view_mode_mine: boolean
 }
@@ -15,7 +15,7 @@ interface ApplicationOfLectureCardListProps {
  * 受講申請カードリストコンテナ
  */
 const ApplicationOfLectureCardListContainer = ({
-	isLoading,
+  isLoading,
   applicationOfLectures,
   view_mode_mine,
 }: ApplicationOfLectureCardListProps) => {
@@ -33,11 +33,16 @@ const ApplicationOfLectureCardListContainer = ({
             </Box>
           </Box>
         ))}
-      {!isLoading && applicationOfLectures != null && applicationOfLectures.length != 0 &&
+      {!isLoading &&
+        applicationOfLectures != null &&
+        applicationOfLectures.length != 0 &&
         applicationOfLectures.map((p) => (
           <Box key={p.id}>
             {/* リンク先ページには受講申請のIDを渡す */}
-            <Link href={`/lecture/applicationOfLecture/accept/${p.id}`} passHref>
+            <Link
+              href={`/lecture/applicationOfLecture/accept/${p.id}`}
+              passHref
+            >
               <a>
                 {/* 受講申請カード */}
                 <ApplicationOfLectureCard

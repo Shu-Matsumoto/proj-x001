@@ -1,8 +1,7 @@
 // typesは後ほど定義
 import * as UserTypes from '../../types/userTypes'
-import { ErrorCodeTranslator } from '../errorCodeTranslator';
+import { ErrorCodeTranslator } from '../errorCodeTranslator'
 import { ApiRequestFetcher, ApiRequestType } from 'utils'
-
 
 export type SigninParams = {
   /**
@@ -67,13 +66,13 @@ type AuthResult = {
 export const signin = async (
   context: UserTypes.ApiContext,
   params: SigninParams,
-): Promise<{ result: UserTypes.AppResult, data: UserTypes.User } > => {
-  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/signin`;
-  const apiResult: { code: number, message: string, data: UserTypes.User } =
-    await ApiRequestFetcher(address, ApiRequestType.POST, params);  
-  console.log(apiResult);
+): Promise<{ result: UserTypes.AppResult; data: UserTypes.User }> => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/signin`
+  const apiResult: { code: number; message: string; data: UserTypes.User } =
+    await ApiRequestFetcher(address, ApiRequestType.POST, params)
+  console.log(apiResult)
   return {
     result: ErrorCodeTranslator.ToAppResult(apiResult.code),
     data: apiResult.data,
-  };
+  }
 }

@@ -1,18 +1,18 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { alpha, styled } from '@mui/material/styles';
-import FormControl from '@mui/material/FormControl';
-import Box from 'components/layout/Box'
-import Flex from "components/layout/Flex";
-import InputBase from '@mui/material/InputBase';
-import Text from 'components/atoms/Text'
-import Button from 'components/atoms/Button'
+import FormControl from '@mui/material/FormControl'
+import InputBase from '@mui/material/InputBase'
+import { alpha, styled } from '@mui/material/styles'
+import React from 'react'
+import { useForm } from 'react-hook-form'
 import * as UserTypes from '../../../types/userTypes'
+import Button from 'components/atoms/Button'
+import Text from 'components/atoms/Text'
+import Box from 'components/layout/Box'
+import Flex from 'components/layout/Flex'
 
 // 本フォームの出力データ型
 export type ApplicationOfLecturePostFormData = {
   // 受講申請内容
-  applicationOfLecture: UserTypes.ApplicationOfLecture;
+  applicationOfLecture: UserTypes.ApplicationOfLecture
 }
 
 interface ApplicationOfLecturePostFormProps {
@@ -64,113 +64,106 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       borderColor: theme.palette.primary.main,
     },
   },
-}));
+}))
 
 /**
  * 受講申請フォーム
  */
-export const ApplicationOfLecturePostForm = (props: ApplicationOfLecturePostFormProps) => {
+export const ApplicationOfLecturePostForm = (
+  props: ApplicationOfLecturePostFormProps,
+) => {
   // React Hook Formの使用
-	const {
+  const {
     register,
     control,
     handleSubmit,
-		formState: { errors },
+    formState: { errors },
   } = useForm<ApplicationOfLecturePostFormData>({
-    mode: "onBlur"
-  });
+    mode: 'onBlur',
+  })
 
-	// Form submit時イベントハンドラ
+  // Form submit時イベントハンドラ
   const onSubmit = (formData: ApplicationOfLecturePostFormData) => {
-    console.log(formData);
-    formData.applicationOfLecture.user_id = props.user.id;
-    formData.applicationOfLecture.student_id = props.student.id;
-    formData.applicationOfLecture.status = UserTypes.ApplicationStatus.Waiting;
-    console.log(props.user.id);
-    props.onPost && props.onPost(formData);
+    console.log(formData)
+    formData.applicationOfLecture.user_id = props.user.id
+    formData.applicationOfLecture.student_id = props.student.id
+    formData.applicationOfLecture.status = UserTypes.ApplicationStatus.Waiting
+    console.log(props.user.id)
+    props.onPost && props.onPost(formData)
   }
 
   return (
     <Box width="90%" margin={2}>
-      <Flex
-        justifyContent={"center"}
-        flexDirection={"column"}
-      >
+      <Flex justifyContent={'center'} flexDirection={'column'}>
         {/*情報入力フォーム*/}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box marginBottom={1}>
-						<Flex
-							justifyContent={"flex-start"}
-							flexDirection={"column"}
-            >
-              { /*受講動機*/}
+            <Flex justifyContent={'flex-start'} flexDirection={'column'}>
+              {/*受講動機*/}
               <Text>受講動機</Text>
               <textarea
-                {...register("applicationOfLecture.motivation", {})}
+                {...register('applicationOfLecture.motivation', {})}
                 rows={7}
               />
               {/* 申請ボタン */}
               <Box margin={2}>
-                <Flex justifyContent={"center"}>
-                  <Button type="submit">
-                    申請
-                  </Button>
+                <Flex justifyContent={'center'}>
+                  <Button type="submit">申請</Button>
                 </Flex>
               </Box>
             </Flex>
-          </Box>  
+          </Box>
         </form>
         <Box marginBottom={1}>
           <Flex
-            justifyContent={"center"}
-            flexDirection={"column"}
-            alignItems={"center"}
+            justifyContent={'center'}
+            flexDirection={'column'}
+            alignItems={'center'}
           >
             <Text variant="large">募集内容</Text>
             {/* 講義タイトルの入力 */}
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text variant="medium">講義タイトル</Text>
               <BootstrapInput
-                id="bootstrap-input" 
+                id="bootstrap-input"
                 value={props.lecture.lecture.title}
               />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>講義説明</Text>
               <BootstrapInput
                 id="bootstrap-input"
                 value={props.lecture.lecture.explanation}
               />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>参加担当</Text>
               <BootstrapInput
                 id="bootstrap-input"
-                value={UserTypes.ConvertToStringStudentPosition(props.student.position)}
+                value={UserTypes.ConvertToStringStudentPosition(
+                  props.student.position,
+                )}
               />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>支払い金額[￥]</Text>
               <BootstrapInput
                 id="bootstrap-input"
                 value={props.student.pay_amount}
               />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>目標到達レベル</Text>
-              <BootstrapInput
-                id="bootstrap-input"
-                value={props.student.goal}
-              />
+              <BootstrapInput id="bootstrap-input" value={props.student.goal} />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>参加必要条件</Text>
               <BootstrapInput
                 id="bootstrap-input"
                 value={props.student.requirement}
               />
             </FormControl>
-            <FormControl variant="standard" margin={"normal"}>
+            <FormControl variant="standard" margin={'normal'}>
               <Text>必要開発環境</Text>
               <BootstrapInput
                 id="bootstrap-input"
@@ -178,8 +171,8 @@ export const ApplicationOfLecturePostForm = (props: ApplicationOfLecturePostForm
               />
             </FormControl>
           </Flex>
-        </Box>  
-      </Flex>  
+        </Box>
+      </Flex>
     </Box>
   )
 }

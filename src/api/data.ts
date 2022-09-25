@@ -1,8 +1,8 @@
 // #region API Error code
-/** 
+/**
  * API レスポンスコード
-*/
-export enum ApiResponseCode{
+ */
+export enum ApiResponseCode {
   OK = 200,
   // リクエスト不正
   BadRequest = 400,

@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 import AppLogo from 'components/atoms/AppLogo'
-import {
-  PersonIcon,
-} from 'components/atoms/IconButton'
+import { PersonIcon } from 'components/atoms/IconButton'
 import ShapeImage from 'components/atoms/ShapeImage'
 import Spinner from 'components/atoms/Spinner'
 import Text from 'components/atoms/Text'
@@ -46,10 +44,7 @@ const Header = () => {
 
   return (
     <HeaderRoot>
-      <Flex
-        paddingLeft={3}
-        paddingRight={3}
-        justifyContent="space-between">
+      <Flex paddingLeft={3} paddingRight={3} justifyContent="space-between">
         <Box paddingLeft={1}>
           <AppLogo />
         </Box>
@@ -58,7 +53,7 @@ const Header = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/top" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>トップ</Text>
+                  <Text variant="large">トップ</Text>
                 </Anchor>
               </Link>
             </Box>
@@ -67,7 +62,7 @@ const Header = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/attendance/me" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>受講</Text>
+                  <Text variant="large">受講</Text>
                 </Anchor>
               </Link>
             </Box>
@@ -76,20 +71,20 @@ const Header = () => {
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/lecture/me" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>講義</Text>
+                  <Text variant="large">講義</Text>
                 </Anchor>
               </Link>
             </Box>
           </NavLink>
-          <NavLink>
+          {/* <NavLink>
             <Box display={{ base: 'none', md: 'block' }}>
               <Link href="/inquiry" passHref>
                 <Anchor as="a">
-                  <Text variant='large'>お問い合わせ</Text>
+                  <Text variant="large">お問い合わせ</Text>
                 </Anchor>
               </Link>
             </Box>
-          </NavLink>
+          </NavLink> */}
         </Nav>
         <Nav as="nav" height="56px" alignItems="center">
           <NavLink>
@@ -101,7 +96,7 @@ const Header = () => {
                     <Anchor as="a">
                       <ShapeImage
                         shape="circle"
-                        src={""/*authUser.profileImageUrl*/}
+                        src={'' /*authUser.profileImageUrl*/}
                         width={24}
                         height={24}
                         data-testid="profile-shape-image"
@@ -125,7 +120,7 @@ const Header = () => {
             })()}
           </NavLink>
         </Nav>
-        </Flex>
+      </Flex>
     </HeaderRoot>
   )
 }

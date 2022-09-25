@@ -1,16 +1,16 @@
 // #region Error code
-/** 
+/**
  * エラーコード
-*/
-export enum AppErrorCode{
+ */
+export enum AppErrorCode {
   Success = 0,
-	Error = 1,
+  Error = 1,
 }
 
-/** 
+/**
  * エラーサブコード
-*/
-export enum AppErrorSubCode{
+ */
+export enum AppErrorSubCode {
   None = 0,
   Error = 1,
   DuplicateUser = 2, // ユーザ重複
@@ -21,15 +21,15 @@ export enum AppErrorSubCode{
 /**
  * 処理実行結果格納クラス
  */
-export class AppResult{
+export class AppResult {
   // エラーコード
-  public Code: AppErrorCode;
+  public Code: AppErrorCode
   // サブコード
-  public SubCode: AppErrorSubCode;
+  public SubCode: AppErrorSubCode
   // コンストラクタ
   constructor() {
-    this.Code = AppErrorCode.Success;
-    this.SubCode = AppErrorSubCode.None;
+    this.Code = AppErrorCode.Success
+    this.SubCode = AppErrorSubCode.None
   }
 }
 // #endregion Error Code
@@ -38,12 +38,12 @@ export class AppResult{
 /**
  * 講義ステータス
  */
-export enum LectureStatus{
-  Pending = 0,    // ペンディング
+export enum LectureStatus {
+  Pending = 0, // ペンディング
   Recruiting = 1, // 募集中
-  Waiting = 2,    // 開始待ち(メンバー募集締切)
+  Waiting = 2, // 開始待ち(メンバー募集締切)
   InProgress = 3, // 進行中
-  Finish = 4,     // 終了
+  Finish = 4, // 終了
 }
 
 /**
@@ -56,58 +56,32 @@ export type UserHasTag = {
 /**
  * 講義情報(ベーシック)
  */
-export class LectureBasicInformation{
+export class LectureBasicInformation {
   // 講義ID
-  public Id: number = 0;
+  public Id = 0
   // 講師ID
-  public TeacherId: number = 0;
+  public TeacherId = 0
   // 講義タイトル
-  public Title: string = "";
+  public Title = ''
   // 講師名
-  public TeacherName: string = "";
+  public TeacherName = ''
   // 講師プロフィール画像URL
-  public TeacherProfileImageURL: string = "";
+  public TeacherProfileImageURL = ''
   // 講義ステータス
-  public State: LectureStatus = LectureStatus.Pending;
+  public State: LectureStatus = LectureStatus.Pending
   // 定員(募集人数)
-  public Capacity: number = 0;
+  public Capacity = 0
   // 受講者数
-  public NumberOfStudents: number = 0;
+  public NumberOfStudents = 0
 }
 /**
  * 講義情報(詳細)
  */
-export class LectureDetailInformation{
+export class LectureDetailInformation {
   // 講義ID
-  public Id: number = 0;
+  public Id = 0
   // 講義の説明
-  public Explanation: string = "";
-} 
-
-/**
- * 受講リスト
- */
-export type AttendanceList = {
-
-}
-/**
- * 講義リスト
- */
-export type LectureList = {
-  
-}
-/**
- * フォロワーリスト
- */
-export type FollowerList = {
-  
-}
-
-/**
- * フォローリスト
- */
-export type FollowList = {
-  
+  public Explanation = ''
 }
 // #endregion User
 
@@ -117,18 +91,18 @@ export type AuthUser = {
   id: number
 }
 // AuthUser型デフォルトオブジェクト
-export function GetDefaultAuthUser():AuthUser {
-  let obj: AuthUser = {
+export function GetDefaultAuthUser(): AuthUser {
+  const obj: AuthUser = {
     id: -1,
   }
-  return obj;
+  return obj
 }
 // AuthUser型デフォルトオブジェクト
-export function GetObj_AuthUser():AuthUser {
-  let obj: AuthUser = {
+export function GetObj_AuthUser(): AuthUser {
+  const obj: AuthUser = {
     id: 0,
   }
-  return obj;
+  return obj
 }
 // ユーザー
 export type User = {
@@ -155,22 +129,22 @@ export type User = {
 }
 // User型初期化オブジェクト
 export function GetObj_User() {
-  let obj: User = {
+  const obj: User = {
     id: 0,
     login_id: 0,
-    password: "",
-    user_name: "",
-    email: "",
-    image_path: "",
-    self_introduction: "",
+    password: '',
+    user_name: '',
+    email: '',
+    image_path: '',
+    self_introduction: '',
     credit_card_number: 0,
     financial_institution_id: 0,
     bank_number: 0,
   }
-  return obj;
+  return obj
 }
 
-export enum UserSkillType{
+export enum UserSkillType {
   Nothing = 0,
   PHP = 1,
   JavaScript = 2,
@@ -179,47 +153,47 @@ export enum UserSkillType{
 // ユーザースキル
 export type Skill = {
   // ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // スキルID
-  skill_id: UserSkillType;
+  skill_id: UserSkillType
 }
 // Skill型初期化オブジェクト
 export function GetObj_Skill() {
-  let obj: Skill = {
+  const obj: Skill = {
     id: 0,
     user_id: 0,
-    skill_id: UserSkillType.Nothing
+    skill_id: UserSkillType.Nothing,
   }
-  return obj;
+  return obj
 }
 
 // 授業
 export type Lecture = {
   // 講義ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 講義タイトル
-  title: string;
+  title: string
   // 講義説明
-  explanation: string;
+  explanation: string
 }
 // Lecture型初期化オブジェクト
 export function GetObj_Lecture() {
-  let obj: Lecture = {
+  const obj: Lecture = {
     id: 0,
     user_id: 0,
-    title: "",
-    explanation: "",
+    title: '',
+    explanation: '',
   }
-  return obj;
+  return obj
 }
 // Lecture型とUser型のセット
 export type LectureWithUser = {
   lecture: Lecture
-  user:User
+  user: User
 }
 
 // 生徒役割
@@ -233,41 +207,41 @@ export enum StudentPosition {
 /**
  * 申請ステータス(文字列)
  */
-export enum StudentPositionString{
-  Unknown = "Unknown",
-  Leader = "リーダー",
-  Frontend = "フロントエンドエンジニア",
-  Backend = "バックサイドエンジニア",
-  Design = "デザインエンジニア",
+export enum StudentPositionString {
+  Unknown = 'Unknown',
+  Leader = 'リーダー',
+  Frontend = 'フロントエンドエンジニア',
+  Backend = 'バックサイドエンジニア',
+  Design = 'デザインエンジニア',
 }
 // 文字列の数値化
 export function ConvertToNumberStudentPosition(status: string) {
   // TODO：if使わずにスマートに書き換えたい
   if (status == StudentPositionString.Leader) {
-    return StudentPosition.Leader;
+    return StudentPosition.Leader
   } else if (status == StudentPositionString.Frontend) {
-    return StudentPosition.Frontend;
+    return StudentPosition.Frontend
   } else if (status == StudentPositionString.Backend) {
-    return StudentPosition.Backend;
+    return StudentPosition.Backend
   } else if (status == StudentPositionString.Design) {
-    return StudentPosition.Design;
+    return StudentPosition.Design
   } else {
-    return StudentPosition.Unknown;
+    return StudentPosition.Unknown
   }
 }
 // 数値の文字列化
 export function ConvertToStringStudentPosition(status: number) {
   // TODO：if使わずにスマートに書き換えたい
   if (status == StudentPosition.Leader) {
-    return StudentPositionString.Leader;
+    return StudentPositionString.Leader
   } else if (status == StudentPosition.Frontend) {
-    return StudentPositionString.Frontend;
+    return StudentPositionString.Frontend
   } else if (status == StudentPosition.Backend) {
-    return StudentPositionString.Backend;
+    return StudentPositionString.Backend
   } else if (status == StudentPosition.Design) {
-    return StudentPositionString.Design;
+    return StudentPositionString.Design
   } else {
-    return StudentPositionString.Unknown;
+    return StudentPositionString.Unknown
   }
 }
 
@@ -283,135 +257,135 @@ export enum AttendanceStatus {
 // 生徒
 export type Student = {
   // 講義ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 講義ID
-  lecture_id: number;
+  lecture_id: number
   // 参加役割
-  position: StudentPosition;
+  position: StudentPosition
   // 受講ステータス
-  status: AttendanceStatus;
+  status: AttendanceStatus
   // 支払い金額
-  pay_amount: number;
+  pay_amount: number
   // 目標到達レベル
-  goal: string;
+  goal: string
   // 参加必要条件
-  requirement: string;
+  requirement: string
   // 必要開発環境
-  dev_env: string;
+  dev_env: string
 }
 // Student型初期化オブジェクト
 export function GetObj_Student() {
-  let obj: Student = {
+  const obj: Student = {
     id: 0,
     user_id: 0,
     lecture_id: 0,
     position: StudentPosition.Unknown,
     status: AttendanceStatus.Unknown,
     pay_amount: 0,
-    goal: "",
-    requirement: "",
-    dev_env: ""
+    goal: '',
+    requirement: '',
+    dev_env: '',
   }
-  return obj;
+  return obj
 }
 // Student型とUser型のセット
 export type StudentWithUser = {
   student: Student
-  user:User
+  user: User
 }
 
 // 講師
 export type Teacher = {
   // 講義ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 講義ID
-  lecture_id: number;
+  lecture_id: number
   // 担当役割
-  type: StudentPosition;
+  type: StudentPosition
   // 報酬金額
-  pay_amount: number;
+  pay_amount: number
 }
 // Teacher型初期化オブジェクト
 export function GetObj_Teacher() {
-  let obj: Teacher = {
+  const obj: Teacher = {
     id: 0,
     user_id: 0,
     lecture_id: 0,
     type: StudentPosition.Unknown,
     pay_amount: 0,
   }
-  return obj;
+  return obj
 }
 // Teacher型とUser型のセット
 export type TeacherWithUser = {
   teacher: Teacher
-  user:User
+  user: User
 }
 // 講義日程
 export type LectureSchedule = {
   // 講義ID
-  id: number;
+  id: number
   // 講義ID
-  lecture_id: number;
+  lecture_id: number
   // 開始時刻 (format:yyyy-mm-dd HH:MM:SS)
-  start_time: string;
+  start_time: string
   // 終了時刻 (format:yyyy-mm-dd HH:MM:SS)
-  end_time: string;
+  end_time: string
   // MTG URL
-  url: string;
+  url: string
   // ミーティングID
-  meeting_id: string;
+  meeting_id: string
   // パスコード
-  passcord: string;
+  passcord: string
 }
 // LectureSchedule型初期化オブジェクト
 export function GetObj_LectureSchedule() {
-  let obj: LectureSchedule = {
+  const obj: LectureSchedule = {
     id: 0,
     lecture_id: 0,
-    start_time: "1900-01-01 00:00:00",
-    end_time: "1900-01-01 00:00:00",
-    url: "",
-    meeting_id: "",
-    passcord: "",
+    start_time: '1900-01-01 00:00:00',
+    end_time: '1900-01-01 00:00:00',
+    url: '',
+    meeting_id: '',
+    passcord: '',
   }
-  return obj;
+  return obj
 }
 // 教材
 export type TeachingMaterial = {
   // 講義ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 講義ID
-  lecture_id: number;
+  lecture_id: number
   // タイトル
-  title: string;
+  title: string
   // 説明
-  explanation: string;
+  explanation: string
   // 保存先パス
-  path: string;
+  path: string
 }
 // TeachingMaterial型初期化オブジェクト
 export function GetObj_TeachingMaterial() {
-  let obj: TeachingMaterial = {
+  const obj: TeachingMaterial = {
     id: 0,
     user_id: 0,
     lecture_id: 0,
-    title: "",
-    explanation: "",
-    path: "",
+    title: '',
+    explanation: '',
+    path: '',
   }
-  return obj;
+  return obj
 }
 /**
  * 申請ステータス
  */
-export enum ApplicationStatus{
+export enum ApplicationStatus {
   // 不定
   Unknown = 0,
   // 待機中
@@ -424,152 +398,151 @@ export enum ApplicationStatus{
 /**
  * 申請ステータス(文字列)
  */
-export enum ApplicationStatusString{
+export enum ApplicationStatusString {
   // 不定
-  Unknown = "Unknown",
+  Unknown = 'Unknown',
   // 待機中
-  Waiting = "Waiting",
+  Waiting = 'Waiting',
   // 許可
-  Accept = "Accept",
+  Accept = 'Accept',
   // 却下
-  Reject = "Reject",
+  Reject = 'Reject',
 }
 // 文字列の数値化
 export function ConvertToNumberApplicationStatus(status: string) {
   // TODO：if使わずにスマートに書き換えたい
   if (status == ApplicationStatusString.Accept) {
-    return ApplicationStatus.Accept;
+    return ApplicationStatus.Accept
   } else if (status == ApplicationStatusString.Reject) {
-    return ApplicationStatus.Reject;
+    return ApplicationStatus.Reject
   } else if (status == ApplicationStatusString.Waiting) {
-    return ApplicationStatus.Waiting;
+    return ApplicationStatus.Waiting
   } else {
-    return ApplicationStatus.Unknown;
+    return ApplicationStatus.Unknown
   }
 }
 // 数値の文字列化
 export function ConvertToStringApplicationStatus(status: number) {
   // TODO：if使わずにスマートに書き換えたい
   if (status == ApplicationStatus.Accept) {
-    return ApplicationStatusString.Accept;
+    return ApplicationStatusString.Accept
   } else if (status == ApplicationStatus.Reject) {
-    return ApplicationStatusString.Reject;
+    return ApplicationStatusString.Reject
   } else if (status == ApplicationStatus.Waiting) {
-    return ApplicationStatusString.Waiting;
+    return ApplicationStatusString.Waiting
   } else {
-    return ApplicationStatusString.Unknown;
+    return ApplicationStatusString.Unknown
   }
 }
 // 受講申請
 export type ApplicationOfLecture = {
   // 申請ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 生徒ID
-  student_id: number;
+  student_id: number
   // 申請ステータス
-  status: ApplicationStatus;
+  status: ApplicationStatus
   // 受講動機
-  motivation: string;
+  motivation: string
   // フィードバックコメント
-  fb_comment: string;
+  fb_comment: string
 }
 // ApplicationOfLecture型初期化オブジェクト
 export function GetObj_ApplicationOfLecture() {
-  let obj: ApplicationOfLecture = {
+  const obj: ApplicationOfLecture = {
     id: 0,
     user_id: 0,
     student_id: 0,
     status: ApplicationStatus.Waiting,
-    motivation: "",
-    fb_comment: "",
+    motivation: '',
+    fb_comment: '',
   }
-  return obj;
+  return obj
 }
 
 // チーム内チャット
 export type TeamChat = {
   // 講義ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 講義ID
-  lecture_id: number;
+  lecture_id: number
   // コメント
-  comment: string;
+  comment: string
 }
 // TeamChat型初期化オブジェクト
 export function GetObj_TeamChat() {
-  let obj: TeamChat = {
+  const obj: TeamChat = {
     id: 0,
     user_id: 0,
     lecture_id: 0,
-    comment: "",
+    comment: '',
   }
-  return obj;
+  return obj
 }
 
 // 講義データ
 export class LectureWithOptionData {
-
   // 講義
-  public lecture: Lecture;
-  public students: StudentWithUser[];
-  public teachers: TeacherWithUser[];
-  public schedules: LectureSchedule[];
-  public materials: TeachingMaterial[];
+  public lecture: Lecture
+  public students: StudentWithUser[]
+  public teachers: TeacherWithUser[]
+  public schedules: LectureSchedule[]
+  public materials: TeachingMaterial[]
 
   constructor() {
     this.lecture = {
       id: 0,
       user_id: 0,
-      title: "",
-      explanation: "",
-    };
-    this.students = new Array();
-    this.teachers = new Array();
-    this.schedules = new Array();
-    this.materials = new Array();
+      title: '',
+      explanation: '',
+    }
+    this.students = []
+    this.teachers = []
+    this.schedules = []
+    this.materials = []
   }
 }
 
 // 受講申請データ(詳細版)
 export type ApplicationOfLectureWithOptionData = {
-   // 申請ID
-  id: number;
+  // 申請ID
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 生徒ID
-  student_id: number;
+  student_id: number
   // 申請ステータス
-  status: ApplicationStatus;
+  status: ApplicationStatus
   // 受講動機
-  motivation: string;
+  motivation: string
   // フィードバックコメント
-  fb_comment: string;
+  fb_comment: string
   // ユーザー情報
-  user: User;
+  user: User
   // 生徒情報
-  student: Student;
+  student: Student
   // 講義情報
-  lecture: Lecture;
+  lecture: Lecture
 }
 
 // ApplicationOfLectureWithOptionData型初期化オブジェクト
 export function GetObj_ApplicationOfLectureWithOptionData() {
-  let obj: ApplicationOfLectureWithOptionData = {
+  const obj: ApplicationOfLectureWithOptionData = {
     id: 0,
     user_id: 0,
     student_id: 0,
     status: ApplicationStatus.Unknown,
-    motivation: "",
-    fb_comment: "",
+    motivation: '',
+    fb_comment: '',
     user: GetObj_User(),
     student: GetObj_Student(),
-    lecture: GetObj_Lecture()
+    lecture: GetObj_Lecture(),
   }
-  return obj;
+  return obj
 }
 
 // ユーザー通知
@@ -595,29 +568,29 @@ export enum AlreadyReadStatus {
 // ユーザー通知
 export type UserNotice = {
   // ID
-  id: number;
+  id: number
   // ユーザーID
-  user_id: number;
+  user_id: number
   // 通知タイプ
-  type: UserNoticeType;
+  type: UserNoticeType
   // 既読
-  already_read: AlreadyReadStatus;
+  already_read: AlreadyReadStatus
   // タイトル
-  title: string;
+  title: string
   // サブタイトル
-  sub_title: string;
+  sub_title: string
 }
 // UserNotice型初期化オブジェクト
 export function GetObj_UserNotice() {
-  let obj: UserNotice = {
+  const obj: UserNotice = {
     id: 0,
     user_id: 0,
     type: UserNoticeType.Unknown,
     already_read: AlreadyReadStatus.Unknown,
-    title: "",
-    sub_title: "",
+    title: '',
+    sub_title: '',
   }
-  return obj;
+  return obj
 }
 // #endregion App types
 
@@ -633,7 +606,7 @@ export type ApiContext = {
  * リンク情報を固めたもの
  */
 export type LinkInformationSet = {
-  dispaleyName: string,
+  dispaleyName: string
   pageLink: string
 }
 

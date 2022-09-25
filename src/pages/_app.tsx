@@ -2,10 +2,10 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { theme } from 'themes'
+import type { ApiContext } from '../types/userTypes'
 import { AuthContextProvider } from 'contexts/AuthContext'
 import GlobalSpinnerContextProvider from 'contexts/GlobalSpinnerContext'
-import type { ApiContext } from '../types/userTypes'
+import { theme } from 'themes'
 
 // グローバルのスタイル
 const GlobalStyle = createGlobalStyle`
@@ -54,11 +54,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-          <GlobalSpinnerContextProvider>
-            <AuthContextProvider>
-              <Component {...pageProps} />
-            </AuthContextProvider>
-          </GlobalSpinnerContextProvider>
+        <GlobalSpinnerContextProvider>
+          <AuthContextProvider>
+            <Component {...pageProps} />
+          </AuthContextProvider>
+        </GlobalSpinnerContextProvider>
       </ThemeProvider>
     </>
   )

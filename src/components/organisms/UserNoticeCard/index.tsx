@@ -1,15 +1,14 @@
 import styled from 'styled-components'
-import ScaleImage from 'components/atoms/ScaleImage'
+import Button from 'components/atoms/Button'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
-import Button from 'components/atoms/Button'
 
 interface UserNoticeCardProps {
-	// 通知タイプ
-	type: number
-	// 既読ステータス
-	alreadyRead: number
-	// タイトル
+  // 通知タイプ
+  type: number
+  // 既読ステータス
+  alreadyRead: number
+  // タイトル
   title: string
   // サブタイトル
   subTitle: string
@@ -24,11 +23,6 @@ const UserNoticeCardContainer = styled.div`
   position: relative;
 `
 
-// ユーザー通知カード画像のコンテナ
-const UserNoticeCardImageContainer = styled.div`
-  z-index: 99;
-`
-
 // ユーザー通知カードの情報
 const UserNoticeCardInfo = styled.div`
   position: absolute;
@@ -41,20 +35,20 @@ const UserNoticeCardInfo = styled.div`
  * ユーザー通知カード
  */
 const UserNoticeCard = ({
-	type,
-	alreadyRead,
-	title,
+  type,
+  alreadyRead,
+  title,
   subTitle,
   variant = 'listing',
 }: UserNoticeCardProps) => {
-  const { size, imgSize } = (() => {
+  const { size } = (() => {
     switch (variant) {
       case 'detail':
-        return { size: { base: '320px', md: '540px' }, imgSize: 540 }
+        return { size: { base: '320px', md: '540px' } }
       case 'listing':
-        return { size: { base: '160px', md: '240px' }, imgSize: 240 }
+        return { size: { base: '160px', md: '240px' } }
       default:
-        return { size: { base: '160px' }, imgSize: 160 }
+        return { size: { base: '160px' } }
     }
   })()
 
@@ -90,8 +84,8 @@ const UserNoticeCard = ({
                 padding={{ base: 1, md: 2 }}
               >
                 {subTitle}
-							</Text>
-							<Button>既読</Button>
+              </Text>
+              <Button>既読</Button>
             </Box>
           </UserNoticeCardInfo>
         )}
@@ -102,8 +96,8 @@ const UserNoticeCard = ({
             </Text>
             <Text as="span" variant="medium">
               {subTitle}
-						</Text>
-						<Button>既読</Button>
+            </Text>
+            <Button>既読</Button>
           </Box>
         )}
       </UserNoticeCardContainer>
