@@ -30,7 +30,8 @@ const MyLecturePage: NextPage = () => {
   useEffect(() => {
     // 講義一覧取得
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
+      apiRootUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
     GetLectures(apiContext, authUser.id, ['all']).then((result) => {
       console.log(result)
@@ -40,7 +41,8 @@ const MyLecturePage: NextPage = () => {
   // 新規講義投稿
   const postNewLecture = (formInputData: LecturePostFormData) => {
     const apiContext: ApiContext = {
-      apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
+      apiRootUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
     }
     AddLectureWithOptionData(
       apiContext,
