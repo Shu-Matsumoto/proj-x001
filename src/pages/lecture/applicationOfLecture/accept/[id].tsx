@@ -63,6 +63,13 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
     formInputData: AcceptOfApplicationResultPostFormData,
   ) => {
     console.log(formInputData)
+
+    // 申請処理結果送信確認
+    const result = confirm('受講申請処理結果を送信しますか？')
+    if (!result) {
+      return
+    }
+
     const apiContext: ApiContext = {
       apiRootUrl:
         process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',

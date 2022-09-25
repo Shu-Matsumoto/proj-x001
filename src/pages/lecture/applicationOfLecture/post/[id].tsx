@@ -75,6 +75,13 @@ const ApplicationOfLecturePage: NextPage = () => {
     formInputData: ApplicationOfLecturePostFormData,
   ) => {
     console.log(formInputData)
+
+    // 申請確認
+    const result = confirm('受講申請を送信しますか？')
+    if (!result) {
+      return
+    }
+
     const apiContext: ApiContext = {
       apiRootUrl:
         process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
@@ -88,7 +95,11 @@ const ApplicationOfLecturePage: NextPage = () => {
       apiContext,
       formInputData.applicationOfLecture,
     ).then((apiResult) => {
-      console.log(apiResult)
+      if (apiResult.result.Code == AppErrorCode.Success) {
+        setTimeout(() => {
+          router.push('/search/lecture')
+        }, 1000)
+      }
     })
   }
   // #endregion Function

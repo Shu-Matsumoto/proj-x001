@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import UserProfile from './index'
+import { GetObj_User } from 'types/userTypes'
 
 export default {
   title: 'Organisms/UserProfile',
@@ -52,15 +53,11 @@ const Template: ComponentStory<typeof UserProfile> = (args) => (
 export const Small = Template.bind({})
 Small.args = {
   variant: 'small',
-  username: 'テストユーザー',
-  profileImageUrl: '/images/sample/1.jpg',
-  description: 'サンプルテキスト',
+  user: GetObj_User(),
 }
 
 export const Normal = Template.bind({})
 Normal.args = {
   variant: 'normal',
-  username: 'テストユーザー',
-  profileImageUrl: '/images/sample/1.jpg',
-  description: 'サンプルテキスト',
+  user: GetObj_User(),
 }

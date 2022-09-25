@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useLayoutEffect } from 'react'
 import { AuthUser, GetDefaultAuthUser } from '../../types/userTypes'
 
 // 認証情報データ型
@@ -31,7 +31,7 @@ const LocalStarageKeyName = 'formartion-app-auth-info'
  * 認証情報をローカルストレージから取得
  * @returns
  */
-function getAuthInfoToLocalStorage(): AuthUser {
+function getAuthInfoFromLocalStorage(): AuthUser {
   // localStorageから指定キーのオブジェクト取得
   const defaultAuthInfo = localStorage.getItem(LocalStarageKeyName)
   if (defaultAuthInfo) {
@@ -74,14 +74,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   // #endregion Fields
 
   // 初回のみの実行
-  useEffect(() => {
-    setUserInfo(getAuthInfoToLocalStorage())
+  useLayoutEffect(() => {
+    setUserInfo(getAuthInfoFromLocalStorage())
   }, [])
 
   // #region Functions
   useEffect(() => {
     // userInfoに正しく値がセットされているかどうかをチェック
-    if (userInfo.id > 0) {
+    if (userInfo && userInfo.id > 0) {
       setAuthInfoToLocalStorage(userInfo)
       setLoggedIn(true)
     } else {

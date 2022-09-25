@@ -1,13 +1,22 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import styled from 'styled-components'
 import { useAuthContext } from '../contexts/AuthContext'
-import { AuthUser, GetDefaultAuthUser } from '../types/userTypes'
-import AppLogo from 'components/atoms/AppLogo'
+import { AuthUser } from '../types/userTypes'
 import Separator from 'components/atoms/Separator'
+import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import Footer from 'components/organisms/Footer'
 import SigninFormContainer from 'containers/SigninFormContainer'
+
+// アンカー
+const Anchor = styled(Text)`
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
 const SigninPage: NextPage = () => {
   // ルーター
@@ -35,7 +44,21 @@ const SigninPage: NextPage = () => {
   return (
     <>
       <Box paddingTop={2} paddingLeft={2}>
-        <AppLogo />
+        <Anchor as="a">
+          <Text
+            variant="extraLarge"
+            fontWeight="bold"
+            backgroundColor="#333333"
+            color="white"
+            paddingTop={1}
+            paddingBottom={1}
+            paddingLeft={2}
+            paddingRight={2}
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            formation
+          </Text>
+        </Anchor>
       </Box>
       <Separator />
       <Flex

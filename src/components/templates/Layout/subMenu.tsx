@@ -23,7 +23,7 @@ const SubMenu = ({ menuLinkList }: SubMenuProps) => {
             {menuLinkList.map((item, index) => (
               <Box key={index} paddingTop={1} paddingBottom={1}>
                 <Link key={index} href={`${item.pageLink}`} passHref>
-                  <Text key={index} variant="extraLarge" margin={0} padding={0}>
+                  <Text key={index} variant="medium" margin={0} padding={0}>
                     {`${item.dispaleyName}`}
                   </Text>
                 </Link>

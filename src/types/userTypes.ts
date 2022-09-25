@@ -133,7 +133,7 @@ export function GetObj_User() {
     id: 0,
     login_id: 0,
     password: '',
-    user_name: '',
+    user_name: 'anonymous',
     email: '',
     image_path: '',
     self_introduction: '',

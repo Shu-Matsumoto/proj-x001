@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useLayoutEffect } from 'react'
 import styled from 'styled-components'
-import AppLogo from 'components/atoms/AppLogo'
+import Button from 'components/atoms/Button'
 import { PersonIcon } from 'components/atoms/IconButton'
 import ShapeImage from 'components/atoms/ShapeImage'
 import Spinner from 'components/atoms/Spinner'
@@ -40,83 +42,126 @@ const Anchor = styled(Text)`
  * ヘッダー
  */
 const Header = () => {
-  const { authUser, isloggdIn } = useAuthContext()
+  // #region Fields
+  const router = useRouter()
+  const { authUser, isloggdIn, setAuthUser } = useAuthContext()
+  // #endregion Fields
+
+  // #region Functions
+  // 初回のみの実行
+  useLayoutEffect(() => {
+    if (!authUser || authUser.id <= 0 || !isloggdIn) {
+      router.push('/')
+    }
+  }, [])
+
+  // ログアウトボタンクリック時の確認
+  function confirmLogout(): void {
+    const result = confirm('ログアウトしますか？')
+    if (result) {
+      // ログイン画面へ遷移
+      router.push('/')
+    }
+  }
+  // #endregion Functions
 
   return (
     <HeaderRoot>
       <div>
-        <Flex paddingLeft={3} paddingRight={3} justifyContent="space-between">
-          <Box paddingLeft={1}>
-            <AppLogo />
-          </Box>
-          <Nav as="nav" height="56px" alignItems="center">
+        <Flex paddingLeft={1} paddingRight={3} justifyContent="space-between">
+          <Nav as="nav" height="56px" alignItems="center" marginLeft={2}>
+            <Anchor as="a">
+              <Text
+                variant="extraLarge"
+                fontWeight="bold"
+                backgroundColor="#333333"
+                color="white"
+                paddingTop={1}
+                paddingBottom={1}
+                paddingLeft={2}
+                paddingRight={2}
+                style={{ fontFamily: 'Georgia, serif' }}
+              >
+                formation
+              </Text>
+            </Anchor>
+            {/*トップ*/}
             <NavLink>
               <Box display={{ base: 'none', md: 'block' }}>
                 <Link href="/top" passHref>
                   <Anchor as="a">
-                    <Text variant="large">トップ</Text>
+                    <Text
+                      variant="mediumLarge"
+                      fontWeight="bold"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      トップ
+                    </Text>
                   </Anchor>
                 </Link>
               </Box>
             </NavLink>
+            {/*受講*/}
             <NavLink>
               <Box display={{ base: 'none', md: 'block' }}>
                 <Link href="/attendance/me" passHref>
                   <Anchor as="a">
-                    <Text variant="large">受講</Text>
+                    <Text
+                      variant="mediumLarge"
+                      fontWeight="bold"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      受講
+                    </Text>
                   </Anchor>
                 </Link>
               </Box>
             </NavLink>
+            {/*講義*/}
             <NavLink>
               <Box display={{ base: 'none', md: 'block' }}>
                 <Link href="/lecture/me" passHref>
                   <Anchor as="a">
-                    <Text variant="large">講義</Text>
+                    <Text
+                      variant="mediumLarge"
+                      fontWeight="bold"
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      講義
+                    </Text>
                   </Anchor>
                 </Link>
               </Box>
             </NavLink>
-            {/* <NavLink>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <Link href="/inquiry" passHref>
-                <Anchor as="a">
-                  <Text variant="large">お問い合わせ</Text>
-                </Anchor>
-              </Link>
-            </Box>
-          </NavLink> */}
           </Nav>
           <Nav as="nav" height="56px" alignItems="center">
             <NavLink>
               {(() => {
                 // 認証していたらアイコンを表示
-                if (authUser) {
+                if (authUser && authUser.id > 0) {
                   return (
-                    <Link href={`/users/${authUser.id}`} passHref>
-                      <Anchor as="a">
-                        <ShapeImage
-                          shape="circle"
-                          src={'' /*authUser.profileImageUrl*/}
-                          width={24}
-                          height={24}
-                          data-testid="profile-shape-image"
-                        />
-                      </Anchor>
-                    </Link>
+                    <>
+                      <Link href={`/users/${authUser.id}`} passHref>
+                        <Anchor as="a">
+                          <ShapeImage
+                            shape="circle"
+                            src="/users/1.png"
+                            width={48}
+                            height={48}
+                            data-testid="profile-shape-image"
+                          />
+                        </Anchor>
+                      </Link>
+                    </>
                   )
-                } else if (isloggdIn) {
-                  // ロード中はスピナーを表示
-                  return <Spinner size={20} strokeWidth={2} />
-                } else {
-                  // サインインしてない場合はアイコンを表示
-                  return (
-                    <Link href="/" passHref>
-                      <Anchor as="a">
-                        <PersonIcon size={24} />
-                      </Anchor>
-                    </Link>
-                  )
+                }
+              })()}
+            </NavLink>
+            <NavLink>
+              {(() => {
+                // 認証していたらログアウトボタンを表示
+                if (authUser && authUser.id > 0) {
+                  return <Button onClick={confirmLogout}>Logout</Button>
                 }
               })()}
             </NavLink>
