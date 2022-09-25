@@ -42,7 +42,7 @@ const Anchor = styled(Text)`
  * ヘッダー
  */
 const Header = () => {
-  const { authUser, isLoading } = useAuthContext()
+  const { authUser, isloggdIn } = useAuthContext()
 
   return (
     <HeaderRoot>
@@ -101,7 +101,7 @@ const Header = () => {
                     <Anchor as="a">
                       <ShapeImage
                         shape="circle"
-                        src={authUser.profileImageUrl}
+                        src={""/*authUser.profileImageUrl*/}
                         width={24}
                         height={24}
                         data-testid="profile-shape-image"
@@ -109,7 +109,7 @@ const Header = () => {
                     </Anchor>
                   </Link>
                 )
-              } else if (isLoading) {
+              } else if (isloggdIn) {
                 // ロード中はスピナーを表示
                 return <Spinner size={20} strokeWidth={2} />
               } else {

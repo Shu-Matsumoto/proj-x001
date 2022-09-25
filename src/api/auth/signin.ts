@@ -1,7 +1,7 @@
 // typesは後ほど定義
 import * as UserTypes from '../../types/userTypes'
 import { ErrorCodeTranslator } from '../errorCodeTranslator';
-import { ApiRequestFetcher, ChangeToInvalidApiAuth, ApiRequestType } from 'utils'
+import { ApiRequestFetcher, ApiRequestType } from 'utils'
 
 
 export type SigninParams = {

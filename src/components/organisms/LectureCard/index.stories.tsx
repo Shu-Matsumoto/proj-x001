@@ -62,8 +62,6 @@ Listing.args = {
   variant: 'listing',
   title: "開発現場におけるGithub活用方法",
   teacherName: "鈴木亮平",
-  capacity: 8,
-  numberOfStudents: 4,
   teacherProfileImageUrl: '/images/users/1.png',
 }
 
@@ -73,8 +71,6 @@ Small.args = {
   variant: 'small',
   title: "開発現場におけるGithub活用方法",
   teacherName: "鈴木亮平",
-  capacity: 8,
-  numberOfStudents: 4,
   teacherProfileImageUrl: '/images/users/1.png',
 }
 
@@ -84,7 +80,5 @@ Detail.args = {
   variant: 'detail',
   title: "開発現場におけるGithub活用方法",
   teacherName: "鈴木亮平",
-  capacity: 8,
-  numberOfStudents: 4,
   teacherProfileImageUrl: '/images/users/1.png',
 }

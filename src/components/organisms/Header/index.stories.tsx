@@ -24,10 +24,7 @@ export const Login = () => {
 
   return (
     <>
-      <AuthContextProvider
-        context={{ apiRootUrl: 'https://dummy' }}
-        authUser={authUser}
-      >
+      <AuthContextProvider>
         <ChildComponent />
       </AuthContextProvider>
     </>

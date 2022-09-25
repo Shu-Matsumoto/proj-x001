@@ -54,7 +54,6 @@ Small.args = {
   variant: 'small',
   username: 'テストユーザー',
   profileImageUrl: '/images/sample/1.jpg',
-  numberOfProducts: 2000,
   description: 'サンプルテキスト',
 }
 
@@ -63,6 +62,5 @@ Normal.args = {
   variant: 'normal',
   username: 'テストユーザー',
   profileImageUrl: '/images/sample/1.jpg',
-  numberOfProducts: 2000,
   description: 'サンプルテキスト',
 }

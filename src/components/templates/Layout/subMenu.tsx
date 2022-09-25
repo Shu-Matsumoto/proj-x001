@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import Flex from 'components/layout/Flex'
 import Box from 'components/layout/Box'
-import { LinkInformationSet } from '../../../types'
+import { LinkInformationSet } from '../../../types/userTypes'
 import Text from 'components/atoms/Text'
 
 interface SubMenuProps {
