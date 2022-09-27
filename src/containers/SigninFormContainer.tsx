@@ -33,18 +33,23 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
         if (apiResult.result.Code == AppErrorCode.Success) {
           const loggedInUser: AuthUser = {
             id: apiResult.data.id,
+            user_name: apiResult.data.user_name,
+            profile_image_path: apiResult.data.image_path,
           }
           // console.log("loggedInUser user is ...");
           // console.log(loggedInUser);
           onSignin && onSignin(loggedInUser)
         } else {
+          alert("ログインに失敗しました。")
           const unAuthUser: AuthUser = {
             id: -1,
+            user_name: 'anonymous',
+            profile_image_path: '',
           }
           const err = { cause: 'signin failed.' }
           if (err instanceof Error) {
             // エラーの内容を表示
-            window.alert(err.message)
+            alert(err.message)
             onSignin && onSignin(unAuthUser, err)
           }
         }
@@ -52,9 +57,11 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
     } catch (err: unknown) {
       if (err instanceof Error) {
         // エラーの内容を表示
-        window.alert(err.message)
+        alert(err.message)
         const unAuthUser: AuthUser = {
           id: -1,
+          user_name: 'anonymous',
+          profile_image_path: '',
         }
         onSignin && onSignin(unAuthUser, err)
       }

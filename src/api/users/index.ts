@@ -39,3 +39,27 @@ export const UpdateUserInformation = async (
     data: apiResult.data,
   }
 }
+
+// ユーザープロフィール画像アップロード
+export const UpdateUserProfileImage = async (
+  context: UserTypes.ApiContext,
+  user_id: number,
+  postData: FormData,
+): Promise<{ result: UserTypes.AppResult; data: UserTypes.User }> => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/${user_id}/image`
+  const apiResult: {
+    code: number
+    message: string
+    data: UserTypes.User
+  } = await ApiRequestFetcher(
+    address,
+    ApiRequestType.POST,
+    postData,
+    'multipart/form-data',
+  )
+  console.log(apiResult)
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  }
+}

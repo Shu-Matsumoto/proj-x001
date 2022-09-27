@@ -2,6 +2,7 @@
  * 講義一覧ページ
  */
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { GetLectures, AddLectureWithOptionData } from '../../api/lectures/'
 import Separator from 'components/atoms/Separator'
@@ -16,12 +17,15 @@ import Layout from 'components/templates/Layout'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
 import { useAuthContext } from 'contexts/AuthContext'
-import { ApiContext, AppResult, AppErrorCode } from 'types/userTypes'
+import { ApiContext, AppErrorCode } from 'types/userTypes'
+import { Message } from '@mui/icons-material'
 
 const MyLecturePage: NextPage = () => {
   // #region Fields
+  const router = useRouter()
   // 認証済ユーザー
   const { authUser } = useAuthContext()
+
   const [myLectures, setMyLectures] = useState(authUser.id)
   // #endregion Fields
 
@@ -53,6 +57,13 @@ const MyLecturePage: NextPage = () => {
       formInputData.materials,
     ).then((result) => {
       console.log(result)
+      if (result.result.Code == AppErrorCode.Success) {
+        alert("講義登録に成功しました。")
+        // トップ画面へ遷移
+        router.push('/top')
+      } else {
+        alert("講義登録に失敗しました。")
+      }
     })
   }
   // #endregion Function
@@ -87,7 +98,9 @@ const MyLecturePage: NextPage = () => {
                 alignItems={'center'}
               >
                 投稿エリア
-                <LecturePostForm onPost={postNewLecture} />
+                <LecturePostForm
+                  user={authUser}
+                  onPost={postNewLecture} />
               </Flex>
             </Box>
             <Separator />

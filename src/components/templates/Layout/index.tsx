@@ -1,4 +1,3 @@
-import { height } from '@mui/system'
 import Separator from 'components/atoms/Separator'
 import Box from 'components/layout/Box'
 import Footer from 'components/organisms/Footer'

@@ -89,11 +89,17 @@ export class LectureDetailInformation {
 export type AuthUser = {
   // ユーザーID
   id: number
+  // ログインユーザー名
+  user_name: string
+  // プロフィール画像パス
+  profile_image_path: string
 }
 // AuthUser型デフォルトオブジェクト
 export function GetDefaultAuthUser(): AuthUser {
   const obj: AuthUser = {
     id: -1,
+    user_name: 'anonymous',
+    profile_image_path: '',
   }
   return obj
 }
@@ -101,6 +107,8 @@ export function GetDefaultAuthUser(): AuthUser {
 export function GetObj_AuthUser(): AuthUser {
   const obj: AuthUser = {
     id: 0,
+    user_name: 'anonymous',
+    profile_image_path: '',
   }
   return obj
 }
@@ -109,7 +117,7 @@ export type User = {
   // ユーザーID
   id: number
   // ログインID
-  login_id: number
+  login_id: string
   // ログインパスワード
   password: string
   // ユーザー名
@@ -121,25 +129,45 @@ export type User = {
   // 自己紹介文
   self_introduction: string
   // クレジットカード番号
-  credit_card_number: number
+  credit_card_number: string
   // 金融機関ID
-  financial_institution_id: number
+  financial_institution_id: string
   // 銀行口座番号
-  bank_number: number
+  bank_number: string
 }
 // User型初期化オブジェクト
 export function GetObj_User() {
   const obj: User = {
     id: 0,
-    login_id: 0,
+    login_id: '',
     password: '',
     user_name: 'anonymous',
-    email: '',
+    email: 'sample@sample.com',
     image_path: '',
-    self_introduction: '',
-    credit_card_number: 0,
-    financial_institution_id: 0,
-    bank_number: 0,
+    self_introduction: 'nothing',
+    credit_card_number: '',
+    financial_institution_id: '',
+    bank_number: '',
+  }
+  return obj
+}
+
+// User型初期化オブジェクト
+export function GetCopyObj_User(src: User) {
+  
+  if (!src) { return null }
+
+  const obj: User = {
+    id: src.id,
+    login_id: src.login_id,
+    password: src.password,
+    user_name: src.user_name,
+    email: src.email,
+    image_path: src.image_path,
+    self_introduction: src.self_introduction,
+    credit_card_number: src.credit_card_number,
+    financial_institution_id: src.financial_institution_id,
+    bank_number: src.bank_number,
   }
   return obj
 }

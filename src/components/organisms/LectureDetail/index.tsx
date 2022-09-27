@@ -124,14 +124,14 @@ export const LectureDetail = (props: LectureDetailProps) => {
                         <BootstrapInput
                           key={index}
                           id="bootstrap-input"
-                          value={teacher.user.user_name}
+                          value={ConvertToStringStudentPosition(
+                            teacher.teacher.type,
+                          )}
                         />
                         <BootstrapInput
                           key={index}
                           id="bootstrap-input"
-                          value={ConvertToStringStudentPosition(
-                            teacher.teacher.type,
-                          )}
+                          value={teacher.user.user_name}
                         />
                       </Flex>
                     </Box>
@@ -155,7 +155,12 @@ export const LectureDetail = (props: LectureDetailProps) => {
                             student.student.position,
                           )}
                         />
-                        {!props.view_mode_mine && (
+                        <BootstrapInput
+                          key={index}
+                          id="bootstrap-input"
+                          value={student.student.user_id == 1 ? "未定" : student.user.user_name}
+                        />
+                        {!props.view_mode_mine && student.student.user_id == 1 && (
                           <Link
                             key={index}
                             href={{
@@ -188,54 +193,66 @@ export const LectureDetail = (props: LectureDetailProps) => {
                 </Box>
                 {lecture.schedules.map((schedule, index) => {
                   return (
-                    <Flex
-                      key={index}
-                      justifyContent={'space-between'}
-                      flexDirection={'row'}
-                    >
-                      <BootstrapInput
+                    <Box key={index} margin={1}>
+                      <Flex
                         key={index}
-                        id="bootstrap-input"
-                        value={schedule.start_time}
-                      />
-                      <BootstrapInput
-                        key={index}
-                        id="bootstrap-input"
-                        value={schedule.end_time}
-                      />
-                      {props.view_mode_mine && (
-                        <Button
+                        justifyContent={'flex-start'}
+                        flexDirection={'row'}
+                      >
+                        <BootstrapInput
                           key={index}
-                          variant={'secondary'}
-                          width={{ base: '100px', md: '100px' }}
-                          onClick={() => {
-                            /* 新規タブを開きZOOMリンクへアクセス */
-                            window.open(
-                              'https://us05web.zoom.us/j/4344904366?pwd=R2ltOVJOYldMREJXbndzcnZLa0xzZz09',
-                              '_blank',
-                            )
-                          }}
-                        >
-                          講義参加
-                        </Button>
-                      )}
-                    </Flex>
+                          id="bootstrap-input"
+                          value={schedule.start_time}
+                        />
+                        <BootstrapInput
+                          key={index}
+                          id="bootstrap-input"
+                          value={schedule.end_time}
+                        />
+                        {props.view_mode_mine && (
+                          <Button
+                            key={index}
+                            variant={'secondary'}
+                            width={{ base: '100px', md: '100px' }}
+                            onClick={() => {
+                              /* 新規タブを開きZOOMリンクへアクセス */
+                              window.open(
+                                'https://us05web.zoom.us/j/4344904366?pwd=R2ltOVJOYldMREJXbndzcnZLa0xzZz09',
+                                '_blank',
+                              )
+                            }}
+                          >
+                            講義参加
+                          </Button>
+                        )}
+                      </Flex>
+                  </Box>
                   )
                 })}
               </FormControl>
               <FormControl variant="standard" margin={'normal'}>
-                <InputLabel shrink htmlFor="bootstrap-input">
-                  教材
-                </InputLabel>
+                <Box margin={1}>
+                  <InputLabel shrink htmlFor="bootstrap-input">
+                    教材
+                  </InputLabel>
+                </Box>
                 {lecture.materials.map((material, index) => {
                   return (
-                    <>
-                      <BootstrapInput
-                        key={index}
-                        id="bootstrap-input"
-                        value={material.title}
-                      />
-                    </>
+                    <Box key={index} margin={1}>
+                      <Flex>
+                        <BootstrapInput
+                          key={index}
+                          id="bootstrap-input"
+                          value={material.title}
+                        />
+                        <Button
+                          key={index}
+                          width={{ base: '100px', md: '100px' }}
+                        >
+                          Link
+                        </Button>
+                      </Flex>
+                    </Box>
                   )
                 })}
               </FormControl>

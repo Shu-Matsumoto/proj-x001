@@ -32,18 +32,32 @@ export const ApiRequestFetcher = async (
   resource: RequestInfo,
   type: ApiRequestType,
   params: any,
+  contenType?: string,
 ): Promise<any> => {
   let init: RequestInit
   if (params != null) {
-    init = {
-      method: convertApiRequestTypeToString(type),
-      headers: {
-        Origin: '*',
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        credentials: 'include',
-      },
-      body: JSON.stringify(params),
+    if (!contenType) {
+      init = {
+        method: convertApiRequestTypeToString(type),
+        headers: {
+          Origin: '*',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          credentials: 'include',
+        },
+        body: JSON.stringify(params),
+      }
+    } else {
+      console.log(contenType)
+      init = {
+        method: convertApiRequestTypeToString(type),
+        headers: {
+          Origin: '*',
+          Accept: 'application/json',
+          credentials: 'include',
+        },
+        body: params,
+      }
     }
   } else {
     init = {
@@ -87,4 +101,9 @@ export function ToDatetimeString(datetime: Date): string {
   return (
     year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds
   )
+}
+
+// データサーバー上の画像ファイルURL取得
+export function GetUrlOfImageFileInDataServer(relativePath: string) {
+  return process.env.NEXT_PUBLIC_IMAGE_FILE_HOST_ABS + '/' + relativePath
 }

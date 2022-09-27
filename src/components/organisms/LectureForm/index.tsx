@@ -19,6 +19,7 @@ export type LecturePostFormData = {
 }
 
 interface LecturePostFormProps {
+  user?: UserTypes.AuthUser
   /**
    * 投稿ボタンを押した時のイベントハンドラ
    */
@@ -28,7 +29,7 @@ interface LecturePostFormProps {
 /**
  * 講義新規投稿フォーム
  */
-export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
+export const LecturePostForm = (props: LecturePostFormProps) => {
   // React Hook Formの使用
   const {
     register,
@@ -38,13 +39,13 @@ export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
   } = useForm<LecturePostFormData>({
     defaultValues: {
       lecture: {
-        user_id: 1,
+        user_id: props.user?.id,
         title: 'サンプル講義1',
         explanation: '講義の説明サンプルです。',
       },
       students: [
         {
-          user_id: 1,
+          user_id: props.user?.id,
           position: UserTypes.StudentPosition.Leader,
           status: UserTypes.AttendanceStatus.Waiting,
           pay_amount: 19000,
@@ -55,7 +56,7 @@ export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
       ],
       teachers: [
         {
-          user_id: 1,
+          user_id: props.user?.id,
           type: UserTypes.StudentPosition.Leader,
           pay_amount: 19000,
         },
@@ -75,7 +76,7 @@ export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
       ],
       materials: [
         {
-          user_id: 1,
+          user_id: props.user?.id,
           title: '教材サンプル1',
           explanation: 'これは教材の説明サンプルです。',
           path: 'https://drive.google.com/file/d/1_iZM0kjrw_fwrzQE/view?usp=sharing',
@@ -125,7 +126,12 @@ export const LecturePostForm = ({ onPost }: LecturePostFormProps) => {
   // Form submit時イベントハンドラ
   const onSubmit = (formData: LecturePostFormData) => {
     console.log(formData)
-    onPost && onPost(formData)
+    
+    // 投稿前の確認
+    let result = confirm("新規講義を登録しますか？");
+    if (result) {
+      props.onPost && props.onPost(formData)
+    }
   }
 
   return (

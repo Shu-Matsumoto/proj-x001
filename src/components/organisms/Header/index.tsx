@@ -5,11 +5,11 @@ import styled from 'styled-components'
 import Button from 'components/atoms/Button'
 import { PersonIcon } from 'components/atoms/IconButton'
 import ShapeImage from 'components/atoms/ShapeImage'
-import Spinner from 'components/atoms/Spinner'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
 import { useAuthContext } from 'contexts/AuthContext'
+import { GetUrlOfImageFileInDataServer } from 'utils'
 
 // ヘッダーのルート
 const HeaderRoot = styled.header`
@@ -51,7 +51,7 @@ const Header = () => {
   // 初回のみの実行
   useLayoutEffect(() => {
     if (!authUser || authUser.id <= 0 || !isloggdIn) {
-      router.push('/')
+      //router.push('/')
     }
   }, [])
 
@@ -139,21 +139,39 @@ const Header = () => {
               {(() => {
                 // 認証していたらアイコンを表示
                 if (authUser && authUser.id > 0) {
-                  return (
-                    <>
-                      <Link href={`/users/${authUser.id}`} passHref>
-                        <Anchor as="a">
-                          <ShapeImage
-                            shape="circle"
-                            src="/users/1.png"
-                            width={48}
-                            height={48}
-                            data-testid="profile-shape-image"
-                          />
-                        </Anchor>
-                      </Link>
-                    </>
-                  )
+                  if (
+                    authUser.profile_image_path !== null &&
+                    authUser.profile_image_path !== ''
+                  ) {
+                    return (
+                      <>
+                        <Link href={`/users/${authUser.id}`} passHref>
+                          <Anchor as="a">
+                            <ShapeImage
+                              shape="circle"
+                              //src="/users/1.png" //for DBG
+                              src={GetUrlOfImageFileInDataServer(
+                                authUser.profile_image_path,
+                              )}
+                              width={48}
+                              height={48}
+                              data-testid="profile-shape-image"
+                            />
+                          </Anchor>
+                        </Link>
+                      </>
+                    )
+                  } else {
+                    return (
+                      <>
+                        <Link href={`/users/${authUser.id}`} passHref>
+                          <Anchor as="a">
+                            <PersonIcon size={24} />
+                          </Anchor>
+                        </Link>
+                      </>
+                    )
+                  }
                 }
               })()}
             </NavLink>
@@ -161,7 +179,24 @@ const Header = () => {
               {(() => {
                 // 認証していたらログアウトボタンを表示
                 if (authUser && authUser.id > 0) {
-                  return <Button onClick={confirmLogout}>Logout</Button>
+                  return (
+                    <Flex
+                      flexDirection={'column'}
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                      alignContent={'center'}
+                    >
+                      <Link href={`/users/${authUser.id}`} passHref>
+                        <Text
+                          variant='small'
+                          marginBottom={1}
+                        >
+                          {authUser.user_name}
+                        </Text>
+                      </Link>
+                      <Button onClick={confirmLogout}>Logout</Button>
+                    </Flex>
+                  )
                 }
               })()}
             </NavLink>

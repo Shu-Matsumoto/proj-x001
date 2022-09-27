@@ -85,17 +85,6 @@ export const AcceptOfApplicationResultPostForm = (
     mode: 'onBlur',
   })
 
-  // // トグルボタンの状態保持
-  // const [alignment, setAlignment] = useState(Number(UserTypes.ApplicationStatus.Waiting));
-
-  // // トグルボタンクリックイベントハンドラ
-  // const handleChange = (
-  //   event: React.MouseEvent<HTMLElement>,
-  //   newAlignment: number,
-  // ) => {
-  //   setAlignment(newAlignment);
-  // };
-
   // Form submit時イベントハンドラ
   const onSubmit = (formData: AcceptOfApplicationResultPostFormData) => {
     const acceptResult = formData.applicationOfLecture.status

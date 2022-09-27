@@ -11,7 +11,14 @@ import Layout from 'components/templates/Layout'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import TopPageSubMenu from 'containers/menu/topPageSubMenu'
 import { useAuthContext } from 'contexts/AuthContext'
-import { ApiContext, AppErrorCode, User, GetObj_User } from 'types/userTypes'
+import {
+  ApiContext,
+  AppErrorCode,
+  AuthUser,
+  GetDefaultAuthUser,
+  User,
+  GetObj_User
+} from 'types/userTypes'
 
 const UserPage: NextPage = () => {
   // #region Fields
@@ -21,28 +28,57 @@ const UserPage: NextPage = () => {
   // ページルート
   const router = useRouter()
   // 認証済ユーザー
-  const { authUser } = useAuthContext()
+  const { authUser, setAuthUser } = useAuthContext()
   // ユーザー情報
   const [user, setUser] = useState<User>(GetObj_User())
+  // プロフィール編集モード
+  const [editMode, setEditMode] = useState<boolean>(false)
   // #endregion Fields
 
   // #region Functions
   // 初期化処理
   useEffect(() => {
-    GetUserInformation(apiContext, authUser.id).then((apiResult) => {
+    GetUserInformation(apiContext, authUser.id)
+      .then((apiResult) => {
       //console.log(apiResult);
       if (apiResult.result.Code == AppErrorCode.Success) {
         setUser(apiResult.data)
-        console.log(user)
+        //console.log(user)
       }
     })
   }, [])
+  /**
+   * 編集モード遷移
+   */
+  function transitToEditMode(): void {
+    setEditMode(true)
+  }
+  /**
+   * 参照モード遷移
+   */
+  function transitToRefMode(): void {
+    setEditMode(false)
+  }
+  // ユーザーデータ更新
+  function updateUserData(user: User) {
+    setUser(user)
+    let localAuthUser: AuthUser = GetDefaultAuthUser()
+    localAuthUser.id = user.id
+    localAuthUser.user_name = user.user_name
+    localAuthUser.profile_image_path = user.image_path
+    // 認証ユーザー情報更新
+    setAuthUser(localAuthUser)
+  }
   // #endregion Functions
 
   // #region View
   // ページリンクリスト
   const breadcrumbList: { link: string; title: string }[] = []
   breadcrumbList[0] = { link: '/top', title: 'トップ' }
+  breadcrumbList[1] = {
+    link: `/users/${router.query.id}`,
+    title: 'プロフィール',
+  }
   return (
     <Layout>
       <MainPartLayout
@@ -63,7 +99,14 @@ const UserPage: NextPage = () => {
             </Text>
             <Box width="100%" paddingLeft={2} paddingRight={2}>
               <Flex>
-                <UserProfile variant="normal" user={user} />
+                <UserProfile
+                  variant="normal"
+                  user={user}
+                  editMode={editMode}
+                  onTransitToEdit={transitToEditMode}
+                  onTransitToRef={transitToRefMode}
+                  updateUserData={updateUserData}
+                />
               </Flex>
             </Box>
           </Flex>
