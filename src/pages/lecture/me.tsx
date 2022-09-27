@@ -1,6 +1,7 @@
 /**
  * 講義一覧ページ
  */
+import { Message } from '@mui/icons-material'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
@@ -18,7 +19,6 @@ import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import LecturePageSubMenu from 'containers/menu/lecturePageSubMenu'
 import { useAuthContext } from 'contexts/AuthContext'
 import { ApiContext, AppErrorCode } from 'types/userTypes'
-import { Message } from '@mui/icons-material'
 
 const MyLecturePage: NextPage = () => {
   // #region Fields
@@ -58,11 +58,11 @@ const MyLecturePage: NextPage = () => {
     ).then((result) => {
       console.log(result)
       if (result.result.Code == AppErrorCode.Success) {
-        alert("講義登録に成功しました。")
+        alert('講義登録に成功しました。')
         // トップ画面へ遷移
         router.push('/top')
       } else {
-        alert("講義登録に失敗しました。")
+        alert('講義登録に失敗しました。')
       }
     })
   }
@@ -98,9 +98,7 @@ const MyLecturePage: NextPage = () => {
                 alignItems={'center'}
               >
                 投稿エリア
-                <LecturePostForm
-                  user={authUser}
-                  onPost={postNewLecture} />
+                <LecturePostForm user={authUser} onPost={postNewLecture} />
               </Flex>
             </Box>
             <Separator />

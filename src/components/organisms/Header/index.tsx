@@ -187,10 +187,7 @@ const Header = () => {
                       alignContent={'center'}
                     >
                       <Link href={`/users/${authUser.id}`} passHref>
-                        <Text
-                          variant='small'
-                          marginBottom={1}
-                        >
+                        <Text variant="small" marginBottom={1}>
                           {authUser.user_name}
                         </Text>
                       </Link>

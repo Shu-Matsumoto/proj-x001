@@ -40,7 +40,7 @@ const SigninFormContainer = ({ onSignin }: SigninFormContainerProps) => {
           // console.log(loggedInUser);
           onSignin && onSignin(loggedInUser)
         } else {
-          alert("ログインに失敗しました。")
+          alert('ログインに失敗しました。')
           const unAuthUser: AuthUser = {
             id: -1,
             user_name: 'anonymous',

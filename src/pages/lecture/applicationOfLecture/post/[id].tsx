@@ -96,10 +96,10 @@ const ApplicationOfLecturePage: NextPage = () => {
       formInputData.applicationOfLecture,
     ).then((apiResult) => {
       if (apiResult.result.Code == AppErrorCode.Success) {
-        alert("受講申請の送信に成功しました。")
+        alert('受講申請の送信に成功しました。')
         router.push('/search/lecture')
       } else {
-        alert("受講申請の送信に失敗しました。")
+        alert('受講申請の送信に失敗しました。')
       }
     })
   }

@@ -154,8 +154,9 @@ export function GetObj_User() {
 
 // User型初期化オブジェクト
 export function GetCopyObj_User(src: User) {
-  
-  if (!src) { return null }
+  if (!src) {
+    return null
+  }
 
   const obj: User = {
     id: src.id,

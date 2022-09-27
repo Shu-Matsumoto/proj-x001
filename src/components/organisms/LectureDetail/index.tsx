@@ -158,7 +158,11 @@ export const LectureDetail = (props: LectureDetailProps) => {
                         <BootstrapInput
                           key={index}
                           id="bootstrap-input"
-                          value={student.student.user_id == 1 ? "未定" : student.user.user_name}
+                          value={
+                            student.student.user_id == 1
+                              ? '未定'
+                              : student.user.user_name
+                          }
                         />
                         {!props.view_mode_mine && student.student.user_id == 1 && (
                           <Link
@@ -226,7 +230,7 @@ export const LectureDetail = (props: LectureDetailProps) => {
                           </Button>
                         )}
                       </Flex>
-                  </Box>
+                    </Box>
                   )
                 })}
               </FormControl>

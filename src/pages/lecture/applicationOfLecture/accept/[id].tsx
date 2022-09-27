@@ -86,10 +86,10 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
         updateStudent.user_id = applicationOfLecture.user_id
         UpdateStudent(apiContext, updateStudent).then((apiResult2) => {
           if (apiResult2.result.Code == AppErrorCode.Success) {
-            alert("受講申請処理結果の送信に成功しました。")
+            alert('受講申請処理結果の送信に成功しました。')
             router.push('/lecture/applicationOfLecture/inbox')
           } else {
-            alert("受講申請処理結果の送信に失敗しました。")
+            alert('受講申請処理結果の送信に失敗しました。')
           }
         })
       }

@@ -124,8 +124,8 @@ const UserProfile = (props: UserProfileProps) => {
     console.log('form:', formData.get('file'))
 
     // 画像アップロード
-    UpdateUserProfileImage(apiContext, props.user.id, formData)
-      .then((apiResult) => {
+    UpdateUserProfileImage(apiContext, props.user.id, formData).then(
+      (apiResult) => {
         console.log(apiResult)
         if (apiResult.result.Code == AppErrorCode.Success) {
           // ユーザーデータ更新通知

@@ -17,7 +17,7 @@ import {
   AuthUser,
   GetDefaultAuthUser,
   User,
-  GetObj_User
+  GetObj_User,
 } from 'types/userTypes'
 
 const UserPage: NextPage = () => {
@@ -38,8 +38,7 @@ const UserPage: NextPage = () => {
   // #region Functions
   // 初期化処理
   useEffect(() => {
-    GetUserInformation(apiContext, authUser.id)
-      .then((apiResult) => {
+    GetUserInformation(apiContext, authUser.id).then((apiResult) => {
       //console.log(apiResult);
       if (apiResult.result.Code == AppErrorCode.Success) {
         setUser(apiResult.data)
@@ -62,7 +61,7 @@ const UserPage: NextPage = () => {
   // ユーザーデータ更新
   function updateUserData(user: User) {
     setUser(user)
-    let localAuthUser: AuthUser = GetDefaultAuthUser()
+    const localAuthUser: AuthUser = GetDefaultAuthUser()
     localAuthUser.id = user.id
     localAuthUser.user_name = user.user_name
     localAuthUser.profile_image_path = user.image_path

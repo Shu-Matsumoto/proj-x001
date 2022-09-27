@@ -126,9 +126,9 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
   // Form submit時イベントハンドラ
   const onSubmit = (formData: LecturePostFormData) => {
     console.log(formData)
-    
+
     // 投稿前の確認
-    let result = confirm("新規講義を登録しますか？");
+    const result = confirm('新規講義を登録しますか？')
     if (result) {
       props.onPost && props.onPost(formData)
     }
