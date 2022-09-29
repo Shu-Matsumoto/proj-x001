@@ -319,6 +319,21 @@ export function GetObj_Student() {
   }
   return obj
 }
+// Teacher型オブジェクトコピー
+export function GetCopyObj_Student(src: Student) {
+  const obj: Student = {
+    id: src.id,
+    user_id: src.user_id,
+    lecture_id: src.lecture_id,
+    position: src.position,
+    status: src.status,
+    pay_amount: src.pay_amount,
+    goal: src.goal,
+    requirement: src.requirement,
+    dev_env: src.dev_env,
+  }
+  return obj
+}
 // Student型とUser型のセット
 export type StudentWithUser = {
   student: Student
@@ -346,6 +361,17 @@ export function GetObj_Teacher() {
     lecture_id: 0,
     type: StudentPosition.Unknown,
     pay_amount: 0,
+  }
+  return obj
+}
+// Teacher型オブジェクトコピー
+export function GetCopyObj_Teacher(src: Teacher) {
+  const obj: Teacher = {
+    id: src.id,
+    user_id: src.user_id,
+    lecture_id: src.lecture_id,
+    type: src.type,
+    pay_amount: src.pay_amount,
   }
   return obj
 }

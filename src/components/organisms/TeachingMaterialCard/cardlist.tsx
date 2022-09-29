@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -11,13 +11,24 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { CardData } from './card';
 import * as UserTypes from '../../../types/userTypes'
 
-export const TeachingMaterialCardList = () => {
+interface CardListProps {
+	// 編集中の値変更時のイベントハンドラ
+	updatePostData: (data: UserTypes.TeachingMaterial[]) => void;
+}
+
+export const TeachingMaterialCardList = (props: CardListProps) => {
 	// #region Fields
 	// カード追加の都度インクリメントするカウンタ
 	const [cardDataCounter, setCardDataCounter] = useState(0)
 	const [cardDataList, setCardDataList] = useState<{ id: number, data: UserTypes.TeachingMaterial }[]>(new Array())
 	// #endregion Fields
 	// カード追加
+	// 初回のみの実行
+  useEffect(() => {
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
+	}, [])
 	function addCard(): void {
 		cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_TeachingMaterial() })
 		cardDataList[cardDataList.length - 1].data.user_id = 1
@@ -25,6 +36,9 @@ export const TeachingMaterialCardList = () => {
 		//console.log(cardDataCounter)
 		//console.log(cardDataList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 	// リスト情報更新
 	function changeListData(id: number, setData: UserTypes.TeachingMaterial): void {
@@ -33,6 +47,9 @@ export const TeachingMaterialCardList = () => {
 			target.data = setData
 		}
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 	// カード削除
 	function removeCard(id: number): void {
@@ -41,6 +58,9 @@ export const TeachingMaterialCardList = () => {
 		cardDataList.splice(targetIndex, 1)
 		console.log(cardDataList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 
 	// #region Functions

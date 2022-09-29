@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState } from 'react';
 import Box from '@mui/material/Box'
-import TextField, { StandardTextFieldProps } from '@mui/material/TextField'
+import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Unstable_Grid2';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -18,7 +18,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import * as UserTypes from '../../../types/userTypes'
 
@@ -36,7 +36,7 @@ interface CardDataProps {
 export const CardData = (props: CardDataProps) => {
 	// #region Fields
 	// 編集した生徒情報を格納するデータ
-	const [cardData, setCardData] = useState<UserTypes.Student>(UserTypes.GetObj_Student())
+	const [cardData, setCardData] = useState<UserTypes.Student>(UserTypes.GetCopyObj_Student(props.data))
 	// #endregion Fields
 	// #region Functions
 	// カード内データ値の変更イベントハンドラ
@@ -68,6 +68,15 @@ export const CardData = (props: CardDataProps) => {
 									alt="green iguana"
 								/>
 							</Box>	
+							<TextField
+									label="生徒名"
+									variant='standard'
+									value={props.data.user_id}
+									margin="normal"
+									sx={{ m: 1, width: '18ch' }}
+									InputLabelProps={{ shrink: true }}
+									color="primary" focused
+								/>
 							<Box
 								display="flex"
 								flexDirection={"row"}
@@ -77,7 +86,6 @@ export const CardData = (props: CardDataProps) => {
 								</CardActions>
 								<IconButton
 									color="default"
-									aria-label="remove student"
 									component="label"
 									size="large"
 									onClick={removeMyself}
@@ -116,7 +124,12 @@ export const CardData = (props: CardDataProps) => {
 									variant='standard'
 									value={props.data.pay_amount}
 									onChange={e => {
-										cardData.pay_amount = Number(e.target.value)
+										let number = Number(e.target.value)
+										if (isNaN(number)) {
+											cardData.pay_amount = 0
+										} else {
+											cardData.pay_amount = number
+										}
 										setCardData({...cardData})
 										changeFormValue()
 									}}

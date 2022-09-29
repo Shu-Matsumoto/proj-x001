@@ -20,6 +20,23 @@ export const GetUserInformation = async (
   }
 }
 
+// ユーザーリスト取得
+export const GetUserList = async (
+  context: UserTypes.ApiContext,
+): Promise<{ result: UserTypes.AppResult; data: UserTypes.User[] }> => {
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/users/`
+  const apiResult: {
+    code: number
+    message: string
+    data: UserTypes.User[]
+  } = await ApiRequestFetcher(address, ApiRequestType.GET, null)
+  //console.log(apiResult)
+  return {
+    result: ErrorCodeTranslator.ToAppResult(apiResult.code),
+    data: apiResult.data,
+  }
+}
+
 // ユーザー情報更新
 export const UpdateUserInformation = async (
   context: UserTypes.ApiContext,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -11,29 +11,53 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { CardData } from './card';
 import * as UserTypes from '../../../types/userTypes'
 
-export const TeacherCardList = () => {
+interface CardListProps {
+	// 編集中の値変更時のイベントハンドラ
+	updatePostData: (data: UserTypes.Teacher[]) => void;
+}
+
+
+export const TeacherCardList = (props: CardListProps) => {
 	// #region Fields
 	// カード追加の都度インクリメントするカウンタ
 	const [cardDataCounter, setCardDataCounter] = useState(0)
-	const [cardDataList, setCardDataList] = useState<{ id: number, data: UserTypes.Teacher }[]>(new Array())
+	const [cardDataList, setCardDataList] = useState<{
+		id: number,
+		data: {
+			teacher: UserTypes.Teacher,
+			user_name: string
+		}
+	}[]>(new Array())
 	// #endregion Fields
+	// 初回のみの実行
+  useEffect(() => {
+		props.updatePostData(cardDataList.map(item => {
+			return item.data.teacher
+		}))
+	}, [])
 	// カード追加
 	function addCard(): void {
-		cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_Teacher() })
-		cardDataList[cardDataList.length - 1].data.user_id = 1
-		cardDataList[cardDataList.length - 1].data.type = UserTypes.StudentPosition.Leader
+		cardDataList.push({ id: cardDataCounter, data: { teacher: UserTypes.GetObj_Teacher(), user_name: "" } })
+		cardDataList[cardDataList.length - 1].data.teacher.user_id = 1
+		cardDataList[cardDataList.length - 1].data.teacher.type = UserTypes.StudentPosition.Leader
 		setCardDataCounter(cardDataCounter + 1)
 		//console.log(cardDataCounter)
 		//console.log(cardDataList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data.teacher
+		}))
 	}
 	// リスト情報更新
-	function changeListData(id: number, setData: UserTypes.Teacher): void {
+	function changeListData(id: number, setData: { teacher: UserTypes.Teacher, user_name: string }): void {
 		let target = cardDataList.find(item => item.id == id)
 		if (target && target?.data) {
 			target.data = setData
 		}
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data.teacher
+		}))
 	}
 	// カード削除
 	function removeCard(id: number): void {
@@ -42,6 +66,9 @@ export const TeacherCardList = () => {
 		cardDataList.splice(targetIndex, 1)
 		console.log(cardDataList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data.teacher
+		}))
 	}
 
 	// #region Functions

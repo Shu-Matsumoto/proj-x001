@@ -345,18 +345,16 @@
 // }
 
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
+import Button from '@material-ui/core/Button';
 import TextField from '@mui/material/TextField'
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import { StudentCardList } from '../StudentCardList';
 import { TeachingMaterialCardList } from '../TeachingMaterialCard/cardlist';
 import * as UserTypes from '../../../types/userTypes'
-import * as Utils from '../../../utils'
 import LectureScheduleEditor from '../LectureSchedule';
 import { TeacherCardList } from '../TeacherCard/cardlist';
-
 
 export type LecturePostFormData = {
   lecture: UserTypes.Lecture
@@ -374,19 +372,56 @@ interface LecturePostFormProps {
   onPost?: (formData: LecturePostFormData) => void
 }
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
 export const LecturePostForm = (props: LecturePostFormProps) => {
-
   // #region Fields
+  const [postData, setPostData] = useState<LecturePostFormData>({
+    lecture: UserTypes.GetObj_Lecture(),
+    students: new Array(),
+    teachers: new Array(),
+    schedules: new Array(),
+    materials: new Array()
+  })
   // #endregion Fields
   // #region Function
+  	// 初回のみの実行
+  useEffect(() => {
+    if (props.user && postData.lecture) {
+      postData.lecture.user_id = props.user?.id
+    }
+    setPostData({ ...postData })
+    console.log(postData)
+  }, [])
+
+  function updateTeacherData(data: UserTypes.Teacher[]){
+    if (data && postData?.teachers) { postData.teachers = data }
+    const newPostData = postData
+    setPostData(newPostData)
+  }
+  function updateStudentData(data: UserTypes.Student[]){
+    if (data && postData?.students) { postData.students = data }
+    const newPostData = postData
+    setPostData(newPostData)
+  }
+  function updateScheduleData(data: UserTypes.LectureSchedule[]){
+    if (data && postData?.schedules) { postData.schedules = data }
+    const newPostData = postData
+    setPostData(newPostData)
+  }
+  function updateMaterialData(data: UserTypes.TeachingMaterial[]){
+    if (data && postData?.teachers) { postData.materials = data }
+    const newPostData = postData
+    setPostData(newPostData)
+  }
+  // 講義投稿ボタン
+  const onSubmit = () => {
+    console.log(postData)
+
+    // 投稿前の確認
+    const result = confirm('新規講義を登録しますか？')
+    if (result) {
+      props.onPost && props.onPost(postData)
+    }
+  }
   // #endregion Function
   // #region View
   return (
@@ -396,7 +431,10 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
         <Grid xs={12}>
           <TextField
             label="講義タイトル"
-            id="text-title"
+            onChange={e => {
+              postData.lecture.title = e.target.value
+              setPostData({...postData})
+            }}
             fullWidth
             variant='standard'
             color="primary" focused 
@@ -407,7 +445,10 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
         <Grid xs={12}>
           <TextField
             label="講義説明"
-            id="text-explanation"
+            onChange={e => {
+              postData.lecture.explanation = e.target.value
+              setPostData({...postData})
+            }}
             fullWidth
             variant="outlined"
             multiline
@@ -418,19 +459,23 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
         </Grid>
         {/* 講師 */}
         <Grid xs={12}>
-          <TeacherCardList/>
+          <TeacherCardList updatePostData={updateTeacherData} />
         </Grid>
         {/* 募集生徒 */}
         <Grid xs={12}>
-          <StudentCardList/>
+          <StudentCardList updatePostData={updateStudentData}/>
         </Grid>
         {/* 講義開催スケジュール */}
         <Grid xs={12}>
-          <LectureScheduleEditor/>
+          <LectureScheduleEditor updatePostData={updateScheduleData}/>
         </Grid>
         {/* 教材 */}
         <Grid xs={12}>
-          <TeachingMaterialCardList/>
+          <TeachingMaterialCardList updatePostData={updateMaterialData}/>
+        </Grid>
+        {/* 投稿ボタン */}
+        <Grid xs={12}>
+          <Button variant="contained" size="small" onClick={onSubmit}>新規投稿</Button>
         </Grid>
       </Grid>
     </Box>

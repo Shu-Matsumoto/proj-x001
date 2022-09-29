@@ -28,6 +28,7 @@ import {
 import {
   randomId,
 } from '@mui/x-data-grid-generator';
+import * as UserTypes from '../../../types/userTypes'
 
 const initialRows: GridRowsProp = [];
 
@@ -59,7 +60,12 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-export default function LectureScheduleEditor() {
+interface CardListProps {
+	// 編集中の値変更時のイベントハンドラ
+	updatePostData: (data: UserTypes.LectureSchedule[]) => void;
+}
+
+export default function LectureScheduleEditor(props: CardListProps) {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 

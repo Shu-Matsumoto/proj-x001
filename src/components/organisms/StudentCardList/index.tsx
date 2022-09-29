@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -11,30 +11,48 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { CardData } from '../StudentCard';
 import * as UserTypes from '../../../types/userTypes'
 
-export const StudentCardList = () => {
+interface CardListProps {
+	// 編集中の値変更時のイベントハンドラ
+	updatePostData: (data: UserTypes.Student[]) => void;
+}
+
+export const StudentCardList = (props: CardListProps) => {
 	// #region Fields
 	// 生徒追加の都度インクリメントするカウンタ
 	const [cardDataCounter, setCardDataCounter] = useState(0)
-	const [cardDataList, setCardDataList] = useState<{ id: number, student: UserTypes.Student }[]>(new Array())
+	const [cardDataList, setCardDataList] = useState<{ id: number, data: UserTypes.Student }[]>(new Array())
 	// #endregion Fields
+	// 初回のみの実行
+  useEffect(() => {
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
+  }, [])
+
 	// 生徒カード追加
 	function addStudent(): void {
-		cardDataList.push({ id: cardDataCounter, student: UserTypes.GetObj_Student() })
-		cardDataList[cardDataList.length - 1].student.position = UserTypes.StudentPosition.Leader
-		cardDataList[cardDataList.length - 1].student.status = UserTypes.AttendanceStatus.Waiting
-		cardDataList[cardDataList.length - 1].student.pay_amount = 0
+		cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_Student() })
+		cardDataList[cardDataList.length - 1].data.position = UserTypes.StudentPosition.Leader
+		cardDataList[cardDataList.length - 1].data.status = UserTypes.AttendanceStatus.Waiting
+		cardDataList[cardDataList.length - 1].data.pay_amount = 0
 		setCardDataCounter(cardDataCounter + 1)
 		//console.log(studentCounter)
 		//console.log(studentList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 	// 生徒情報更新
-	function changeStudentData(id: number, student: UserTypes.Student): void {
+	function changeStudentData(id: number, data: UserTypes.Student): void {
 		let target = cardDataList.find(item => item.id == id)
-		if (target && target?.student) {
-			target.student = student
+		if (target && target?.data) {
+			target.data = data
 		}
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 	// 生徒カード削除
 	function removeStudent(id: number): void {
@@ -43,6 +61,9 @@ export const StudentCardList = () => {
 		cardDataList.splice(targetIndex, 1)
 		console.log(cardDataList)
 		setCardDataList([...cardDataList])
+		props.updatePostData(cardDataList.map(item => {
+			return item.data
+		}))
 	}
 	// #region Functions
 	// #endregion Functions
@@ -82,7 +103,7 @@ export const StudentCardList = () => {
 									<li>
 										<CardData
 											id={item.id}
-											data={item.student}
+											data={item.data}
 											onChangeValue={changeStudentData}
 											onRemove={removeStudent}
 										/>
