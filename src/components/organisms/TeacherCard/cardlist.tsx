@@ -21,6 +21,7 @@ export const TeacherCardList = () => {
 	function addCard(): void {
 		cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_Teacher() })
 		cardDataList[cardDataList.length - 1].data.user_id = 1
+		cardDataList[cardDataList.length - 1].data.type = UserTypes.StudentPosition.Leader
 		setCardDataCounter(cardDataCounter + 1)
 		//console.log(cardDataCounter)
 		//console.log(cardDataList)

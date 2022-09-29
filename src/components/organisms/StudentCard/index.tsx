@@ -22,28 +22,28 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import * as UserTypes from '../../../types/userTypes'
 
-interface StudentCardProps {
-	// 生徒ID
+interface CardDataProps {
+	// カードID
 	id: number
-  // 生徒情報
-	student: UserTypes.Student
+  // カード内データ
+	data: UserTypes.Student
 	// フォーム内の値が変化した時のイベントハンドラ
-  onChangeValue: (id: number, student: UserTypes.Student) => void
+  onChangeValue: (id: number, data: UserTypes.Student) => void
   // 削除ボタンを押した時のイベントハンドラ
   onRemove: (id: number) => void
 }
 
-export const StudentCard = (props: StudentCardProps) => {
+export const CardData = (props: CardDataProps) => {
 	// #region Fields
 	// 編集した生徒情報を格納するデータ
-	const [student, setStudent] = useState<UserTypes.Student>(UserTypes.GetObj_Student())
+	const [cardData, setCardData] = useState<UserTypes.Student>(UserTypes.GetObj_Student())
 	// #endregion Fields
 	// #region Functions
-	// 編集した値を親へ通知するイベントハンドラ
+	// カード内データ値の変更イベントハンドラ
 	function changeFormValue(): void {
-		props.onChangeValue(props.id, student)
+		props.onChangeValue(props.id, cardData)
 	}
-
+	// 削除ボタンクリックイベントハンドラ
 	function removeMyself(): void {
 		console.log("do remove")
 		props.onRemove(props.id)
@@ -93,15 +93,14 @@ export const StudentCard = (props: StudentCardProps) => {
 								<FormControl sx={{ m: 1, minWidth: 160 }} size="small">
 									<InputLabel variant='outlined' size="small">役割</InputLabel>
 								<Select
-									//defaultValue={UserTypes.StudentPosition.Leader}
-									value={props.student.position}
+									value={props.data.position}
 									onChange={e => {
 										if (typeof e.target.value === "string") {
-											student.position = UserTypes.ConvertToNumberStudentPosition(e.target.value)
+											cardData.position = UserTypes.ConvertToNumberStudentPosition(e.target.value)
 										} else {
-											student.position = e.target.value
+											cardData.position = e.target.value
 										}
-										setStudent({...student})
+										setCardData({...cardData})
 										changeFormValue()
 									}}
 									>
@@ -115,10 +114,10 @@ export const StudentCard = (props: StudentCardProps) => {
 									label="受講金額"
 									id="text-pay-amount"
 									variant='standard'
-									value={props.student.pay_amount}
+									value={props.data.pay_amount}
 									onChange={e => {
-										student.pay_amount = Number(e.target.value)
-										setStudent({...student})
+										cardData.pay_amount = Number(e.target.value)
+										setCardData({...cardData})
 										changeFormValue()
 									}}
 									margin="normal"
@@ -148,10 +147,10 @@ export const StudentCard = (props: StudentCardProps) => {
 											id="text-goal"
 											fullWidth
 											variant="outlined"
-											value={props.student.goal}
+											value={props.data.goal}
 											onChange={e => {
-												student.goal = e.target.value
-												setStudent({...student})
+												cardData.goal = e.target.value
+												setCardData({...cardData})
 												changeFormValue()
 											}}
 											multiline
@@ -176,10 +175,10 @@ export const StudentCard = (props: StudentCardProps) => {
 											id="text-requirement"
 											fullWidth
 											variant="outlined"
-											value={props.student.requirement}
+											value={props.data.requirement}
 											onChange={e => {
-												student.requirement = e.target.value
-												setStudent({...student})
+												cardData.requirement = e.target.value
+												setCardData({...cardData})
 												changeFormValue()
 											}}
 											multiline
@@ -204,10 +203,10 @@ export const StudentCard = (props: StudentCardProps) => {
 											id="text-dev-env"
 											fullWidth
 											variant="outlined"
-											value={props.student.dev_env}
+											value={props.data.dev_env}
 											onChange={e => {
-												student.dev_env = e.target.value
-												setStudent({...student})
+												cardData.dev_env = e.target.value
+												setCardData({...cardData})
 												changeFormValue()
 											}}
 											multiline

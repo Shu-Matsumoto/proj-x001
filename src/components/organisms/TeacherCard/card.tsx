@@ -54,7 +54,7 @@ export const CardData = (props: CardDataProps) => {
 		<Box marginBottom={1}>
 			<Card>
 				<Grid container spacing={0} columns={12}>
-					{/* エリア1 */}
+					{/* ヘッダー */}
 					<Grid xs={3}>
 						<Box
 							display="flex"
@@ -73,7 +73,7 @@ export const CardData = (props: CardDataProps) => {
 								flexDirection={"row"}
 							>
 								<CardActions>
-									<Button variant="contained" size="small">受講申請</Button>
+									<Button variant="contained" size="small">講師選択</Button>
 								</CardActions>
 								<IconButton
 									color="default"
@@ -87,8 +87,47 @@ export const CardData = (props: CardDataProps) => {
 							</Box>	
 						</Box>
 					</Grid>
-					{/* エリア2 */}
-					<Grid xs={3}></Grid>
+					{/* 募集概要 */}
+					<Grid xs={3}>
+						<CardContent>
+								<FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+									<InputLabel variant='outlined' size="small">役割</InputLabel>
+								<Select
+									value={props.data.type}
+									onChange={e => {
+										if (typeof e.target.value === "string") {
+											cardData.type = UserTypes.ConvertToNumberStudentPosition(e.target.value)
+										} else {
+											cardData.type = e.target.value
+										}
+										setCardData({...cardData})
+										changeFormValue()
+									}}
+									>
+										<MenuItem value={UserTypes.StudentPosition.Leader}>Leader</MenuItem>
+										<MenuItem value={UserTypes.StudentPosition.Frontend}>Frontend Eng.</MenuItem>
+										<MenuItem value={UserTypes.StudentPosition.Backend}>Backend Eng.</MenuItem>
+										<MenuItem value={UserTypes.StudentPosition.Design}>Design Eng.</MenuItem>
+									</Select>
+								</FormControl>
+								<TextField
+									label="報酬金額"
+									id="text-pay-amount"
+									variant='standard'
+									value={props.data.pay_amount}
+									onChange={e => {
+										cardData.pay_amount = Number(e.target.value)
+										setCardData({...cardData})
+										changeFormValue()
+									}}
+									margin="normal"
+									sx={{ m: 1, width: '11ch' }}
+									InputProps={{ startAdornment: <InputAdornment position="start">￥</InputAdornment>}}
+									InputLabelProps={{ shrink: true }}
+									color="primary" focused
+								/>
+						</CardContent>
+					</Grid>
 					{/* エリア3 */}
 					<Grid xs={3}></Grid>
 					{/* エリア4 */}

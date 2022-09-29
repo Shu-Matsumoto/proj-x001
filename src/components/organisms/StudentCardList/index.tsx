@@ -8,41 +8,41 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { StudentCard } from '../StudentCard';
+import { CardData } from '../StudentCard';
 import * as UserTypes from '../../../types/userTypes'
 
 export const StudentCardList = () => {
 	// #region Fields
 	// 生徒追加の都度インクリメントするカウンタ
-	const [studentCounter, setStudentCounter] = useState(0)
-	const [studentList, setStudentList] = useState<{ id: number, student: UserTypes.Student }[]>(new Array())
+	const [cardDataCounter, setCardDataCounter] = useState(0)
+	const [cardDataList, setCardDataList] = useState<{ id: number, student: UserTypes.Student }[]>(new Array())
 	// #endregion Fields
 	// 生徒カード追加
 	function addStudent(): void {
-		studentList.push({ id: studentCounter, student: UserTypes.GetObj_Student() })
-		studentList[studentList.length - 1].student.position = UserTypes.StudentPosition.Leader
-		studentList[studentList.length - 1].student.status = UserTypes.AttendanceStatus.Waiting
-		studentList[studentList.length - 1].student.pay_amount = 0
-		setStudentCounter(studentCounter + 1)
+		cardDataList.push({ id: cardDataCounter, student: UserTypes.GetObj_Student() })
+		cardDataList[cardDataList.length - 1].student.position = UserTypes.StudentPosition.Leader
+		cardDataList[cardDataList.length - 1].student.status = UserTypes.AttendanceStatus.Waiting
+		cardDataList[cardDataList.length - 1].student.pay_amount = 0
+		setCardDataCounter(cardDataCounter + 1)
 		//console.log(studentCounter)
 		//console.log(studentList)
-		setStudentList([...studentList])
+		setCardDataList([...cardDataList])
 	}
 	// 生徒情報更新
 	function changeStudentData(id: number, student: UserTypes.Student): void {
-		let target = studentList.find(item => item.id == id)
+		let target = cardDataList.find(item => item.id == id)
 		if (target && target?.student) {
 			target.student = student
 		}
-		setStudentList([...studentList])
+		setCardDataList([...cardDataList])
 	}
 	// 生徒カード削除
 	function removeStudent(id: number): void {
 		console.log('remove id', id)
-		const targetIndex = studentList.findIndex(item => item.id == id)
-		studentList.splice(targetIndex, 1)
-		console.log(studentList)
-		setStudentList([...studentList])
+		const targetIndex = cardDataList.findIndex(item => item.id == id)
+		cardDataList.splice(targetIndex, 1)
+		console.log(cardDataList)
+		setCardDataList([...cardDataList])
 	}
 	// #region Functions
 	// #endregion Functions
@@ -77,12 +77,12 @@ export const StudentCardList = () => {
 							</IconButton>
 						</Box>
 						<ul>
-							{studentList.map((item) => {
+							{cardDataList.map((item) => {
 								return (
 									<li>
-										<StudentCard
+										<CardData
 											id={item.id}
-											student={item.student}
+											data={item.student}
 											onChangeValue={changeStudentData}
 											onRemove={removeStudent}
 										/>

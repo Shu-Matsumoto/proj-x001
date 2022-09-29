@@ -354,7 +354,7 @@ import { StudentCardList } from '../StudentCardList';
 import { TeachingMaterialCardList } from '../TeachingMaterialCard/cardlist';
 import * as UserTypes from '../../../types/userTypes'
 import * as Utils from '../../../utils'
-import { LectureScheduleCardList } from '../LectureSchedule/cardlist';
+import LectureScheduleEditor from '../LectureSchedule';
 import { TeacherCardList } from '../TeacherCard/cardlist';
 
 
@@ -426,7 +426,7 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
         </Grid>
         {/* 講義開催スケジュール */}
         <Grid xs={12}>
-          <LectureScheduleCardList/>
+          <LectureScheduleEditor/>
         </Grid>
         {/* 教材 */}
         <Grid xs={12}>
