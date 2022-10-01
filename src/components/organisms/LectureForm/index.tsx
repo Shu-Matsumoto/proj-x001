@@ -440,7 +440,7 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
   // #endregion Function
   // #region View
   return (
-    <Box sx={{ flexGrow: 1, width: 800 }}>
+    <Box sx={{ flexGrow: 1, width: 830 }}>
       <Grid container spacing={2}>
         {/* 講義タイトル */}
         <Grid xs={12}>

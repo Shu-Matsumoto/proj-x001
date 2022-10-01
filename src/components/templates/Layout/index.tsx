@@ -20,20 +20,20 @@ const Layout = ({ children }: LayoutProps) => {
       <Header />
       <main
         style={{
-          backgroundImage: `url(${'https://beiz.jp/images_T/white/white_00036.jpg'})`,
+          background: `url(${'https://beiz.jp/images_T/white/white_00036.jpg'})`,
           paddingBottom: '75px',
           width: '100%',
           height: 'auto',
         }}
       >
         {children}
+        <Box height={'300px'} />
       </main>
       <Separator />
       <Box
         width="100%"
         padding={0}
         style={{
-          backgroundColor: 'lightgrey',
           position: 'fixed',
           bottom: 0,
           width: '100%',
@@ -41,6 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
           // top: "100vh",
           // position: "sticky",
           //bottom: 0
+          background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
         }}
       >
         <Footer />

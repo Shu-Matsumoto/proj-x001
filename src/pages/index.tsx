@@ -43,24 +43,34 @@ const SigninPage: NextPage = () => {
 
   return (
     <>
-      <Box paddingTop={2} paddingLeft={2}>
-        <Anchor as="a">
-          <Text
-            variant="extraLarge"
-            fontWeight="bold"
-            backgroundColor="#333333"
-            color="white"
-            paddingTop={1}
-            paddingBottom={1}
-            paddingLeft={2}
-            paddingRight={2}
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
-            formation
-          </Text>
-        </Anchor>
-      </Box>
-      <Separator />
+      <Flex
+        style={{
+          background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
+        }}
+      >
+        <Box paddingTop={2} paddingLeft={2}>
+          <Anchor as="a">
+            <Text
+              variant="extraLarge"
+              fontWeight="bold"
+              backgroundColor="#333333"
+              color="white"
+              paddingTop={1}
+              paddingBottom={1}
+              paddingLeft={2}
+              paddingRight={2}
+              style={{ fontFamily: 'Georgia, serif' }}
+            >
+              formation
+            </Text>
+          </Anchor>
+        </Box>
+      </Flex>
+      <Separator
+        style={{
+          background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
+        }}
+      />
       <Flex
         paddingTop={2}
         paddingBottom={2}
@@ -89,8 +99,16 @@ const SigninPage: NextPage = () => {
           </Box>
         </Flex>
       </Flex>
-      <Separator />
-      <Box>
+      <Separator
+        style={{
+          background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
+        }}
+      />
+      <Box
+        style={{
+          background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
+        }}
+      >
         <Footer />
       </Box>
     </>

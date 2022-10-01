@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Button from 'components/atoms/Button'
 import { PersonIcon } from 'components/atoms/IconButton'
@@ -49,7 +49,7 @@ const Header = () => {
 
   // #region Functions
   // 初回のみの実行
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!authUser || authUser.id <= 0 || !isloggdIn) {
       router.push('/')
     }
@@ -66,7 +66,11 @@ const Header = () => {
   // #endregion Functions
 
   return (
-    <HeaderRoot>
+    <HeaderRoot
+      style={{
+        background: 'linear-gradient(to right, #a8caba 0%, #5d4157 100%)',
+      }}
+    >
       <div>
         <Flex paddingLeft={1} paddingRight={3} justifyContent="space-between">
           <Nav as="nav" height="56px" alignItems="center" marginLeft={2}>
@@ -94,6 +98,7 @@ const Header = () => {
                       variant="mediumLarge"
                       fontWeight="bold"
                       style={{ textDecoration: 'underline' }}
+                      color={'#111111'}
                     >
                       トップ
                     </Text>
@@ -110,6 +115,7 @@ const Header = () => {
                       variant="mediumLarge"
                       fontWeight="bold"
                       style={{ textDecoration: 'underline' }}
+                      color={'#111111'}
                     >
                       受講
                     </Text>
@@ -126,6 +132,7 @@ const Header = () => {
                       variant="mediumLarge"
                       fontWeight="bold"
                       style={{ textDecoration: 'underline' }}
+                      color={'#111111'}
                     >
                       講義
                     </Text>
@@ -187,7 +194,11 @@ const Header = () => {
                       alignContent={'center'}
                     >
                       <Link href={`/users/${authUser.id}`} passHref>
-                        <Text variant="small" marginBottom={1}>
+                        <Text
+                          variant="small"
+                          marginBottom={1}
+                          color={'lightgrey'}
+                        >
                           {authUser.user_name}
                         </Text>
                       </Link>

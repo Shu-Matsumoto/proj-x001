@@ -2,11 +2,11 @@ import Grid from 'components/layout/Grid'
 
 interface LectureCardListProps {
   /**
-   * 1行に表示する商品数
+   * 1行に表示する講義数
    */
   numberPerRow?: number
   /**
-   * モバイルで1行に表示する商品数
+   * モバイルで1行に表示する講義数
    */
   numberPerRowForMobile?: number
 }
@@ -15,8 +15,8 @@ interface LectureCardListProps {
  * 講義カードリスト
  */
 const LectureCardList = ({
-  numberPerRow = 4,
-  numberPerRowForMobile = 2,
+  numberPerRow = 3,
+  numberPerRowForMobile = 1,
   children,
 }: React.PropsWithChildren<LectureCardListProps>) => {
   return (

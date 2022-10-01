@@ -56,9 +56,9 @@ const ApplicationOfLectureCard = ({
   const { size, imgSize } = (() => {
     switch (variant) {
       case 'detail':
-        return { size: { base: '320px', md: '540px' }, imgSize: 540 }
+        return { size: { base: '280px', md: '500px' }, imgSize: 540 }
       case 'listing':
-        return { size: { base: '160px', md: '240px' }, imgSize: 240 }
+        return { size: { base: '140px', md: '200px' }, imgSize: 240 }
       default:
         return { size: { base: '160px' }, imgSize: 160 }
     }

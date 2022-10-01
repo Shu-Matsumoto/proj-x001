@@ -74,7 +74,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   // #endregion Fields
 
   // 初回のみの実行
-  useLayoutEffect(() => {
+  useEffect(() => {
     setUserInfo(getAuthInfoFromLocalStorage())
   }, [])
 

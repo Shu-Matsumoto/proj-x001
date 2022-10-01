@@ -138,7 +138,6 @@ const ApplicationOfLecturePage: NextPage = () => {
                 flexDirection={'column'}
                 alignItems={'center'}
               >
-                投稿エリア
                 <ApplicationOfLecturePostForm
                   user={authUser}
                   lecture={lecture}
