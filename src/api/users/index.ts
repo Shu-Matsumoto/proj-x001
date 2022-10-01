@@ -24,7 +24,7 @@ export const GetUserInformation = async (
 export const GetUserList = async (
   context: UserTypes.ApiContext,
 ): Promise<{ result: UserTypes.AppResult; data: UserTypes.User[] }> => {
-  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/users/`
+  const address = `${context.apiRootUrl.replace(/\/$/g, '')}/users`
   const apiResult: {
     code: number
     message: string
