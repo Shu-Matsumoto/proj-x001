@@ -4,7 +4,7 @@ import SubMenu from 'components/templates/Layout/subMenu'
 
 const LecturePageSubMenu = () => {
   const menuList: LinkInformationSet[] = [
-    { dispaleyName: '講義一覧', pageLink: '/lecture/me' },
+    { dispaleyName: '講義投稿', pageLink: '/lecture/newpost' },
     {
       dispaleyName: '受講申請一覧',
       pageLink: '/lecture/applicationOfLecture/inbox',

@@ -48,7 +48,7 @@ const LectureCardListContainer = ({
                   variant="listing"
                   title={p.lecture.title}
                   teacherName={p.user.user_name}
-                  teacherProfileImageUrl="/lectures/github.png"
+                  teacherProfileImageUrl="/lectures/Online_lectures.png"
                 />
               </a>
             </Link>

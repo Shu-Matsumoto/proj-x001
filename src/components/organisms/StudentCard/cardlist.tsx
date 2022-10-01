@@ -1,5 +1,5 @@
-import AddCircleIcon from '@mui/icons-material/AddCircle'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -13,18 +13,17 @@ import { CardData } from './card'
 
 interface CardListProps {
   // 編集中の値変更時のイベントハンドラ
-  updatePostData: (data: UserTypes.TeachingMaterial[]) => void
+  updatePostData: (data: UserTypes.Student[]) => void
 }
 
-export const TeachingMaterialCardList = (props: CardListProps) => {
+export const StudentCardList = (props: CardListProps) => {
   // #region Fields
-  // カード追加の都度インクリメントするカウンタ
+  // 生徒追加の都度インクリメントするカウンタ
   const [cardDataCounter, setCardDataCounter] = useState(0)
   const [cardDataList, setCardDataList] = useState<
-    { id: number; data: UserTypes.TeachingMaterial }[]
+    { id: number; data: UserTypes.Student }[]
   >([])
   // #endregion Fields
-  // カード追加
   // 初回のみの実行
   useEffect(() => {
     props.updatePostData(
@@ -33,15 +32,18 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
       }),
     )
   }, [])
-  function addCard(): void {
-    cardDataList.push({
-      id: cardDataCounter,
-      data: UserTypes.GetObj_TeachingMaterial(),
-    })
-    cardDataList[cardDataList.length - 1].data.user_id = 1
+
+  // 生徒カード追加
+  function addStudent(): void {
+    cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_Student() })
+    cardDataList[cardDataList.length - 1].data.position =
+      UserTypes.StudentPosition.Leader
+    cardDataList[cardDataList.length - 1].data.status =
+      UserTypes.AttendanceStatus.Waiting
+    cardDataList[cardDataList.length - 1].data.pay_amount = 0
     setCardDataCounter(cardDataCounter + 1)
-    //console.log(cardDataCounter)
-    //console.log(cardDataList)
+    //console.log(studentCounter)
+    //console.log(studentList)
     setCardDataList([...cardDataList])
     props.updatePostData(
       cardDataList.map((item) => {
@@ -49,14 +51,11 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
       }),
     )
   }
-  // リスト情報更新
-  function changeListData(
-    id: number,
-    setData: UserTypes.TeachingMaterial,
-  ): void {
+  // 生徒情報更新
+  function changeStudentData(id: number, data: UserTypes.Student): void {
     const target = cardDataList.find((item) => item.id == id)
     if (target && target?.data) {
-      target.data = setData
+      target.data = data
     }
     setCardDataList([...cardDataList])
     props.updatePostData(
@@ -65,8 +64,8 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
       }),
     )
   }
-  // カード削除
-  function removeCard(id: number): void {
+  // 生徒カード削除
+  function removeStudent(id: number): void {
     console.log('remove id', id)
     const targetIndex = cardDataList.findIndex((item) => item.id == id)
     cardDataList.splice(targetIndex, 1)
@@ -78,10 +77,8 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
       }),
     )
   }
-
   // #region Functions
   // #endregion Functions
-
   // #region View
   return (
     <Box>
@@ -96,7 +93,7 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
             style={{ height: '1px' }}
           >
             <Typography variant="caption" color={'#0971f1'}>
-              教材
+              募集生徒
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -106,9 +103,9 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
                 aria-label="add student"
                 component="label"
                 size="large"
-                onClick={addCard}
+                onClick={addStudent}
               >
-                <AddCircleIcon />
+                <PersonAddIcon />
               </IconButton>
             </Box>
             <ul>
@@ -118,8 +115,8 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
                     <CardData
                       id={item.id}
                       data={item.data}
-                      onChangeValue={changeListData}
-                      onRemove={removeCard}
+                      onChangeValue={changeStudentData}
+                      onRemove={removeStudent}
                     />
                   </li>
                 )

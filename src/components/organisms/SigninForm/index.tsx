@@ -42,6 +42,7 @@ const SigninForm = ({ onSignin }: SigninFormProps) => {
           type="text"
           placeholder="ユーザーID"
           hasError={!!errors.username}
+          style={{ backgroundColor: '#E7E7FF', color: '#333333' }}
         />
         {errors.username && (
           <Text color="danger" variant="small" paddingLeft={1}>
@@ -57,6 +58,7 @@ const SigninForm = ({ onSignin }: SigninFormProps) => {
           type="password"
           placeholder="パスワード"
           hasError={!!errors.password}
+          style={{ backgroundColor: '#E7E7FF', color: '#333333' }}
         />
         {errors.password && (
           <Text color="danger" variant="small" paddingLeft={1}>

@@ -1,15 +1,7 @@
-import Link from 'next/link'
 import styled from 'styled-components'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
 import Flex from 'components/layout/Flex'
-
-const Anchor = styled(Text)`
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`
 
 /**
  * フッター

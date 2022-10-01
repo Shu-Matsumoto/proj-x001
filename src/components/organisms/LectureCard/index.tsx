@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { PersonIcon } from 'components/atoms/IconButton'
 import ScaleImage from 'components/atoms/ScaleImage'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
@@ -43,6 +44,7 @@ const LectureCard = ({
   teacherProfileImageUrl,
   variant = 'listing',
 }: LectureCardProps) => {
+  const profileImageSizeNumber = 360
   const { size, imgSize } = (() => {
     switch (variant) {
       case 'detail':

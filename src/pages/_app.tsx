@@ -2,7 +2,6 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import type { ApiContext } from '../types/userTypes'
 import { AuthContextProvider } from 'contexts/AuthContext'
 import GlobalSpinnerContextProvider from 'contexts/GlobalSpinnerContext'
 import { theme } from 'themes'
@@ -33,12 +32,6 @@ ol, ul {
   list-style: none;
 }
 `
-
-// APIベースURL
-const apiContext: ApiContext = {
-  apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api',
-}
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>

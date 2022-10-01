@@ -22,7 +22,7 @@ const SigninPage: NextPage = () => {
   // ルーター
   const router = useRouter()
   // 認証情報コンテクスト
-  const { isloggdIn, setAuthUser } = useAuthContext()
+  const { setAuthUser } = useAuthContext()
 
   // 認証後のイベントハンドラ
   const handleSignin = async (user: AuthUser, err?: Error) => {
@@ -67,6 +67,11 @@ const SigninPage: NextPage = () => {
         paddingLeft={{ base: 2, md: 0 }}
         paddingRight={{ base: 2, md: 0 }}
         justifyContent="center"
+        height={'570px'}
+        style={{
+          backgroundImage: `url(${'/common/app_title.png'})`,
+          backgroundSize: 'cover',
+        }}
       >
         <Flex
           width="400px"

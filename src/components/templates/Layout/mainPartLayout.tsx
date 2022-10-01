@@ -20,8 +20,8 @@ const MainPartLayout = ({
     <>
       <Box width="100%">
         <Flex>
-          <Box width="13%">{subMenu}</Box>
-          <Box width="87%">
+          <Box width="10%">{subMenu}</Box>
+          <Box width="90%">
             <Flex flexDirection={'column'}>
               <Box margin={1}>
                 <Flex>

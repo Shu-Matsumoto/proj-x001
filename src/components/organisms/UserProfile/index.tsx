@@ -1,14 +1,4 @@
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Box from '@mui/material/Box'
-import FilledInput from '@mui/material/FilledInput'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import IconButton from '@mui/material/IconButton'
-import Input from '@mui/material/Input'
-import InputAdornment from '@mui/material/InputAdornment'
-import InputLabel from '@mui/material/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import * as React from 'react'
 
@@ -223,7 +213,11 @@ export default function UserProfile(props: UserProfileProps) {
           <TextField
             label="クレジットカード番号"
             id="text-credit-card-number"
-            value={userData?.credit_card_number}
+            value={
+              userData?.credit_card_number
+                ? userData.credit_card_number
+                : '未登録'
+            }
             sx={{ m: 1, width: '25ch' }}
             variant="standard"
             InputLabelProps={{ shrink: true }}
@@ -233,7 +227,11 @@ export default function UserProfile(props: UserProfileProps) {
           <TextField
             label="金融機関番号"
             id="text-financial-institution-id"
-            value={userData?.financial_institution_id}
+            value={
+              userData?.financial_institution_id
+                ? userData.financial_institution_id
+                : '未登録'
+            }
             sx={{ m: 1, width: '25ch' }}
             variant="standard"
             InputLabelProps={{ shrink: true }}
@@ -241,7 +239,7 @@ export default function UserProfile(props: UserProfileProps) {
           <TextField
             label="入金用銀行口座番号"
             id="text-bank-number"
-            value={userData?.bank_number}
+            value={userData?.bank_number ? userData.bank_number : '未登録'}
             sx={{ m: 1, width: '25ch' }}
             variant="standard"
             InputLabelProps={{ shrink: true }}

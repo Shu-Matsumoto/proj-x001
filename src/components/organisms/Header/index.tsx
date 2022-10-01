@@ -44,7 +44,7 @@ const Anchor = styled(Text)`
 const Header = () => {
   // #region Fields
   const router = useRouter()
-  const { authUser, isloggdIn, setAuthUser } = useAuthContext()
+  const { authUser, isloggdIn } = useAuthContext()
   // #endregion Fields
 
   // #region Functions
@@ -120,7 +120,7 @@ const Header = () => {
             {/*講義*/}
             <NavLink>
               <Box display={{ base: 'none', md: 'block' }}>
-                <Link href="/lecture/me" passHref>
+                <Link href="/lecture/newpost" passHref>
                   <Anchor as="a">
                     <Text
                       variant="mediumLarge"

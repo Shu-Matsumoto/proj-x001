@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import { styled } from '@mui/material/styles'
 import * as React from 'react'
-import type { UserNotice } from '../types/userTypes'
+import { UserNotice, AlreadyReadStatus } from '../types/userTypes'
 import UserNoticeCard from 'components/organisms/UserNoticeCard'
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -17,27 +17,40 @@ const Item = styled(Paper)(({ theme }) => ({
 interface UserNoticeCardListProps {
   isLoading: boolean
   userNotices: UserNotice[]
+  onChangeToAlreadyReadNotice?: (id: number) => void
 }
 
 export default function BasicStack({
   isLoading,
   userNotices,
+  onChangeToAlreadyReadNotice,
 }: UserNoticeCardListProps) {
+  // #region Functions
+  function changeToAlreadyReadNotice(id: number) {
+    onChangeToAlreadyReadNotice && onChangeToAlreadyReadNotice(id)
+  }
+  // #endregion Functions
+
   return (
     <Box sx={{ width: '100%' }}>
       <Stack spacing={2}>
         {userNotices != null &&
-          userNotices.map((notice, index) => (
-            <Item key={index}>
-              {/* ユーザー通知カード */}
-              <UserNoticeCard
-                type={notice.type}
-                alreadyRead={notice.already_read}
-                title={notice.title}
-                subTitle={notice.sub_title}
-              />
-            </Item>
-          ))}
+          userNotices.map(
+            (notice, index) =>
+              notice.already_read != AlreadyReadStatus.True && (
+                <Item key={index}>
+                  {/* ユーザー通知カード */}
+                  <UserNoticeCard
+                    id={notice.id}
+                    type={notice.type}
+                    alreadyRead={notice.already_read}
+                    title={notice.title}
+                    subTitle={notice.sub_title}
+                    onChangeToAlreadyReadNotice={changeToAlreadyReadNotice}
+                  />
+                </Item>
+              ),
+          )}
       </Stack>
     </Box>
   )

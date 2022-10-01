@@ -614,10 +614,10 @@ export enum UserNoticeType {
 export enum AlreadyReadStatus {
   // 不定
   Unknown = 0,
-  // 既読
-  True = 1,
   // 未読
-  False = 2,
+  False = 1,
+  // 既読
+  True = 2,
 }
 
 // ユーザー通知

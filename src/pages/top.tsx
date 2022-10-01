@@ -15,7 +15,12 @@ import Layout from 'components/templates/Layout'
 import MainPartLayout from 'components/templates/Layout/mainPartLayout'
 import UserNoticeCardListContainer from 'containers/UserNoticeCardListContainer'
 import TopPageSubMenu from 'containers/menu/topPageSubMenu'
-import { ApiContext, AppErrorCode, UserNotice } from 'types/userTypes'
+import {
+  ApiContext,
+  AppErrorCode,
+  UserNotice,
+  AlreadyReadStatus,
+} from 'types/userTypes'
 
 // 絞込条件(既読 or 未読)
 type Condition = 'alreadyRead' | 'unread'
@@ -83,6 +88,25 @@ const TopPage: NextPage = () => {
       setIsLoading(false)
     })
   }
+  function changeToAlreadyReadNotice(id: number) {
+    const targetNotice = userNotices.find((item) => item.id == id)
+    if (targetNotice) {
+      targetNotice.already_read = AlreadyReadStatus.True
+      UpdateUserNotice(apiContext, targetNotice).then((apiResult) => {
+        if (apiResult.result.Code == AppErrorCode.Success) {
+          setIsLoading(true)
+          GetMyUserNotices(apiContext, authUser.id, []).then((apiResult2) => {
+            //console.log(apiResult2);
+            if (apiResult2.result.Code == AppErrorCode.Success) {
+              setUserNotices(apiResult2.data)
+              //console.log(userNotices);
+            }
+          })
+          setIsLoading(false)
+        }
+      })
+    }
+  }
   // #endregion Functions
 
   // #region View
@@ -138,6 +162,7 @@ const TopPage: NextPage = () => {
                   <UserNoticeCardListContainer
                     isLoading={isLoading}
                     userNotices={userNotices}
+                    onChangeToAlreadyReadNotice={changeToAlreadyReadNotice}
                   />
                 </Box>
               </Flex>
