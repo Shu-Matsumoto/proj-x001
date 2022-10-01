@@ -113,9 +113,9 @@ export const AcceptOfApplicationResultPostForm = (
                       id="bootstrap-input"
                       value={props.applicationOfLecture.user.user_name}
                     />
-                    <Button variant="primary" type="button">
+                    {/* <Button variant="primary" type="button">
                       プロフィール
-                    </Button>
+                    </Button> */}
                   </Flex>
                 </Box>
               </FormControl>

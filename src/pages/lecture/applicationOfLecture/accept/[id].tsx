@@ -134,7 +134,6 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
                 flexDirection={'column'}
                 alignItems={'center'}
               >
-                投稿エリア
                 <AcceptOfApplicationResultPostForm
                   applicationOfLecture={applicationOfLecture}
                   onPost={postAcceptOfApplicationResult}

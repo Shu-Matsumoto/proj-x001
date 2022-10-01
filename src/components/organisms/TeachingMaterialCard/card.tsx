@@ -67,11 +67,11 @@ export const CardData = (props: CardDataProps) => {
           </Grid>
           <Grid xs={2}>
             <Box display="flex" flexDirection={'row'}>
-              <CardActions>
+              {/* <CardActions>
                 <Button variant="contained" size="small">
                   Link
                 </Button>
-              </CardActions>
+              </CardActions> */}
               <IconButton
                 color="default"
                 component="label"

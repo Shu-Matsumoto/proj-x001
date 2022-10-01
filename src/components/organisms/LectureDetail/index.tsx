@@ -231,14 +231,14 @@ export const LectureDetail = (props: LectureDetailProps) => {
                   )
                 })}
               </FormControl>
-              <FormControl variant="standard" margin={'normal'}>
-                <Box margin={1}>
-                  <InputLabel shrink htmlFor="bootstrap-input">
-                    教材
-                  </InputLabel>
-                </Box>
-                {props.view_mode_mine &&
-                  lecture.materials.map((material, index) => {
+              {props.view_mode_mine && (
+                <FormControl variant="standard" margin={'normal'}>
+                  <Box margin={1}>
+                    <InputLabel shrink htmlFor="bootstrap-input">
+                      教材
+                    </InputLabel>
+                  </Box>
+                  {lecture.materials.map((material, index) => {
                     return (
                       <Box key={index} margin={1}>
                         <Flex>
@@ -261,7 +261,8 @@ export const LectureDetail = (props: LectureDetailProps) => {
                       </Box>
                     )
                   })}
-              </FormControl>
+                </FormControl>
+              )}
             </>
           </Flex>
         </Box>

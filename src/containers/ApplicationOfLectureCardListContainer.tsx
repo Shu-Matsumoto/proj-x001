@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ApplicationOfLectureWithOptionData } from '../types/userTypes'
+import { ConvertToStringStudentPosition } from '../types/userTypes'
 import RectLoader from 'components/atoms/RectLoader'
 import Box from 'components/layout/Box'
 import ApplicationOfLectureCard from 'components/organisms/ApplicationOfLectureCard'
@@ -49,9 +50,10 @@ const ApplicationOfLectureCardListContainer = ({
                   variant="listing"
                   title={p.lecture.title}
                   studentName={p.user.user_name}
+                  position={ConvertToStringStudentPosition(p.student.position)}
                   capacity={4}
                   numberOfStudents={4}
-                  teacherProfileImageUrl="/lectures/github.png"
+                  studentProfileImageUrl={p.user.image_path}
                 />
               </a>
             </Link>

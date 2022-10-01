@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { GetUrlOfImageFileInDataServer } from '../../../utils'
 import ScaleImage from 'components/atoms/ScaleImage'
 import Text from 'components/atoms/Text'
 import Box from 'components/layout/Box'
@@ -8,12 +9,14 @@ interface ApplicationOfLectureCardProps {
   title: string
   // 生徒名
   studentName: string
+  // ポジション
+  position: string
   // 定員(募集人数)
   capacity: number
   // 参加者数
   numberOfStudents: number
-  // 講師プロフィール画像URL
-  teacherProfileImageUrl: string
+  // 生徒プロフィール画像URL
+  studentProfileImageUrl: string
   /**
    * バリアント（表示スタイル）
    */
@@ -46,7 +49,7 @@ const ApplicationOfLectureCard = ({
   studentName,
   capacity,
   numberOfStudents,
-  teacherProfileImageUrl,
+  studentProfileImageUrl,
   variant = 'listing',
 }: ApplicationOfLectureCardProps) => {
   const { size, imgSize } = (() => {
@@ -64,14 +67,25 @@ const ApplicationOfLectureCard = ({
     <>
       <ApplicationOfLectureCardContainer>
         <ApplicationOfLectureCardImageContainer>
-          <ScaleImage
-            src={teacherProfileImageUrl}
-            width={imgSize ?? 240}
-            height={imgSize ?? 240}
-            containerWidth={size}
-            containerHeight={size}
-            objectFit="cover"
-          />
+          {studentProfileImageUrl && studentProfileImageUrl != '' ? (
+            <ScaleImage
+              src={GetUrlOfImageFileInDataServer(studentProfileImageUrl)}
+              width={imgSize ?? 240}
+              height={imgSize ?? 240}
+              containerWidth={size}
+              containerHeight={size}
+              objectFit="cover"
+            />
+          ) : (
+            <ScaleImage
+              src={'/lectures/Online_lectures.png'}
+              width={imgSize ?? 240}
+              height={imgSize ?? 240}
+              containerWidth={size}
+              containerHeight={size}
+              objectFit="cover"
+            />
+          )}
         </ApplicationOfLectureCardImageContainer>
         {variant !== 'small' && (
           <ApplicationOfLectureCardInfo>
