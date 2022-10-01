@@ -51,7 +51,7 @@ const Header = () => {
   // 初回のみの実行
   useLayoutEffect(() => {
     if (!authUser || authUser.id <= 0 || !isloggdIn) {
-      //router.push('/')
+      router.push('/')
     }
   }, [])
 

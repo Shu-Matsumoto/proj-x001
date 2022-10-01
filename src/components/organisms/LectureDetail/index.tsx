@@ -220,10 +220,7 @@ export const LectureDetail = (props: LectureDetailProps) => {
                             width={{ base: '100px', md: '100px' }}
                             onClick={() => {
                               /* 新規タブを開きZOOMリンクへアクセス */
-                              window.open(
-                                'https://us05web.zoom.us/j/4344904366?pwd=R2ltOVJOYldMREJXbndzcnZLa0xzZz09',
-                                '_blank',
-                              )
+                              window.open(schedule.url)
                             }}
                           >
                             講義参加
@@ -240,25 +237,30 @@ export const LectureDetail = (props: LectureDetailProps) => {
                     教材
                   </InputLabel>
                 </Box>
-                {lecture.materials.map((material, index) => {
-                  return (
-                    <Box key={index} margin={1}>
-                      <Flex>
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={material.title}
-                        />
-                        <Button
-                          key={index}
-                          width={{ base: '100px', md: '100px' }}
-                        >
-                          Link
-                        </Button>
-                      </Flex>
-                    </Box>
-                  )
-                })}
+                {props.view_mode_mine &&
+                  lecture.materials.map((material, index) => {
+                    return (
+                      <Box key={index} margin={1}>
+                        <Flex>
+                          <BootstrapInput
+                            key={index}
+                            id="bootstrap-input"
+                            value={material.title}
+                          />
+                          <Button
+                            key={index}
+                            width={{ base: '100px', md: '100px' }}
+                            onClick={() => {
+                              /* 新規タブを開き資料リンクへアクセス */
+                              window.open(material.path)
+                            }}
+                          >
+                            Link
+                          </Button>
+                        </Flex>
+                      </Box>
+                    )
+                  })}
               </FormControl>
             </>
           </Flex>
