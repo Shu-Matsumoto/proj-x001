@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 import React from 'react'
 import { GetUserList } from '../../../api/users'
-import SimpleDialog from 'components/molecules/SimpleDialog'
-import { ApiContext, AppErrorCode } from 'types/userTypes'
+import { ApiContext, AppErrorCode } from '../../../types/userTypes'
+import SimpleDialog from '../../molecules/SimpleDialog'
 
 interface DialogButtonProps {
   // ダイアログオープン
