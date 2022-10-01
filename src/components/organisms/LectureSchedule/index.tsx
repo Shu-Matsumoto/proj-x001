@@ -78,20 +78,22 @@ export default function LectureScheduleEditor(props: CardListProps) {
   // テーブル内の値変化時のイベントハンドラ
   React.useEffect(() => {
     //console.log("tabel", rows)
-    schedules.splice(0)
+    const newSchedules: UserTypes.LectureSchedule[] = []
     rows.forEach((row, index) => {
       //console.log(row)
-      schedules.push(UserTypes.GetObj_LectureSchedule())
+      newSchedules.push(UserTypes.GetObj_LectureSchedule())
       // row['start_time'],row['end_time']のフォーマット：Fri Sep 30 2022 13:31:00 GMT+0900 (日本標準時) {}
       // toLocaleStringのフォーマット2022/9/30 14:10:00
-      schedules[index].start_time = new Date(row['start_time']).toLocaleString()
-      schedules[index].end_time = new Date(row['end_time']).toLocaleString()
-      schedules[index].url = row['url']
-      schedules[index].meeting_id = row['meeting_id']
-      schedules[index].passcord = row['passcord']
+      newSchedules[index].start_time = new Date(
+        row['start_time'],
+      ).toLocaleString()
+      newSchedules[index].end_time = new Date(row['end_time']).toLocaleString()
+      newSchedules[index].url = row['url']
+      newSchedules[index].meeting_id = row['meeting_id']
+      newSchedules[index].passcord = row['passcord']
     })
-    setSchedules({ ...schedules })
-    props.updatePostData(schedules)
+    setSchedules({ ...newSchedules })
+    props.updatePostData(newSchedules)
     //console.log(schedules)
   }, [rows])
 

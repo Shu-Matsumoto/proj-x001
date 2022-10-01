@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -144,7 +145,7 @@ export const CardData = (props: CardDataProps) => {
             </FormControl>
           </Grid>
           {/* エリア3 */}
-          <Grid xs={3}>
+          {/* <Grid xs={3}>
             <TextField
               label="報酬金額"
               id="text-pay-amount"
@@ -173,11 +174,11 @@ export const CardData = (props: CardDataProps) => {
               color="primary"
               focused
             />
-          </Grid>
+          </Grid> */}
           {/* エリア4 */}
           <Grid xs={3}>
             <TextField
-              label="生徒名"
+              label="講師名"
               variant="standard"
               value={
                 props.data.teacher.user_id > 1 ? props.data.user_name : '未定'

@@ -62,11 +62,11 @@ export const CardData = (props: CardDataProps) => {
               <Box marginTop={3} marginLeft={1}>
                 <CardMedia
                   component="img"
-                  image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf76v4M-JO8uEnyvey3Kz0EtZowRRDqfsL4Q&usqp=CAU"
+                  image="/lectures/leader.png"
                   alt="green iguana"
                 />
               </Box>
-              <TextField
+              {/* <TextField
                 label="生徒名"
                 variant="standard"
                 value={props.data.user_id}
@@ -75,13 +75,13 @@ export const CardData = (props: CardDataProps) => {
                 InputLabelProps={{ shrink: true }}
                 color="primary"
                 focused
-              />
+              /> */}
               <Box display="flex" flexDirection={'row'}>
-                <CardActions>
+                {/* <CardActions>
                   <Button variant="contained" size="small">
                     受講申請
                   </Button>
-                </CardActions>
+                </CardActions> */}
                 <IconButton
                   color="default"
                   component="label"
@@ -96,7 +96,7 @@ export const CardData = (props: CardDataProps) => {
           {/* 募集概要 */}
           <Grid xs={3}>
             <CardContent>
-              <FormControl sx={{ m: 1, minWidth: 160 }} size="small">
+              <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
                 <InputLabel variant="outlined" size="small">
                   役割
                 </InputLabel>
@@ -127,7 +127,7 @@ export const CardData = (props: CardDataProps) => {
                   </MenuItem>
                 </Select>
               </FormControl>
-              <TextField
+              {/* <TextField
                 label="受講金額"
                 id="text-pay-amount"
                 variant="standard"
@@ -152,7 +152,7 @@ export const CardData = (props: CardDataProps) => {
                 InputLabelProps={{ shrink: true }}
                 color="primary"
                 focused
-              />
+              /> */}
             </CardContent>
           </Grid>
           {/* 募集詳細 */}
