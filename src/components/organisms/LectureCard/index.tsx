@@ -74,10 +74,10 @@ const LectureCard = ({
             <Box>
               <Text
                 as="h2"
-                fontSize={{ base: 'small', md: 'mediumLarge' }}
+                fontSize={{ base: 'small', md: 'medium' }}
                 letterSpacing={{ base: 2, md: 3 }}
-                lineHeight={{ base: '32px', md: '48px' }}
-                backgroundColor="white"
+                lineHeight={{ base: '16px', md: '32px' }}
+                backgroundColor="#DDDDDD"
                 margin={0}
                 paddingRight={2}
                 paddingLeft={2}
@@ -90,12 +90,12 @@ const LectureCard = ({
                 as="span"
                 fontWeight="bold"
                 display="inline-block"
-                backgroundColor="white"
-                fontSize={{ base: 'extraSmall', md: 'medium' }}
+                backgroundColor="#EEEEDD"
+                fontSize={{ base: 'extraSmall', md: 'extraSmall' }}
                 lineHeight={{ base: '8px', md: '12px' }}
                 letterSpacing={{ base: 2, md: 4 }}
                 margin={0}
-                padding={{ base: 1, md: 2 }}
+                padding={{ base: 1, md: 1 }}
               >
                 講師：{teacherName}
               </Text>

@@ -49,6 +49,7 @@ const ApplicationOfLectureCard = ({
   studentName,
   capacity,
   numberOfStudents,
+  position,
   studentProfileImageUrl,
   variant = 'listing',
 }: ApplicationOfLectureCardProps) => {
@@ -78,7 +79,7 @@ const ApplicationOfLectureCard = ({
             />
           ) : (
             <ScaleImage
-              src={'/lectures/Online_lectures.png'}
+              src={'/users/untitleduser.png'}
               width={imgSize ?? 240}
               height={imgSize ?? 240}
               containerWidth={size}
@@ -91,11 +92,11 @@ const ApplicationOfLectureCard = ({
           <ApplicationOfLectureCardInfo>
             <Box>
               <Text
-                as="h2"
-                fontSize={{ base: 'small', md: 'mediumLarge' }}
+                as="h4"
+                fontSize={{ base: 'small', md: 'medium' }}
                 letterSpacing={{ base: 2, md: 3 }}
-                lineHeight={{ base: '32px', md: '48px' }}
-                backgroundColor="white"
+                lineHeight={{ base: '16px', md: '24px' }}
+                backgroundColor="#DDDDDD"
                 margin={0}
                 paddingRight={2}
                 paddingLeft={2}
@@ -108,14 +109,28 @@ const ApplicationOfLectureCard = ({
                 as="span"
                 fontWeight="bold"
                 display="inline-block"
-                backgroundColor="white"
-                fontSize={{ base: 'extraSmall', md: 'medium' }}
+                backgroundColor="#EEEEDD"
+                fontSize={{ base: 'extraSmall', md: 'extraSmall' }}
                 lineHeight={{ base: '8px', md: '12px' }}
                 letterSpacing={{ base: 2, md: 4 }}
                 margin={0}
-                padding={{ base: 1, md: 2 }}
+                padding={{ base: 1, md: 1 }}
               >
                 講義：{title}
+              </Text>
+              <br />
+              <Text
+                as="span"
+                fontWeight="bold"
+                display="inline-block"
+                backgroundColor="#EEEEDD"
+                fontSize={{ base: 'extraSmall', md: 'extraSmall' }}
+                lineHeight={{ base: '8px', md: '12px' }}
+                letterSpacing={{ base: 2, md: 4 }}
+                margin={0}
+                padding={{ base: 1, md: 1 }}
+              >
+                役割： {position}
               </Text>
               {/* <Text
                 as="span"
