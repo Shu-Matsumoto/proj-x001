@@ -1,17 +1,16 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
+import Button from '@mui/material/Button'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
@@ -23,12 +22,16 @@ import * as React from 'react'
 import * as UserTypes from '../../../types/userTypes'
 
 interface CardDataProps {
+  isRefMode: boolean
   // カードID
   id: number
   // カード内データ
-  data: UserTypes.Student
+  data: { student: UserTypes.Student, user_name: string }
   // フォーム内の値が変化した時のイベントハンドラ
-  onChangeValue: (id: number, data: UserTypes.Student) => void
+  onChangeValue: (
+    id: number,
+    data: { student: UserTypes.Student, user_name: string }
+  ) => void
   // 削除ボタンを押した時のイベントハンドラ
   onRemove: (id: number) => void
 }
@@ -36,9 +39,13 @@ interface CardDataProps {
 export const CardData = (props: CardDataProps) => {
   // #region Fields
   // 編集した生徒情報を格納するデータ
-  const [cardData, setCardData] = useState<UserTypes.Student>(
-    UserTypes.GetCopyObj_Student(props.data),
-  )
+  const [cardData, setCardData] = useState<{
+    student: UserTypes.Student
+    user_name: string
+  }>({
+    student: UserTypes.GetCopyObj_Student(props.data.student),
+    user_name: props.data.user_name
+  })
   // #endregion Fields
   // #region Functions
   // カード内データ値の変更イベントハンドラ
@@ -66,30 +73,40 @@ export const CardData = (props: CardDataProps) => {
                   alt="green iguana"
                 />
               </Box>
-              {/* <TextField
-                label="生徒名"
-                variant="standard"
-                value={props.data.user_id}
-                margin="normal"
-                sx={{ m: 1, width: '18ch' }}
-                InputLabelProps={{ shrink: true }}
-                color="primary"
-                focused
-              /> */}
+              {props.isRefMode && (
+                <TextField
+                  label="生徒名"
+                  variant="standard"
+                  value={
+                    props.data.student.user_id > 1
+                      ? props.data.user_name
+                      : '不定'
+                  }
+                  margin="normal"
+                  sx={{ m: 1, width: '18ch' }}
+                  InputLabelProps={{ shrink: true }}
+                  color="primary"
+                  focused
+                />
+              )}
               <Box display="flex" flexDirection={'row'}>
-                {/* <CardActions>
-                  <Button variant="contained" size="small">
-                    受講申請
-                  </Button>
-                </CardActions> */}
-                <IconButton
-                  color="default"
-                  component="label"
-                  size="large"
-                  onClick={removeMyself}
-                >
-                  <PersonRemoveIcon />
-                </IconButton>
+                {props.isRefMode && (props.data.student.user_id <= 1) && (
+                  <CardActions>
+                    <Button variant="contained" size="small">
+                      受講申請
+                    </Button>
+                  </CardActions>
+                )}
+                {!props.isRefMode && (
+                  <IconButton
+                    color="default"
+                    component="label"
+                    size="large"
+                    onClick={removeMyself}
+                  >
+                    <PersonRemoveIcon />
+                  </IconButton>
+                )}
               </Box>
             </Box>
           </Grid>
@@ -101,17 +118,20 @@ export const CardData = (props: CardDataProps) => {
                   役割
                 </InputLabel>
                 <Select
-                  value={props.data.position}
+                  value={props.data.student.position}
                   onChange={(e) => {
-                    if (typeof e.target.value === 'string') {
-                      cardData.position =
-                        UserTypes.ConvertToNumberStudentPosition(e.target.value)
-                    } else {
-                      cardData.position = e.target.value
+                    if (!props.isRefMode) {
+                        if (typeof e.target.value === 'string') {
+                          cardData.student.position =
+                            UserTypes.ConvertToNumberStudentPosition(e.target.value)
+                        } else {
+                          cardData.student.position = e.target.value
+                        }
+                        setCardData({ ...cardData })
+                        changeFormValue()
+                      }
                     }
-                    setCardData({ ...cardData })
-                    changeFormValue()
-                  }}
+                  }
                 >
                   <MenuItem value={UserTypes.StudentPosition.Leader}>
                     Leader
@@ -174,11 +194,13 @@ export const CardData = (props: CardDataProps) => {
                       id="text-goal"
                       fullWidth
                       variant="outlined"
-                      value={props.data.goal}
+                      value={props.data.student.goal}
                       onChange={(e) => {
-                        cardData.goal = e.target.value
-                        setCardData({ ...cardData })
-                        changeFormValue()
+                        if (!props.isRefMode) {
+                          cardData.student.goal = e.target.value
+                          setCardData({ ...cardData })
+                          changeFormValue()
+                        }
                       }}
                       multiline
                       rows={4}
@@ -203,11 +225,13 @@ export const CardData = (props: CardDataProps) => {
                       id="text-requirement"
                       fullWidth
                       variant="outlined"
-                      value={props.data.requirement}
+                      value={props.data.student.requirement}
                       onChange={(e) => {
-                        cardData.requirement = e.target.value
-                        setCardData({ ...cardData })
-                        changeFormValue()
+                        if (!props.isRefMode) {
+                          cardData.student.requirement = e.target.value
+                          setCardData({ ...cardData })
+                          changeFormValue()
+                        }
                       }}
                       multiline
                       rows={4}
@@ -232,11 +256,13 @@ export const CardData = (props: CardDataProps) => {
                       id="text-dev-env"
                       fullWidth
                       variant="outlined"
-                      value={props.data.dev_env}
+                      value={props.data.student.dev_env}
                       onChange={(e) => {
-                        cardData.dev_env = e.target.value
-                        setCardData({ ...cardData })
-                        changeFormValue()
+                        if (!props.isRefMode) {
+                          cardData.student.dev_env = e.target.value
+                          setCardData({ ...cardData })
+                          changeFormValue()
+                        }
                       }}
                       multiline
                       rows={4}

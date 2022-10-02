@@ -12,6 +12,10 @@ import * as UserTypes from '../../../types/userTypes'
 import { CardData } from './card'
 
 interface CardListProps {
+  // 参照モード
+  isRefMode: boolean
+  // 参照用データ
+  refData: UserTypes.TeacherWithUser[]
   // 編集中の値変更時のイベントハンドラ
   updatePostData: (data: UserTypes.Teacher[]) => void
 }
@@ -32,12 +36,31 @@ export const TeacherCardList = (props: CardListProps) => {
   // #endregion Fields
   // 初回のみの実行
   useEffect(() => {
-    props.updatePostData(
-      cardDataList.map((item) => {
-        return item.data.teacher
-      }),
-    )
+    if (!props.isRefMode) {
+      props.updatePostData(
+        cardDataList.map((item) => {
+          return item.data.teacher
+        }),
+      )
+    }
   }, [])
+
+  // ステートの変更
+  useEffect(() => {
+    if (props.isRefMode) {
+      setCardDataList(props.refData.map((item, index) => {
+        return {
+          id: index,
+          data: {
+            teacher: item.teacher,
+            user_name: item.user.user_name
+          }
+        }
+      }))
+      console.log(cardDataList)      
+    }
+  }, [props.refData])
+
   // カード追加
   function addCard(): void {
     cardDataList.push({
@@ -60,7 +83,7 @@ export const TeacherCardList = (props: CardListProps) => {
   // リスト情報更新
   function changeListData(
     id: number,
-    setData: { teacher: UserTypes.Teacher; user_name: string },
+    setData: { teacher: UserTypes.Teacher, user_name: string },
   ): void {
     const target = cardDataList.find((item) => item.id == id)
     if (target && target?.data) {
@@ -108,22 +131,25 @@ export const TeacherCardList = (props: CardListProps) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Box justifyContent={'flex-end'}>
-              <IconButton
-                color="primary"
-                aria-label="add student"
-                component="label"
-                size="large"
-                onClick={addCard}
-              >
-                <PersonAddIcon />
-              </IconButton>
-            </Box>
+            {!props.isRefMode && (
+              <Box justifyContent={'flex-end'}>
+                <IconButton
+                  color="primary"
+                  aria-label="add student"
+                  component="label"
+                  size="large"
+                  onClick={addCard}
+                >
+                  <PersonAddIcon />
+                </IconButton>
+              </Box>
+            )}
             <ul>
               {cardDataList.map((item) => {
                 return (
                   <li key={item.id}>
                     <CardData
+                      isRefMode={props.isRefMode}
                       id={item.id}
                       data={item.data}
                       onChangeValue={changeListData}

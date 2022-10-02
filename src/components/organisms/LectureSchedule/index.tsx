@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 import EditIcon from '@mui/icons-material/Edit'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import SaveIcon from '@mui/icons-material/Save'
+import LinkIcon from '@mui/icons-material/Link'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -31,6 +32,8 @@ import * as UserTypes from '../../../types/userTypes'
 const initialRows: GridRowsProp = []
 
 interface EditToolbarProps {
+  // 参照モード
+  isRefMode: boolean
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void
   setRowModesModel: (
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
@@ -54,14 +57,20 @@ function EditToolbar(props: EditToolbarProps) {
 
   return (
     <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        追加
-      </Button>
+      {!props.isRefMode && (
+        <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+          追加
+        </Button>
+      )}
     </GridToolbarContainer>
   )
 }
 
 interface CardListProps {
+  // 参照モード
+  isRefMode: boolean
+  // 参照用データ
+  refData: UserTypes.LectureSchedule[]
   // 編集中の値変更時のイベントハンドラ
   updatePostData: (data: UserTypes.LectureSchedule[]) => void
 }
@@ -77,6 +86,8 @@ export default function LectureScheduleEditor(props: CardListProps) {
 
   // テーブル内の値変化時のイベントハンドラ
   React.useEffect(() => {
+    if (props.isRefMode) { return }
+    
     //console.log("tabel", rows)
     const newSchedules: UserTypes.LectureSchedule[] = []
     rows.forEach((row, index) => {
@@ -96,6 +107,25 @@ export default function LectureScheduleEditor(props: CardListProps) {
     props.updatePostData(newSchedules)
     //console.log(schedules)
   }, [rows])
+
+  // ステートの変更
+  React.useEffect(() => {
+    if (props.isRefMode) {
+      console.log(rows)  
+      const newRows = props.refData.map((item, index) => {
+        return ({
+          id: item.id,
+          start_time: new Date(item.start_time),
+          end_time: new Date(item.end_time),
+          url: item.url,
+          meeting_id: item.meeting_id,
+          passcord: item.passcord
+        })
+      })
+      setRows(newRows)
+      console.log(newRows)  
+    }
+  }, [props.refData])
 
   // 行編集開始
   const handleRowEditStart = (
@@ -172,7 +202,17 @@ export default function LectureScheduleEditor(props: CardListProps) {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit
-
+        if (props.isRefMode) {
+          return [
+            <GridActionsCellItem
+              key={id}
+              icon={<LinkIcon />}
+              label="Link"
+              onClick={() => { /*aaa*/}}
+            />,
+          ]
+        }
+        
         if (isInEditMode) {
           return [
             <GridActionsCellItem
@@ -249,7 +289,7 @@ export default function LectureScheduleEditor(props: CardListProps) {
             onRowEditStop={handleRowEditStop}
             processRowUpdate={processRowUpdate}
             components={{
-              Toolbar: EditToolbar,
+              Toolbar: props.isRefMode ? undefined :EditToolbar,
             }}
             componentsProps={{
               toolbar: { setRows, setRowModesModel },

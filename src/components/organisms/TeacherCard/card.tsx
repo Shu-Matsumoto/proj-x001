@@ -3,14 +3,12 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import TextField, { StandardTextFieldProps } from '@mui/material/TextField'
+import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 import * as React from 'react'
@@ -18,14 +16,15 @@ import * as UserTypes from '../../../types/userTypes'
 import { UserSelectDialogButton } from '../UserSelectDialog'
 
 interface CardDataProps {
+  isRefMode: boolean
   // カードID
   id: number
   // カード内データ
-  data: { teacher: UserTypes.Teacher; user_name: string }
+  data: { teacher: UserTypes.Teacher, user_name: string }
   // フォーム内の値が変化した時のイベントハンドラ
   onChangeValue: (
     id: number,
-    data: { teacher: UserTypes.Teacher; user_name: string },
+    data: { teacher: UserTypes.Teacher, user_name: string },
   ) => void
   // 削除ボタンを押した時のイベントハンドラ
   onRemove: (id: number) => void
@@ -76,39 +75,41 @@ export const CardData = (props: CardDataProps) => {
       <Card>
         <Grid container spacing={0} columns={12}>
           {/* ヘッダー */}
-          <Grid xs={2.5}>
-            <Box display="flex" flexDirection={'column'} alignItems={'center'}>
-              <Box
-                marginTop={2}
-                marginLeft={1}
-                display="flex"
-                flexDirection={'row'}
-              >
-                <CardActions>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    onClick={handleClickOpen}
-                  >
-                    講師選択
-                  </Button>
-                  <UserSelectDialogButton
-                    open={dialogOpen}
-                    onClose={handleClose}
-                  />
-                </CardActions>
-                <IconButton
-                  color="default"
-                  aria-label="remove student"
-                  component="label"
-                  size="large"
-                  onClick={removeMyself}
+          {!props.isRefMode && (
+            <Grid xs={2.5}>
+              <Box display="flex" flexDirection={'column'} alignItems={'center'}>
+                <Box
+                  marginTop={2}
+                  marginLeft={1}
+                  display="flex"
+                  flexDirection={'row'}
                 >
-                  <PersonRemoveIcon />
-                </IconButton>
+                  <CardActions>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={handleClickOpen}
+                    >
+                      講師選択
+                    </Button>
+                    <UserSelectDialogButton
+                      open={dialogOpen}
+                      onClose={handleClose}
+                    />
+                  </CardActions>
+                  <IconButton
+                    color="default"
+                    aria-label="remove student"
+                    component="label"
+                    size="large"
+                    onClick={removeMyself}
+                  >
+                    <PersonRemoveIcon />
+                  </IconButton>
+                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
+          )}
           {/* 役割 */}
           <Grid xs={3.5}>
             <FormControl sx={{ m: 2.5, minWidth: 160 }} size="small">
@@ -118,15 +119,17 @@ export const CardData = (props: CardDataProps) => {
               <Select
                 value={props.data.teacher.type}
                 onChange={(e) => {
-                  if (typeof e.target.value === 'string') {
-                    cardData.teacher.type =
-                      UserTypes.ConvertToNumberStudentPosition(e.target.value)
-                  } else {
-                    cardData.teacher.type = e.target.value
+                  if (!props.isRefMode) {
+                    if (typeof e.target.value === 'string') {
+                      cardData.teacher.type =
+                        UserTypes.ConvertToNumberStudentPosition(e.target.value)
+                    } else {
+                      cardData.teacher.type = e.target.value
+                    }
+                    setCardData({ ...cardData })
+                    //console.log(cardData)
+                    changeFormValue()
                   }
-                  setCardData({ ...cardData })
-                  //console.log(cardData)
-                  changeFormValue()
                 }}
               >
                 <MenuItem value={UserTypes.StudentPosition.Leader}>

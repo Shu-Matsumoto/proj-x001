@@ -12,6 +12,10 @@ import * as UserTypes from '../../../types/userTypes'
 import { CardData } from './card'
 
 interface CardListProps {
+  // 参照モード
+  isRefMode: boolean
+  // 参照用データ
+  refData: UserTypes.TeachingMaterial[]
   // 編集中の値変更時のイベントハンドラ
   updatePostData: (data: UserTypes.TeachingMaterial[]) => void
 }
@@ -27,12 +31,29 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
   // カード追加
   // 初回のみの実行
   useEffect(() => {
-    props.updatePostData(
-      cardDataList.map((item) => {
-        return item.data
-      }),
-    )
+    if (!props.isRefMode) {
+      props.updatePostData(
+        cardDataList.map((item) => {
+          return item.data
+        }),
+      )
+    }
   }, [])
+
+  // ステートの変更
+  useEffect(() => {
+    if (props.isRefMode) {
+      setCardDataList(props.refData.map((item, index) => {
+        return {
+          id: index,
+          data: item
+        }
+      }))
+      console.log(cardDataList)      
+    }
+  }, [props.refData])
+
+  // カード追加
   function addCard(): void {
     cardDataList.push({
       id: cardDataCounter,
@@ -100,22 +121,25 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Box justifyContent={'flex-end'}>
-              <IconButton
-                color="primary"
-                aria-label="add student"
-                component="label"
-                size="large"
-                onClick={addCard}
-              >
-                <AddCircleIcon />
-              </IconButton>
-            </Box>
+            {!props.isRefMode && (
+              <Box justifyContent={'flex-end'}>
+                <IconButton
+                  color="primary"
+                  aria-label="add student"
+                  component="label"
+                  size="large"
+                  onClick={addCard}
+                >
+                  <AddCircleIcon />
+                </IconButton>
+              </Box>
+            )}
             <ul>
               {cardDataList.map((item) => {
                 return (
                   <li key={item.id}>
                     <CardData
+                      isRefMode={props.isRefMode}
                       id={item.id}
                       data={item.data}
                       onChangeValue={changeListData}

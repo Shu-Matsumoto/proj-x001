@@ -1,72 +1,30 @@
-import FormControl from '@mui/material/FormControl'
-import InputBase from '@mui/material/InputBase'
-import InputLabel from '@mui/material/InputLabel'
-import { alpha, styled } from '@mui/material/styles'
-import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
-
-import { GetLectureWithOptionData } from '../../../api/lectures'
-import Button from 'components/atoms/Button'
-import Box from 'components/layout/Box'
-import Flex from 'components/layout/Flex'
+import Button from '@material-ui/core/Button'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Grid from '@mui/material/Unstable_Grid2'
+import { useState, useEffect } from 'react'
+import * as React from 'react'
+import LectureScheduleEditor from '../LectureSchedule'
+import { StudentCardList } from '../StudentCard/cardlist'
+import { TeacherCardList } from '../TeacherCard/cardlist'
+import { TeachingMaterialCardList } from '../TeachingMaterialCard/cardlist'
 import {
   ApiContext,
   AppErrorCode,
   LectureWithOptionData,
   ConvertToStringStudentPosition,
 } from 'types/userTypes'
+import { GetLectureWithOptionData } from '../../../api/lectures'
 
 interface LectureDetailProps {
   lecture_id: number
   view_mode_mine: boolean
 }
 
-// 情報表示用タグ
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(3),
-  },
-  '& .MuiInputBase-input': {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    width: 'auto',
-    padding: '10px 12px',
-    transition: theme.transitions.create([
-      'border-color',
-      'background-color',
-      'box-shadow',
-    ]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: theme.palette.primary.main,
-    },
-  },
-}))
-
-/**
- * 講義詳細表示コンポーネント
- */
 export const LectureDetail = (props: LectureDetailProps) => {
   // #region Fields
   const [lecture, setLecture] = useState(new LectureWithOptionData())
   // #endregion Fields
-
   // #region Functions
   // 初期化処理
   useEffect(() => {
@@ -83,190 +41,69 @@ export const LectureDetail = (props: LectureDetailProps) => {
     })
   }, [])
   // #endregion Functions
-
   // #region View
   return (
-    <Box width="90%" margin={2}>
-      <Flex justifyContent={'flex-start'}>
-        {/* タイトル */}
-        <Box marginBottom={1}>
-          <Flex justifyContent={'flex-start'} flexDirection={'column'}>
-            <>
-              {/* 講義タイトルの入力 */}
-              <FormControl variant="standard" margin={'normal'}>
-                <InputLabel shrink htmlFor="bootstrap-input">
-                  講義タイトル
-                </InputLabel>
-                <BootstrapInput
-                  id="bootstrap-input"
-                  value={lecture.lecture.title}
-                />
-              </FormControl>
-              <FormControl variant="standard" margin={'normal'}>
-                <InputLabel shrink htmlFor="bootstrap-input">
-                  説明
-                </InputLabel>
-                <BootstrapInput
-                  id="bootstrap-input"
-                  value={lecture.lecture.explanation}
-                />
-              </FormControl>
-              <FormControl variant="standard" margin={'normal'}>
-                <Box margin={1}>
-                  <InputLabel shrink htmlFor="bootstrap-input">
-                    講師
-                  </InputLabel>
-                </Box>
-                {lecture.teachers.map((teacher, index) => {
-                  return (
-                    <Box key={index} margin={1}>
-                      <Flex key={index} flexDirection={'row'}>
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={ConvertToStringStudentPosition(
-                            teacher.teacher.type,
-                          )}
-                        />
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={teacher.user.user_name}
-                        />
-                      </Flex>
-                    </Box>
-                  )
-                })}
-              </FormControl>
-              <FormControl variant="standard" margin={'normal'}>
-                <Box margin={1}>
-                  <InputLabel shrink htmlFor="bootstrap-input">
-                    募集生徒
-                  </InputLabel>
-                </Box>
-                {lecture.students.map((student, index) => {
-                  return (
-                    <Box key={index} margin={1}>
-                      <Flex key={index}>
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={ConvertToStringStudentPosition(
-                            student.student.position,
-                          )}
-                        />
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={
-                            student.student.user_id == 1
-                              ? '未定'
-                              : student.user.user_name
-                          }
-                        />
-                        {!props.view_mode_mine && student.student.user_id == 1 && (
-                          <Link
-                            key={index}
-                            href={{
-                              pathname: `/lecture/applicationOfLecture/post/${student.student.user_id}`,
-                              query: {
-                                lecture_id: student.student.lecture_id,
-                                student_id: student.student.id,
-                              },
-                            }}
-                            passHref
-                          >
-                            <Button
-                              key={index}
-                              width={{ base: '100px', md: '100px' }}
-                            >
-                              受講申請
-                            </Button>
-                          </Link>
-                        )}
-                      </Flex>
-                    </Box>
-                  )
-                })}
-              </FormControl>
-              <FormControl variant="standard" margin={'normal'}>
-                <Box margin={1}>
-                  <InputLabel shrink htmlFor="bootstrap-input">
-                    スケジュール
-                  </InputLabel>
-                </Box>
-                {lecture.schedules.map((schedule, index) => {
-                  return (
-                    <Box key={index} margin={1}>
-                      <Flex
-                        key={index}
-                        justifyContent={'flex-start'}
-                        flexDirection={'row'}
-                      >
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={schedule.start_time}
-                        />
-                        <BootstrapInput
-                          key={index}
-                          id="bootstrap-input"
-                          value={schedule.end_time}
-                        />
-                        {props.view_mode_mine && (
-                          <Button
-                            key={index}
-                            variant={'secondary'}
-                            width={{ base: '100px', md: '100px' }}
-                            onClick={() => {
-                              /* 新規タブを開きZOOMリンクへアクセス */
-                              window.open(schedule.url)
-                            }}
-                          >
-                            講義参加
-                          </Button>
-                        )}
-                      </Flex>
-                    </Box>
-                  )
-                })}
-              </FormControl>
-              {props.view_mode_mine && (
-                <FormControl variant="standard" margin={'normal'}>
-                  <Box margin={1}>
-                    <InputLabel shrink htmlFor="bootstrap-input">
-                      教材
-                    </InputLabel>
-                  </Box>
-                  {lecture.materials.map((material, index) => {
-                    return (
-                      <Box key={index} margin={1}>
-                        <Flex>
-                          <BootstrapInput
-                            key={index}
-                            id="bootstrap-input"
-                            value={material.title}
-                          />
-                          <Button
-                            key={index}
-                            width={{ base: '100px', md: '100px' }}
-                            onClick={() => {
-                              /* 新規タブを開き資料リンクへアクセス */
-                              window.open(material.path)
-                            }}
-                          >
-                            Link
-                          </Button>
-                        </Flex>
-                      </Box>
-                    )
-                  })}
-                </FormControl>
-              )}
-            </>
-          </Flex>
-        </Box>
-      </Flex>
+    <Box sx={{ flexGrow: 1, width: 830 }}>
+      <Grid container spacing={2}>
+        {/* 講義タイトル */}
+        <Grid xs={12}>
+          <TextField
+            label="講義タイトル"
+            value={lecture.lecture.title}
+            fullWidth
+            variant="standard"
+            color="primary"
+            focused
+            InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
+        {/* 講義説明 */}
+        <Grid xs={12}>
+          <TextField
+            label="講義説明"
+            value={lecture.lecture.explanation}
+            fullWidth
+            variant="outlined"
+            multiline
+            rows={4}
+            color="primary"
+            focused
+            InputLabelProps={{ shrink: true }}
+          />
+        </Grid>
+        {/* 講師 */}
+        <Grid xs={12}>
+          <TeacherCardList
+            isRefMode={true}
+            refData={lecture.teachers}
+            updatePostData={() => { /*do nothing*/ }}
+          />
+        </Grid>
+        {/* 募集生徒 */}
+        <Grid xs={12}>
+          <StudentCardList
+            isRefMode={true}
+            refData={lecture.students}
+            updatePostData={() => { /*do nothing*/ }}
+          />
+        </Grid>
+        {/* 講義開催スケジュール */}
+        <Grid xs={12}>
+          <LectureScheduleEditor
+            isRefMode={true}
+            refData={lecture.schedules}
+            updatePostData={() => { /*do nothing*/ }}
+          />
+        </Grid>
+        {/* 教材 */}
+        <Grid xs={12}>
+          <TeachingMaterialCardList
+            isRefMode={true}
+            refData={lecture.materials}
+            updatePostData={() => { /*do nothing*/ }}
+          />
+        </Grid>
+      </Grid>
     </Box>
   )
   // #endregion View

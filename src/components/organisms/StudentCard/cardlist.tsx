@@ -12,6 +12,10 @@ import * as UserTypes from '../../../types/userTypes'
 import { CardData } from './card'
 
 interface CardListProps {
+  // 参照モード
+  isRefMode: boolean
+  // 参照用データ
+  refData: UserTypes.StudentWithUser[]
   // 編集中の値変更時のイベントハンドラ
   updatePostData: (data: UserTypes.Student[]) => void
 }
@@ -21,38 +25,67 @@ export const StudentCardList = (props: CardListProps) => {
   // 生徒追加の都度インクリメントするカウンタ
   const [cardDataCounter, setCardDataCounter] = useState(0)
   const [cardDataList, setCardDataList] = useState<
-    { id: number; data: UserTypes.Student }[]
+    {
+      id: number
+      data: {
+        student: UserTypes.Student
+        user_name: string
+      }
+    }[]
   >([])
   // #endregion Fields
   // 初回のみの実行
   useEffect(() => {
-    props.updatePostData(
-      cardDataList.map((item) => {
-        return item.data
-      }),
-    )
+    if (!props.isRefMode) {
+      props.updatePostData(
+        cardDataList.map((item) => {
+          return item.data.student
+        }),
+      )
+    }
   }, [])
+
+  // ステートの変更
+  useEffect(() => {
+    if (props.isRefMode) {
+      setCardDataList(props.refData.map((item, index) => {
+        return {
+          id: index,
+          data: {
+            student : item.student,
+            user_name: item.user.user_name
+          }
+        }
+      }))
+      console.log(cardDataList)      
+    }
+  }, [props.refData])
 
   // 生徒カード追加
   function addStudent(): void {
-    cardDataList.push({ id: cardDataCounter, data: UserTypes.GetObj_Student() })
-    cardDataList[cardDataList.length - 1].data.position =
+    cardDataList.push({
+      id: cardDataCounter, data: { student: UserTypes.GetObj_Student(), user_name: '' },
+    })
+    cardDataList[cardDataList.length - 1].data.student.position =
       UserTypes.StudentPosition.Leader
-    cardDataList[cardDataList.length - 1].data.status =
+    cardDataList[cardDataList.length - 1].data.student.status =
       UserTypes.AttendanceStatus.Waiting
-    cardDataList[cardDataList.length - 1].data.pay_amount = 0
+    cardDataList[cardDataList.length - 1].data.student.pay_amount = 0
     setCardDataCounter(cardDataCounter + 1)
     //console.log(studentCounter)
     //console.log(studentList)
     setCardDataList([...cardDataList])
     props.updatePostData(
       cardDataList.map((item) => {
-        return item.data
+        return item.data.student
       }),
     )
   }
   // 生徒情報更新
-  function changeStudentData(id: number, data: UserTypes.Student): void {
+  function changeStudentData(
+    id: number,
+    data: { student: UserTypes.Student, user_name: string },
+  ): void {
     const target = cardDataList.find((item) => item.id == id)
     if (target && target?.data) {
       target.data = data
@@ -60,7 +93,7 @@ export const StudentCardList = (props: CardListProps) => {
     setCardDataList([...cardDataList])
     props.updatePostData(
       cardDataList.map((item) => {
-        return item.data
+        return item.data.student
       }),
     )
   }
@@ -73,7 +106,7 @@ export const StudentCardList = (props: CardListProps) => {
     setCardDataList([...cardDataList])
     props.updatePostData(
       cardDataList.map((item) => {
-        return item.data
+        return item.data.student
       }),
     )
   }
@@ -97,22 +130,25 @@ export const StudentCardList = (props: CardListProps) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Box justifyContent={'flex-end'}>
-              <IconButton
-                color="primary"
-                aria-label="add student"
-                component="label"
-                size="large"
-                onClick={addStudent}
-              >
-                <PersonAddIcon />
-              </IconButton>
-            </Box>
+            {!props.isRefMode && (
+              <Box justifyContent={'flex-end'}>
+                <IconButton
+                  color="primary"
+                  aria-label="add student"
+                  component="label"
+                  size="large"
+                  onClick={addStudent}
+                >
+                  <PersonAddIcon />
+                </IconButton>
+              </Box>
+            )}
             <ul>
               {cardDataList.map((item) => {
                 return (
                   <li key={item.id}>
                     <CardData
+                      isRefMode={props.isRefMode}
                       id={item.id}
                       data={item.data}
                       onChangeValue={changeStudentData}

@@ -16,6 +16,7 @@ import * as React from 'react'
 import * as UserTypes from '../../../types/userTypes'
 
 interface CardDataProps {
+  isRefMode: boolean
   // カードID
   id: number
   // カード内データ
@@ -55,9 +56,11 @@ export const CardData = (props: CardDataProps) => {
               variant="standard"
               value={props.data.title}
               onChange={(e) => {
-                cardData.title = e.target.value
-                setCardData({ ...cardData })
-                changeFormValue()
+                if (!props.isRefMode) {
+                  cardData.title = e.target.value
+                  setCardData({ ...cardData })
+                  changeFormValue()
+                }
               }}
               fullWidth
               color="primary"
@@ -67,19 +70,23 @@ export const CardData = (props: CardDataProps) => {
           </Grid>
           <Grid xs={2}>
             <Box display="flex" flexDirection={'row'}>
-              {/* <CardActions>
-                <Button variant="contained" size="small">
-                  Link
-                </Button>
-              </CardActions> */}
-              <IconButton
-                color="default"
-                component="label"
-                size="large"
-                onClick={removeMyself}
-              >
-                <RemoveCircleIcon />
-              </IconButton>
+              {props.isRefMode && (
+                <CardActions>
+                  <Button variant="contained" size="small">
+                    Link
+                  </Button>
+                </CardActions>
+              )}
+              {!props.isRefMode && (
+                <IconButton
+                  color="default"
+                  component="label"
+                  size="large"
+                  onClick={removeMyself}
+                >
+                  <RemoveCircleIcon />
+                </IconButton>
+              )}
             </Box>
           </Grid>
           <Grid xs={12}>
@@ -96,9 +103,11 @@ export const CardData = (props: CardDataProps) => {
                   variant="outlined"
                   value={props.data.explanation}
                   onChange={(e) => {
-                    cardData.explanation = e.target.value
-                    setCardData({ ...cardData })
-                    changeFormValue()
+                    if (!props.isRefMode) {
+                      cardData.explanation = e.target.value
+                      setCardData({ ...cardData })
+                      changeFormValue()
+                    }
                   }}
                   multiline
                   rows={2}
@@ -111,9 +120,11 @@ export const CardData = (props: CardDataProps) => {
                   variant="standard"
                   value={props.data.path}
                   onChange={(e) => {
-                    cardData.path = e.target.value
-                    setCardData({ ...cardData })
-                    changeFormValue()
+                    if (!props.isRefMode) {
+                      cardData.path = e.target.value
+                      setCardData({ ...cardData })
+                      changeFormValue()
+                    }
                   }}
                   fullWidth
                   margin={'dense'}
