@@ -72,7 +72,14 @@ export const CardData = (props: CardDataProps) => {
             <Box display="flex" flexDirection={'row'}>
               {props.isRefMode && (
                 <CardActions>
-                  <Button variant="contained" size="small">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => {
+                      /* 新規タブを開き資料リンクへアクセス */
+                      window.open(props.data.path)
+                    }}
+                  >
                     Link
                   </Button>
                 </CardActions>

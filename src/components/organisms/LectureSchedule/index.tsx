@@ -3,8 +3,8 @@ import CancelIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 import EditIcon from '@mui/icons-material/Edit'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import SaveIcon from '@mui/icons-material/Save'
 import LinkIcon from '@mui/icons-material/Link'
+import SaveIcon from '@mui/icons-material/Save'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
@@ -71,6 +71,8 @@ interface CardListProps {
   isRefMode: boolean
   // 参照用データ
   refData: UserTypes.LectureSchedule[]
+  // 自身のデータとして参照するモード
+  view_mode_mine: boolean
   // 編集中の値変更時のイベントハンドラ
   updatePostData: (data: UserTypes.LectureSchedule[]) => void
 }
@@ -86,8 +88,10 @@ export default function LectureScheduleEditor(props: CardListProps) {
 
   // テーブル内の値変化時のイベントハンドラ
   React.useEffect(() => {
-    if (props.isRefMode) { return }
-    
+    if (props.isRefMode) {
+      return
+    }
+
     //console.log("tabel", rows)
     const newSchedules: UserTypes.LectureSchedule[] = []
     rows.forEach((row, index) => {
@@ -111,19 +115,19 @@ export default function LectureScheduleEditor(props: CardListProps) {
   // ステートの変更
   React.useEffect(() => {
     if (props.isRefMode) {
-      console.log(rows)  
+      console.log(rows)
       const newRows = props.refData.map((item, index) => {
-        return ({
+        return {
           id: item.id,
           start_time: new Date(item.start_time),
           end_time: new Date(item.end_time),
-          url: item.url,
-          meeting_id: item.meeting_id,
-          passcord: item.passcord
-        })
+          url: props.view_mode_mine ? item.url : 'private data',
+          meeting_id: props.view_mode_mine ? item.meeting_id : 'private data',
+          passcord: props.view_mode_mine ? item.passcord : 'private data',
+        }
       })
       setRows(newRows)
-      console.log(newRows)  
+      console.log(newRows)
     }
   }, [props.refData])
 
@@ -172,6 +176,18 @@ export default function LectureScheduleEditor(props: CardListProps) {
     return updatedRow
   }
 
+  // Linkボタンクリック
+  const handleLinkClick = (id: GridRowId) => () => {
+    if (!props.view_mode_mine) {
+      return
+    }
+
+    const row = rows.find((row) => row.id == id)
+    console.log(row)
+    /* 新規タブを開きOnline Meetingリンクへアクセス */
+    row && window.open(row['url'])
+  }
+
   // テーブル列定義
   const columns: GridColumns = [
     // 終了時刻
@@ -208,11 +224,11 @@ export default function LectureScheduleEditor(props: CardListProps) {
               key={id}
               icon={<LinkIcon />}
               label="Link"
-              onClick={() => { /*aaa*/}}
+              onClick={handleLinkClick(id)}
             />,
           ]
         }
-        
+
         if (isInEditMode) {
           return [
             <GridActionsCellItem
@@ -289,7 +305,7 @@ export default function LectureScheduleEditor(props: CardListProps) {
             onRowEditStop={handleRowEditStop}
             processRowUpdate={processRowUpdate}
             components={{
-              Toolbar: props.isRefMode ? undefined :EditToolbar,
+              Toolbar: props.isRefMode ? undefined : EditToolbar,
             }}
             componentsProps={{
               toolbar: { setRows, setRowModesModel },

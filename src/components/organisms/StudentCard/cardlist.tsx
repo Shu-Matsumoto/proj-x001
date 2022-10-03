@@ -48,23 +48,26 @@ export const StudentCardList = (props: CardListProps) => {
   // ステートの変更
   useEffect(() => {
     if (props.isRefMode) {
-      setCardDataList(props.refData.map((item, index) => {
-        return {
-          id: index,
-          data: {
-            student : item.student,
-            user_name: item.user.user_name
+      setCardDataList(
+        props.refData.map((item, index) => {
+          return {
+            id: index,
+            data: {
+              student: item.student,
+              user_name: item.user.user_name,
+            },
           }
-        }
-      }))
-      console.log(cardDataList)      
+        }),
+      )
+      console.log(cardDataList)
     }
   }, [props.refData])
 
   // 生徒カード追加
   function addStudent(): void {
     cardDataList.push({
-      id: cardDataCounter, data: { student: UserTypes.GetObj_Student(), user_name: '' },
+      id: cardDataCounter,
+      data: { student: UserTypes.GetObj_Student(), user_name: '' },
     })
     cardDataList[cardDataList.length - 1].data.student.position =
       UserTypes.StudentPosition.Leader
@@ -84,7 +87,7 @@ export const StudentCardList = (props: CardListProps) => {
   // 生徒情報更新
   function changeStudentData(
     id: number,
-    data: { student: UserTypes.Student, user_name: string },
+    data: { student: UserTypes.Student; user_name: string },
   ): void {
     const target = cardDataList.find((item) => item.id == id)
     if (target && target?.data) {

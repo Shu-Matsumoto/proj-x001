@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Unstable_Grid2'
 import { useState, useEffect } from 'react'
 import * as React from 'react'
+import { GetLectureWithOptionData } from '../../../api/lectures'
 import LectureScheduleEditor from '../LectureSchedule'
 import { StudentCardList } from '../StudentCard/cardlist'
 import { TeacherCardList } from '../TeacherCard/cardlist'
@@ -14,7 +15,6 @@ import {
   LectureWithOptionData,
   ConvertToStringStudentPosition,
 } from 'types/userTypes'
-import { GetLectureWithOptionData } from '../../../api/lectures'
 
 interface LectureDetailProps {
   lecture_id: number
@@ -76,7 +76,9 @@ export const LectureDetail = (props: LectureDetailProps) => {
           <TeacherCardList
             isRefMode={true}
             refData={lecture.teachers}
-            updatePostData={() => { /*do nothing*/ }}
+            updatePostData={() => {
+              /*do nothing*/
+            }}
           />
         </Grid>
         {/* 募集生徒 */}
@@ -84,7 +86,9 @@ export const LectureDetail = (props: LectureDetailProps) => {
           <StudentCardList
             isRefMode={true}
             refData={lecture.students}
-            updatePostData={() => { /*do nothing*/ }}
+            updatePostData={() => {
+              /*do nothing*/
+            }}
           />
         </Grid>
         {/* 講義開催スケジュール */}
@@ -92,17 +96,24 @@ export const LectureDetail = (props: LectureDetailProps) => {
           <LectureScheduleEditor
             isRefMode={true}
             refData={lecture.schedules}
-            updatePostData={() => { /*do nothing*/ }}
+            view_mode_mine={props.view_mode_mine}
+            updatePostData={() => {
+              /*do nothing*/
+            }}
           />
         </Grid>
-        {/* 教材 */}
-        <Grid xs={12}>
-          <TeachingMaterialCardList
-            isRefMode={true}
-            refData={lecture.materials}
-            updatePostData={() => { /*do nothing*/ }}
-          />
-        </Grid>
+        {/* 教材 ※受講確定後から資料へアクセスできるようガードをかける*/}
+        {props.view_mode_mine && (
+          <Grid xs={12}>
+            <TeachingMaterialCardList
+              isRefMode={true}
+              refData={lecture.materials}
+              updatePostData={() => {
+                /*do nothing*/
+              }}
+            />
+          </Grid>
+        )}
       </Grid>
     </Box>
   )

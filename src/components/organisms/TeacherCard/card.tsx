@@ -20,11 +20,11 @@ interface CardDataProps {
   // カードID
   id: number
   // カード内データ
-  data: { teacher: UserTypes.Teacher, user_name: string }
+  data: { teacher: UserTypes.Teacher; user_name: string }
   // フォーム内の値が変化した時のイベントハンドラ
   onChangeValue: (
     id: number,
-    data: { teacher: UserTypes.Teacher, user_name: string },
+    data: { teacher: UserTypes.Teacher; user_name: string },
   ) => void
   // 削除ボタンを押した時のイベントハンドラ
   onRemove: (id: number) => void
@@ -77,7 +77,11 @@ export const CardData = (props: CardDataProps) => {
           {/* ヘッダー */}
           {!props.isRefMode && (
             <Grid xs={2.5}>
-              <Box display="flex" flexDirection={'column'} alignItems={'center'}>
+              <Box
+                display="flex"
+                flexDirection={'column'}
+                alignItems={'center'}
+              >
                 <Box
                   marginTop={2}
                   marginLeft={1}

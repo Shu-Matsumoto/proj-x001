@@ -43,13 +43,15 @@ export const TeachingMaterialCardList = (props: CardListProps) => {
   // ステートの変更
   useEffect(() => {
     if (props.isRefMode) {
-      setCardDataList(props.refData.map((item, index) => {
-        return {
-          id: index,
-          data: item
-        }
-      }))
-      console.log(cardDataList)      
+      setCardDataList(
+        props.refData.map((item, index) => {
+          return {
+            id: index,
+            data: item,
+          }
+        }),
+      )
+      console.log(cardDataList)
     }
   }, [props.refData])
 

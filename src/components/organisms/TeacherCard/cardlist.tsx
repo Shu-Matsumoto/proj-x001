@@ -48,16 +48,18 @@ export const TeacherCardList = (props: CardListProps) => {
   // ステートの変更
   useEffect(() => {
     if (props.isRefMode) {
-      setCardDataList(props.refData.map((item, index) => {
-        return {
-          id: index,
-          data: {
-            teacher: item.teacher,
-            user_name: item.user.user_name
+      setCardDataList(
+        props.refData.map((item, index) => {
+          return {
+            id: index,
+            data: {
+              teacher: item.teacher,
+              user_name: item.user.user_name,
+            },
           }
-        }
-      }))
-      console.log(cardDataList)      
+        }),
+      )
+      console.log(cardDataList)
     }
   }, [props.refData])
 
@@ -83,7 +85,7 @@ export const TeacherCardList = (props: CardListProps) => {
   // リスト情報更新
   function changeListData(
     id: number,
-    setData: { teacher: UserTypes.Teacher, user_name: string },
+    setData: { teacher: UserTypes.Teacher; user_name: string },
   ): void {
     const target = cardDataList.find((item) => item.id == id)
     if (target && target?.data) {

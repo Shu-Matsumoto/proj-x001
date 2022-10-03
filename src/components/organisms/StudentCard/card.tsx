@@ -1,10 +1,10 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove'
-import Button from '@mui/material/Button'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -17,6 +17,7 @@ import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Unstable_Grid2'
+import Link from 'next/link'
 import { useState } from 'react'
 import * as React from 'react'
 import * as UserTypes from '../../../types/userTypes'
@@ -26,11 +27,11 @@ interface CardDataProps {
   // カードID
   id: number
   // カード内データ
-  data: { student: UserTypes.Student, user_name: string }
+  data: { student: UserTypes.Student; user_name: string }
   // フォーム内の値が変化した時のイベントハンドラ
   onChangeValue: (
     id: number,
-    data: { student: UserTypes.Student, user_name: string }
+    data: { student: UserTypes.Student; user_name: string },
   ) => void
   // 削除ボタンを押した時のイベントハンドラ
   onRemove: (id: number) => void
@@ -44,7 +45,7 @@ export const CardData = (props: CardDataProps) => {
     user_name: string
   }>({
     student: UserTypes.GetCopyObj_Student(props.data.student),
-    user_name: props.data.user_name
+    user_name: props.data.user_name,
   })
   // #endregion Fields
   // #region Functions
@@ -90,11 +91,22 @@ export const CardData = (props: CardDataProps) => {
                 />
               )}
               <Box display="flex" flexDirection={'row'}>
-                {props.isRefMode && (props.data.student.user_id <= 1) && (
+                {props.isRefMode && props.data.student.user_id <= 1 && (
                   <CardActions>
-                    <Button variant="contained" size="small">
-                      受講申請
-                    </Button>
+                    <Link
+                      href={{
+                        pathname: `/lecture/applicationOfLecture/post/${props.data.student.user_id}`,
+                        query: {
+                          lecture_id: props.data.student.lecture_id,
+                          student_id: props.data.student.id,
+                        },
+                      }}
+                      passHref
+                    >
+                      <Button variant="contained" size="small">
+                        受講申請
+                      </Button>
+                    </Link>
                   </CardActions>
                 )}
                 {!props.isRefMode && (
@@ -121,17 +133,18 @@ export const CardData = (props: CardDataProps) => {
                   value={props.data.student.position}
                   onChange={(e) => {
                     if (!props.isRefMode) {
-                        if (typeof e.target.value === 'string') {
-                          cardData.student.position =
-                            UserTypes.ConvertToNumberStudentPosition(e.target.value)
-                        } else {
-                          cardData.student.position = e.target.value
-                        }
-                        setCardData({ ...cardData })
-                        changeFormValue()
+                      if (typeof e.target.value === 'string') {
+                        cardData.student.position =
+                          UserTypes.ConvertToNumberStudentPosition(
+                            e.target.value,
+                          )
+                      } else {
+                        cardData.student.position = e.target.value
                       }
+                      setCardData({ ...cardData })
+                      changeFormValue()
                     }
-                  }
+                  }}
                 >
                   <MenuItem value={UserTypes.StudentPosition.Leader}>
                     Leader
