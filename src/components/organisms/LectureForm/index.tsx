@@ -130,19 +130,36 @@ export const LecturePostForm = (props: LecturePostFormProps) => {
         </Grid>
         {/* 講師 */}
         <Grid xs={12}>
-          <TeacherCardList updatePostData={updateTeacherData} />
+          <TeacherCardList
+            isRefMode={false}
+            refData={[]}
+            updatePostData={updateTeacherData}
+          />
         </Grid>
         {/* 募集生徒 */}
         <Grid xs={12}>
-          <StudentCardList updatePostData={updateStudentData} />
+          <StudentCardList
+            isRefMode={false}
+            refData={[]}
+            updatePostData={updateStudentData}
+          />
         </Grid>
         {/* 講義開催スケジュール */}
         <Grid xs={12}>
-          <LectureScheduleEditor updatePostData={updateScheduleData} />
+          <LectureScheduleEditor
+            isRefMode={false}
+            refData={[]}
+            view_mode_mine={false}
+            updatePostData={updateScheduleData}
+          />
         </Grid>
         {/* 教材 */}
         <Grid xs={12}>
-          <TeachingMaterialCardList updatePostData={updateMaterialData} />
+          <TeachingMaterialCardList
+            isRefMode={false}
+            refData={[]}
+            updatePostData={updateMaterialData}
+          />
         </Grid>
         {/* 投稿ボタン */}
         <Grid xs={12}>
