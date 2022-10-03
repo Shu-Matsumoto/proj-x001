@@ -159,15 +159,18 @@ export const AcceptOfApplicationResultPostForm = (
                       required: true,
                     })}
                   >
-                    <option value={Number(UserTypes.ApplicationStatus.Waiting)}>
-                      保留
-                    </option>
-                    <option value={Number(UserTypes.ApplicationStatus.Accept)}>
-                      承認
-                    </option>
                     <option value={Number(UserTypes.ApplicationStatus.Reject)}>
                       却下
                     </option>
+                    {/* 申請結果送信自時点で他社が受講生として採択されている場合がある。
+                    その状況で許可を送信する訳にはいかないため制限をかける */}
+                    {props.applicationOfLecture.student_id > 1 && (
+                      <option
+                        value={Number(UserTypes.ApplicationStatus.Accept)}
+                      >
+                        承認
+                      </option>
+                    )}
                   </select>
                 </Flex>
               </Box>

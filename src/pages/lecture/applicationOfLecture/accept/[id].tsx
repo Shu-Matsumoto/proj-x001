@@ -22,6 +22,7 @@ import {
   AppErrorCode,
   ApplicationOfLectureWithOptionData,
   GetObj_ApplicationOfLectureWithOptionData,
+  ApplicationStatus,
 } from 'types/userTypes'
 
 /**
@@ -81,17 +82,26 @@ const ApplicationOfLectureAcceptPage: NextPage = () => {
     ).then((apiResult) => {
       console.log(apiResult)
       if (apiResult.result.Code == AppErrorCode.Success) {
-        // 申請処理が成功した場合に対象生徒情報のIDに申請者IDをセットする。
-        const updateStudent = applicationOfLecture.student
-        updateStudent.user_id = applicationOfLecture.user_id
-        UpdateStudent(apiContext, updateStudent).then((apiResult2) => {
-          if (apiResult2.result.Code == AppErrorCode.Success) {
-            alert('受講申請処理結果の送信に成功しました。')
-            router.push('/lecture/applicationOfLecture/inbox')
-          } else {
-            alert('受講申請処理結果の送信に失敗しました。')
-          }
-        })
+        // 申請処理を承認で送信した場合に対象生徒情報のIDに申請者IDをセットする。
+        if (
+          formInputData.applicationOfLecture.status == ApplicationStatus.Accept
+        ) {
+          const updateStudent = applicationOfLecture.student
+          updateStudent.user_id = applicationOfLecture.user_id
+          UpdateStudent(apiContext, updateStudent).then((apiResult2) => {
+            if (apiResult2.result.Code == AppErrorCode.Success) {
+              alert('受講申請処理結果の送信に成功しました。')
+              router.push('/lecture/applicationOfLecture/inbox')
+            } else {
+              alert('受講申請処理結果の送信に失敗しました。')
+            }
+          })
+        } else {
+          alert('受講申請処理結果の送信に成功しました。')
+          router.push('/lecture/applicationOfLecture/inbox')
+        }
+      } else {
+        alert('受講申請処理結果の送信に失敗しました。')
       }
     })
   }

@@ -19,6 +19,7 @@ import {
   ApiContext,
   AppErrorCode,
   ApplicationOfLectureWithOptionData,
+  ApplicationStatus,
   ApplicationStatusString,
   ConvertToNumberApplicationStatus,
 } from 'types/userTypes'
@@ -91,7 +92,11 @@ const ApplicationOfLectureInboxPage: NextPage = () => {
     ).then((apiResult) => {
       //console.log(apiResult);
       if (apiResult.result.Code == AppErrorCode.Success) {
-        setApplicationOfLectures(apiResult.data)
+        setApplicationOfLectures(
+          apiResult.data.filter(
+            (item) => item.status == ApplicationStatus.Waiting,
+          ),
+        )
         console.log(applicationOfLectures)
       }
       setIsLoading(false)
@@ -110,7 +115,11 @@ const ApplicationOfLectureInboxPage: NextPage = () => {
     ).then((apiResult) => {
       //console.log(apiResult);
       if (apiResult.result.Code == AppErrorCode.Success) {
-        setApplicationOfLectures(apiResult.data)
+        setApplicationOfLectures(
+          apiResult.data.filter(
+            (item) => item.status == ApplicationStatus.Waiting,
+          ),
+        )
         console.log(applicationOfLectures)
       }
       setIsLoading(false)
